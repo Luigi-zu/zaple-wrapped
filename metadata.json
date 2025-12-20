@@ -1,0 +1,8 @@
+{
+  "name": "Zaple Wrapped 2025 Generator",
+  "description": "A dynamic Spotify-style Wrapped generator for Zaple influencers with animated slides, data visualizations, and video integration.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
