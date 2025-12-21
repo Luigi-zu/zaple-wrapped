@@ -1,54 +1,16 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zaple Wrapped 2025</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-      body {
-        background-color: #000000;
-        color: #ffffff;
-        margin: 0;
-        overflow-x: hidden;
-      }
-      .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; }
-      .font-urbanist { font-family: 'Urbanist', sans-serif; }
-      
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #000;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #330086;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #9A5BFF;
-      }
-    </style>
-    <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@19.0.0",
-    "react-dom": "https://esm.sh/react-dom@19.0.0",
-    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-    "framer-motion": "https://esm.sh/framer-motion@11.11.17",
-    "lucide-react": "https://esm.sh/lucide-react@0.460.0",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
-  }
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx';
+
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+  throw new Error("No se pudo encontrar el elemento root para montar la aplicación.");
 }
-</script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <!-- Esta línea es la que hace que todo el código TSX se ejecute -->
-    <script type="module" src="./index.tsx"></script>
-  </body>
-</html>
+
+const root = ReactDOM.createRoot(rootElement);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
