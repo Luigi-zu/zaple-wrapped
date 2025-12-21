@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { WrappedData } from '../types.ts';
@@ -48,11 +49,10 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
     setIsPaused(false);
     const duration = Date.now() - pressStartTimeRef.current;
     
-    // Si fue un toque corto (menos de 250ms), navegamos
     if (duration < 250) {
       const { clientX } = e;
       const { innerWidth } = window;
-      const threshold = innerWidth * 0.3; // 30% izquierdo para retroceder
+      const threshold = innerWidth * 0.3;
 
       if (clientX < threshold) {
         if (currentSlide > 0) {
@@ -97,7 +97,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
   const formatNum = (n: number) => new Intl.NumberFormat('es-AR').format(n);
 
-  // Animación común para todos los títulos
   const titleAnim = {
     initial: { opacity: 0, y: 30, filter: 'blur(8px)' },
     animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
@@ -112,7 +111,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
         onPointerUp={handlePointerUp}
       >
         
-        {/* Progress Bars */}
         <div className="absolute top-6 left-4 right-4 z-[130] flex gap-1 px-1">
           {Array.from({ length: totalSlides }).map((_, i) => (
             <div key={i} className="h-1 flex-1 bg-white/20 rounded-full overflow-hidden">
@@ -130,7 +128,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
         <div className="relative w-full h-full">
           
-          {/* SLIDE 0: Intro Animation 2025 */}
+          {/* 0: Intro Animation 2025 */}
           <Slide isActive={currentSlide === 0}>
             <div className="relative h-full flex flex-col items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 flex items-center justify-center z-10 overflow-hidden pointer-events-none">
@@ -153,7 +151,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* SLIDE 1: Contexto */}
+          {/* 1: Contexto */}
           <Slide isActive={currentSlide === 1}>
             <div className="text-center space-y-8 px-8">
                 <motion.div animate={{ rotate: [0, 10, -10, 0] }} transition={{ repeat: Infinity, duration: 4 }} className="text-8xl">✨</motion.div>
@@ -166,7 +164,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* SLIDE 2: Título Trabajaste Duro */}
+          {/* 2: Título Trabajaste Duro */}
           <Slide isActive={currentSlide === 2}>
             <div className="text-center space-y-6">
                 <div className="text-9xl mb-4">⚡</div>
@@ -176,7 +174,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* SLIDE 3: Stats Trabajaste Duro */}
+          {/* 3: Stats Trabajaste Duro */}
           <Slide isActive={currentSlide === 3}>
             <div className="space-y-6 px-6">
               <div className="p-8 bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10">
@@ -192,7 +190,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* SLIDE 4: Título Llegamos Lejos */}
+          {/* 4: Título Llegamos Lejos */}
           <Slide isActive={currentSlide === 4}>
             <div className="text-center space-y-6">
                 <div className="text-9xl mb-4">🚀</div>
@@ -202,7 +200,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* SLIDE 5: Stats Views */}
+          {/* 5: Stats Views (ACHICADO) */}
           <Slide isActive={currentSlide === 5}>
             <div className="flex flex-col items-center justify-center h-full text-center px-4 space-y-8">
                <div className="w-full flex flex-col items-center">
@@ -210,19 +208,19 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                     initial={{ scale: 0.5, opacity: 0 }} 
                     animate={{ scale: 1, opacity: 1 }} 
                     transition={{ duration: 0.8 }} 
-                    className="text-[clamp(4.5rem,14vw,6rem)] font-jakarta font-black leading-none text-center w-full break-all"
+                    className="text-[clamp(3.5rem,12vw,5.5rem)] font-jakarta font-black leading-none text-center w-full break-all"
                   >
                     {formatNum(data.totalViews)}
                   </motion.p>
                   <p className="text-lg font-urbanist font-bold text-[#46DEFF] tracking-[0.3em] uppercase mt-4">Views Totales</p>
                </div>
                <p className="text-xl font-urbanist italic px-10 leading-tight text-gray-400">
-                  <span className={G_BODY}>"{getComparison(data.totalViews)}"</span>
+                  <span className={G_BODY}>"{data.viewsPhrase}"</span>
                </p>
             </div>
           </Slide>
 
-          {/* SLIDE 6: Título Comentarios */}
+          {/* 6: Título Comentarios */}
           <Slide isActive={currentSlide === 6}>
             <div className="text-center space-y-6">
                 <div className="text-9xl mb-4">💬</div>
@@ -232,7 +230,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* SLIDE 7: Stats Comentarios */}
+          {/* 7: Stats Comentarios */}
           <Slide isActive={currentSlide === 7}>
             <div className="flex flex-col items-center justify-center h-full text-center space-y-8 px-4">
               <div className="w-full flex flex-col items-center">
@@ -250,7 +248,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* SLIDE 8: Apoyo */}
+          {/* 8: Apoyo */}
           <Slide isActive={currentSlide === 8}>
             <div className="space-y-6 px-6">
               <motion.h2 {...titleAnim} className="text-2xl font-jakarta font-black uppercase tracking-tight ml-2">MUCHO <span className={G_KEYWORD}>APOYO ❤️</span></motion.h2>
@@ -265,7 +263,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* SLIDE 9: Raros */}
+          {/* 9: Raros */}
           <Slide isActive={currentSlide === 9}>
             <div className="space-y-6 px-6">
               <motion.h2 {...titleAnim} className="text-2xl font-jakarta font-black uppercase tracking-tight ml-2">Y ALGUNOS <span className={G_KEYWORD}>QUE... 🤌🏻</span></motion.h2>
@@ -280,19 +278,19 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* SLIDE 10: Likes */}
+          {/* 10: Likes */}
           <Slide isActive={currentSlide === 10}>
             <div className="flex flex-col items-center justify-center text-center h-full space-y-10 px-4">
                <motion.div animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1.5 }} className="text-9xl drop-shadow-[0_0_30px_rgba(255,0,229,0.5)]">❤️</motion.div>
                <div>
                   <h2 className="text-7xl font-jakarta font-black leading-none">{formatNum(data.totalLikes)}</h2>
-                  <p className="text-xl font-urbanist font-bold text-[#9A5BFF] uppercase tracking-[0.2em] mt-2">Corazones</p>
+                  <p className="text-xl font-urbanist font-bold text-[#9A5BFF] uppercase tracking-[0.2em] mt-2">Likes</p>
                </div>
                <p className="text-lg text-gray-400 font-urbanist max-w-[280px]">La gente señaló con un corazón que les volaste la cabeza.</p>
             </div>
           </Slide>
 
-          {/* SLIDE 11: Top Videos Intro */}
+          {/* 11: Top Videos Intro */}
           <Slide isActive={currentSlide === 11}>
             <div className="text-center space-y-8">
                <div className="text-9xl">🏆</div>
@@ -330,7 +328,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </Slide>
           ))}
 
-          {/* SLIDE 15: Final Summary */}
+          {/* 15: Final Summary */}
           <Slide isActive={currentSlide === 15}>
             <div className="flex flex-col h-full justify-between py-12 px-6">
               
@@ -383,12 +381,5 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
     </div>
   );
 };
-
-function getComparison(views: number) {
-    if (views > 1000000) return `¡Llenaste ${Math.round(views/80000)} estadios de River! 🏟️`;
-    if (views > 50000) return `¡Es como llenar la Bombonera entera! 🏟️`;
-    if (views > 10000) return `¡Es una multitud increíble de gente! 🚀`;
-    return `¡Una comunidad fiel siguiendo tus pasos! 🚀`;
-}
 
 export default WrappedViewer;

@@ -4,12 +4,13 @@ import { WrappedData } from '../types';
 export const CLIENTS_DATA: Record<string, WrappedData> = {
   "Bilinkis": {
     influencerName: "Santi Bilinkis",
-    influencerPhoto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop", // Reemplazar con foto real
+    influencerPhoto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
     totalViews: 4500000,
     totalLikes: 320000,
     totalComments: 12500,
     totalMinutes: 1450,
     totalVideos: 84,
+    viewsPhrase: "Un alcance masivo para un año de puro crecimiento tecnológico.",
     supportiveComments: [
       { id: "s1", username: "tecnofilo_ar", text: "El mejor análisis tecnológico de Argentina siempre.", profilePic: "https://i.pravatar.cc/150?u=s1" },
       { id: "s2", username: "mariana_tech", text: "Santi, tus hilos de IA me cambiaron la forma de laburar.", profilePic: "https://i.pravatar.cc/150?u=s2" },
@@ -28,12 +29,13 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
   },
   "Masnatta": {
     influencerName: "Meli Masnatta",
-    influencerPhoto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop", // Reemplazar con foto real
+    influencerPhoto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop",
     totalViews: 2800000,
     totalLikes: 195000,
     totalComments: 8900,
     totalMinutes: 980,
     totalVideos: 62,
+    viewsPhrase: "Inspirando a miles de personas a través de la educación y la tecnología.",
     supportiveComments: [
       { id: "s1", username: "educa_innovar", text: "Referente total en educación y género.", profilePic: "https://i.pravatar.cc/150?u=m1" },
       { id: "s2", username: "chicas_it", text: "Inspiración pura para todas las que empezamos.", profilePic: "https://i.pravatar.cc/150?u=m2" },

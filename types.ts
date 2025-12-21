@@ -23,6 +23,7 @@ export interface WrappedData {
   totalComments: number;
   totalMinutes: number;
   totalVideos: number;
+  viewsPhrase: string; // Frase personalizada para la slide de views
   supportiveComments: Comment[];
   weirdComments: Comment[];
   topVideos: VideoData[];

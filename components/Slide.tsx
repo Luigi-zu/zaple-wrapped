@@ -21,12 +21,17 @@ const Slide: React.FC<SlideProps> = ({ children, isActive }) => {
         >
           <AnimatedBackground />
           
-          {/* Logo de Zaple - Siempre presente */}
-          <div className="absolute top-12 left-1/2 -translate-x-1/2 z-[120] opacity-80">
-            <div className="flex items-center gap-2">
-               <div className="w-6 h-6 bg-gradient-to-tr from-[#FF00E5] to-[#46DEFF] rounded-md rotate-12" />
-               <span className="font-jakarta font-black tracking-tighter text-xl">Zaple</span>
-            </div>
+          {/* Logo de Zaple - Imagen PNG */}
+          <div className="absolute top-12 left-1/2 -translate-x-1/2 z-[120] opacity-90">
+            <img 
+              src="zaple-logo.png" 
+              alt="Zaple" 
+              className="h-8 w-auto object-contain"
+              onError={(e) => {
+                // Fallback por si la imagen no existe aún
+                e.currentTarget.style.display = 'none';
+              }}
+            />
           </div>
 
           <div className="relative z-10 w-full h-full flex flex-col justify-center">
