@@ -19,33 +19,27 @@
       .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; }
       .font-urbanist { font-family: 'Urbanist', sans-serif; }
       
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #000;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #330086;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #9A5BFF;
+      /* Reset básico para asegurar que el root ocupe todo */
+      #root {
+        min-height: 100vh;
+        width: 100%;
       }
     </style>
   <script type="importmap">
 {
   "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
     "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
-    "framer-motion": "https://esm.sh/framer-motion@^12.23.26",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+    "framer-motion": "https://esm.sh/framer-motion@^12.23.26"
   }
 }
 </script>
 </head>
   <body>
     <div id="root"></div>
+    <!-- En Vite, simplemente apuntamos al archivo principal. Vercel hace el resto. -->
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>
