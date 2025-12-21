@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { CLIENTS_DATA } from '../data/clients';
-import { G_KEYWORD } from '../constants';
+import { CLIENTS_DATA } from '../data/clients.ts';
+import { G_KEYWORD } from '../constants.tsx';
 import { ChevronRight, Users } from 'lucide-react';
 
 const ClientSelector: React.FC = () => {
@@ -41,10 +41,6 @@ const ClientSelector: React.FC = () => {
           </a>
         ))}
       </div>
-
-      <p className="text-gray-600 font-urbanist text-sm">
-        Para ver un Wrapped directo usa: <code className="bg-white/5 px-2 py-1 rounded">?u=ID_DEL_CLIENTE</code>
-      </p>
     </div>
   );
 };

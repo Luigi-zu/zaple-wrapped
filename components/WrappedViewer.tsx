@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { WrappedData } from '../types';
-import Slide from './Slide';
-import { G_KEYWORD, G_BODY } from '../constants';
+import { WrappedData } from '../types.ts';
+import Slide from './Slide.tsx';
+import { G_KEYWORD, G_BODY } from '../constants.tsx';
 import { Share2, Download, RefreshCcw, Heart, MessageCircle, Play, Home } from 'lucide-react';
 
 interface WrappedViewerProps {
@@ -60,8 +60,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
   return (
     <div className="fixed inset-0 bg-[#0a0a0a] flex items-center justify-center p-0 md:p-4">
       <div className="relative w-full h-full max-w-[450px] max-h-[800px] aspect-[9/16] bg-black shadow-2xl md:rounded-[3rem] overflow-hidden">
-        
-        {/* Progress Bars */}
         <div className="absolute top-6 left-4 right-4 z-[100] flex gap-1.5 px-2">
           {Array.from({ length: totalSlides }).map((_, i) => (
             <div key={i} className="h-1 flex-1 bg-white/20 rounded-full overflow-hidden">
@@ -74,7 +72,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
           ))}
         </div>
 
-        {/* Home Button Overlay */}
         <button 
           onClick={onRestart}
           className="absolute top-10 right-6 z-[110] p-2 bg-black/20 backdrop-blur-md rounded-full border border-white/10 text-white/50 hover:text-white transition-colors"
@@ -82,14 +79,12 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
           <Home size={18} />
         </button>
 
-        {/* Navigation Areas */}
         <div className="absolute inset-0 z-50 flex">
           <div className="w-1/3 h-full cursor-pointer" onClick={handlePrev} />
           <div className="w-2/3 h-full cursor-pointer" onClick={handleNext} />
         </div>
 
         <div className="relative w-full h-full">
-          {/* Slide 1: Intro */}
           <Slide isActive={currentSlide === 0}>
             <div className="text-center space-y-8 px-4">
               <motion.h2 initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[#89D0D4] font-jakarta font-bold tracking-[0.2em] uppercase text-sm">
@@ -113,7 +108,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* Slide 2: Minutes */}
           <Slide isActive={currentSlide === 1}>
             <div className="space-y-10 px-4">
               <motion.h2 initial={{ x: -50 }} animate={{ x: 0 }} className="text-5xl font-jakarta font-black leading-tight italic">
@@ -131,7 +125,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* Slide 3: Impact */}
           <Slide isActive={currentSlide === 2}>
             <div className="space-y-8 px-4 text-center">
               <h2 className="text-5xl font-jakarta font-black leading-tight">¡LLEGAMOS <br/><span className={G_KEYWORD}>LEJOS</span>!</h2>
@@ -151,7 +144,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* Slide 4: Comments Stats */}
           <Slide isActive={currentSlide === 3}>
             <div className="text-center space-y-12 px-4">
               <motion.div animate={{ rotate: [0, 5, -5, 0] }} transition={{ repeat: Infinity, duration: 3 }} className="text-8xl">💬</motion.div>
@@ -165,7 +157,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* Slide 5: Supportive Comments */}
           <Slide isActive={currentSlide === 4}>
             <div className="space-y-8 px-4">
               <h2 className="text-4xl font-jakarta font-black uppercase tracking-tight">MUCHO <br/><span className={G_KEYWORD}>APOYO ❤️</span></h2>
@@ -183,7 +174,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* Slide 6: Weird Comments */}
           <Slide isActive={currentSlide === 5}>
             <div className="space-y-8 px-4">
               <h2 className="text-3xl font-jakarta font-black uppercase">Y TAMBIÉN ALGUNOS <br/><span className={G_KEYWORD}>QUE... 🤌🏻🤌🏻🤌🏻</span></h2>
@@ -201,7 +191,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* Slide 7: Likes */}
           <Slide isActive={currentSlide === 6}>
             <div className="flex flex-col items-center justify-center text-center h-full space-y-12">
                <motion.div animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 0.8 }} className="text-9xl drop-shadow-[0_0_40px_rgba(255,0,229,0.6)]">❤️</motion.div>
@@ -213,7 +202,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* Slide 8: Video Intro */}
           <Slide isActive={currentSlide === 7}>
             <div className="text-center space-y-10">
                <motion.div initial={{ scale: 3, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-9xl">🏆</motion.div>
@@ -222,7 +210,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* Slides 9-11: Top Videos */}
           {[0, 1, 2].map((idx) => (
             <Slide key={idx} isActive={currentSlide === 8 + idx}>
               <div className="flex flex-col h-full pt-10 pb-6 space-y-4 px-4">
@@ -252,7 +239,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </Slide>
           ))}
 
-          {/* Slide 12: Summary Final */}
           <Slide isActive={currentSlide === 11}>
             <div className="flex flex-col h-full justify-between py-12 px-6">
               <div className="text-center space-y-2">
@@ -289,14 +275,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                  <button onClick={onRestart} className="w-full py-4 bg-white text-black font-jakarta font-bold rounded-2xl flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors">
                     <RefreshCcw size={20} /> VER OTROS
                  </button>
-                 <div className="grid grid-cols-2 gap-4">
-                    <button className="py-3 bg-white/10 rounded-2xl flex items-center justify-center gap-2 font-bold text-sm">
-                       <Download size={18} /> GUARDAR
-                    </button>
-                    <button className="py-3 bg-white/10 rounded-2xl flex items-center justify-center gap-2 font-bold text-sm">
-                       <Share2 size={18} /> COMPARTIR
-                    </button>
-                 </div>
               </div>
             </div>
           </Slide>

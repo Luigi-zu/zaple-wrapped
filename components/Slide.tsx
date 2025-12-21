@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import AnimatedBackground from './AnimatedBackground';
+import AnimatedBackground from './AnimatedBackground.tsx';
 
 interface SlideProps {
   children: React.ReactNode;
