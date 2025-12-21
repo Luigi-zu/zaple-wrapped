@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Zaple Wrapped 2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Librería para capturar el div como imagen -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,30 +17,30 @@
         margin: 0;
         overflow-x: hidden;
         -webkit-tap-highlight-color: transparent;
+        user-select: none;
       }
       .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; }
       .font-urbanist { font-family: 'Urbanist', sans-serif; }
       #root { min-height: 100vh; width: 100%; }
       
-      /* Animación personalizada para el 2025 */
       @keyframes slideThrough {
-        0% { transform: translateX(-150%) skewX(-20deg); opacity: 0; }
+        0% { transform: translateX(-200%) skewX(-20deg); opacity: 0; }
         20% { opacity: 1; }
         80% { opacity: 1; }
-        100% { transform: translateX(150%) skewX(-20deg); opacity: 0; }
+        100% { transform: translateX(200%) skewX(-20deg); opacity: 0; }
       }
       .animate-2025 {
-        animation: slideThrough 1.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        animation: slideThrough 1.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
       }
     </style>
   <script type="importmap">
 {
   "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "framer-motion": "https://esm.sh/framer-motion@^12.23.26",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "framer-motion": "https://esm.sh/framer-motion@^12.23.26"
   }
 }
 </script>
