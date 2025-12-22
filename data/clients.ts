@@ -14,7 +14,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     viewsPhrase: "¡Eso es como llenar la Bombonera 1.706 veces! 💙💛",
     supportiveComments: [
       { id: "s1", username: "ferciccone.beautyepigenetica", text: "genio, en todo lo que decis siempre. Te admiro 🙌", profilePic: "/imagenes/comentarios/Santi 1.png" },
-      { id: "s2", username: "santisiri", text: "muy bueno esto que decís santi", profilePic: "/imagenes/comentarios/Santi 2.png" },
+      { id: "s2", username: "monikemonvilleok", text: "Estás casi todos los días en mi vida. Vos sos un allanador de colina en mi vida!!!! Feliz día del amigo❤️🙌", profilePic: "/imagenes/comentarios/Santi 2.png" },
       { id: "s3", username: "nitomestre", text: "que placer es escucharte!!", profilePic: "/imagenes/comentarios/Santi 3.png" }
     ],
     weirdComments: [
@@ -283,9 +283,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_ca", username: "lost_ca", text: "¿Venden plumas?", profilePic: "https://i.pravatar.cc/150?u=caw3" }
     ],
     topVideos: [
-      { id: "v1_ca", title: "Caso de Éxito", videoUrl: "/videos/cacique.group/video_1_Video by cacique.group.mp4", views: 22419, likes: 696, comments: 14 },
-      { id: "v2_ca", title: "Nuestra Cultura", videoUrl: "/videos/cacique.group/video_2_Video by vocesqueinspiran.oficial.mp4", views: 19351, likes: 3, comments: 22 },
-      { id: "v3_ca", title: "Innovación Abierta", videoUrl: "/videos/cacique.group/video_3_Video by cacique.group.mp4", views: 19078, likes: 3, comments: 3 }
+      { id: "v1_ca", title: "Innovación Abierta", videoUrl: "/videos/cacique.group/video_1_Video by cacique.group.mp4", views: 1100148, likes: 41548, comments: 632 },
+      { id: "v2_ca", title: "Caso de Éxito", videoUrl: "/videos/cacique.group/video_2_Video by cacique.group.mp4", views: 22419, likes: 696, comments: 14 },
+      { id: "v3_ca", title: "Nuestra Cultura", videoUrl: "/videos/cacique.group/video_3_Video by vocesqueinspiran.oficial.mp4", views: 19351, likes: 458, comments: 22 }
     ]
   },
   "Dubi": {
