@@ -4,7 +4,7 @@ import { WrappedData } from '../types';
 export const CLIENTS_DATA: Record<string, WrappedData> = {
   "Bilinkis": {
     influencerName: "Santi Bilinkis",
-    influencerPhoto: "/imagenes/Bilinkis.png",
+    influencerPhoto: "/imagenes/perfiles/Bilinkis.png",
     totalViews: 92119181,
     totalLikes: 3529667,
     totalComments: 58803,
@@ -29,7 +29,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
   },
   "Masnatta": {
     influencerName: "Meli Masnatta",
-    influencerPhoto: "/imagenes/Masnatta.png",
+    influencerPhoto: "/imagenes/perfiles/Masnatta.png",
     totalViews: 543451,
     totalLikes: 342,
     totalComments: 440,
@@ -54,7 +54,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
   },
   "Rosario": {
     influencerName: "Rosario de Bendiciones",
-    influencerPhoto: "/imagenes/Rosario.png",
+    influencerPhoto: "/imagenes/perfiles/Rosario.png",
     totalViews: 87419,
     totalLikes: 7089,
     totalComments: 380,
@@ -79,7 +79,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
   },
   "Loidi": {
     influencerName: "Jonatan Loidi",
-    influencerPhoto: "/imagenes/Loidi.png",
+    influencerPhoto: "/imagenes/perfiles/Loidi.png",
     totalViews: 20182009,
     totalLikes: 1206706,
     totalComments: 14407,
@@ -104,7 +104,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
   },
   "Rieznik": {
     influencerName: "Andres Rieznik",
-    influencerPhoto: "/imagenes/Rieznik.png",
+    influencerPhoto: "/imagenes/perfiles/Rieznik.png",
     totalViews: 2044790,
     totalLikes: 101207,
     totalComments: 771,
@@ -129,7 +129,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
   },
   "Zuchovicki": {
     influencerName: "Claudio Zuchovicki",
-    influencerPhoto: "/imagenes/Zuchovicki.png",
+    influencerPhoto: "/imagenes/perfiles/Zuchovicki.png",
     totalViews: 10898671,
     totalLikes: 475291,
     totalComments: 8417,
@@ -154,7 +154,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
   },
   "Tomi": {
     influencerName: "Tomi Balmaceda",
-    influencerPhoto: "/imagenes/Tomi.png",
+    influencerPhoto: "/imagenes/perfiles/Tomi.png",
     totalViews: 1191808,
     totalLikes: 37800,
     totalComments: 998,
@@ -179,7 +179,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
   },
   "Patricia": {
     influencerName: "Patricia Jebsen",
-    influencerPhoto: "/imagenes/Patricia.png",
+    influencerPhoto: "/imagenes/perfiles/Patricia.png",
     totalViews: 12081979,
     totalLikes: 377145,
     totalComments: 6222,
@@ -204,7 +204,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
   },
   "Melamed": {
     influencerName: "Alejandro Melamed",
-    influencerPhoto: "/imagenes/Melamed.png",
+    influencerPhoto: "/imagenes/perfiles/Melamed.png",
     totalViews: 2845982,
     totalLikes: 84084,
     totalComments: 999,
@@ -229,7 +229,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
   },
   "Cwaik": {
     influencerName: "Joan Cwaik",
-    influencerPhoto: "/imagenes/Cwaik.png",
+    influencerPhoto: "/imagenes/perfiles/Cwaik.png",
     totalViews: 3306841,
     totalLikes: 60890,
     totalComments: 1172,
@@ -254,7 +254,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
   },
   "Cacique": {
     influencerName: "Cacique Group",
-    influencerPhoto: "/imagenes/Cacique.png",
+    influencerPhoto: "/imagenes/perfiles/Cacique.png",
     totalViews: 123111,
     totalLikes: 1750,
     totalComments: 75,
@@ -279,7 +279,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
   },
   "Dubi": {
     influencerName: "Caro Dubi",
-    influencerPhoto: "/imagenes/Dubi.png",
+    influencerPhoto: "/imagenes/perfiles/Dubi.png",
     totalViews: 2716001,
     totalLikes: 38340,
     totalComments: 951,
@@ -304,7 +304,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
   },
   "Streamset": {
     influencerName: "Streamset Latam",
-    influencerPhoto: "/imagenes/Streamset.png",
+    influencerPhoto: "/imagenes/perfiles/Streamset.png",
     totalViews: 916426,
     totalLikes: 603,
     totalComments: 432,
