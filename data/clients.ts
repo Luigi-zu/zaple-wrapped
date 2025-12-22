@@ -3,6 +3,7 @@ import { WrappedData } from '../types';
 
 export const CLIENTS_DATA: Record<string, WrappedData> = {
   "Bilinkis": {
+    clientName: "Bilinkis",
     influencerName: "Santi Bilinkis",
     influencerPhoto: "/imagenes/perfiles/Santi.png",
     totalViews: 92119181,
@@ -28,10 +29,11 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     ]
   },
   "Masnatta": {
+    clientName: "Masnatta",
     influencerName: "Meli Masnatta",
     influencerPhoto: "/imagenes/perfiles/Meli.png",
     totalViews: 543451,
-    totalLikes: 342,
+    totalLikes: 12734,
     totalComments: 440,
     totalMinutes: 48,
     totalVideos: 55,
@@ -47,12 +49,13 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3", username: "lost_in_space", text: "Meli, ¿qué opinas de los gatos que no maúllan?", profilePic: "https://i.pravatar.cc/150?u=mw3" }
     ],
     topVideos: [
-      { id: "v1", title: "Cerrando la brecha digital", videoUrl: "/videos/melinamasnatta/video_1_Video by melinamasnatta.mp4", views: 51679, likes: 3, comments: 22 },
-      { id: "v2", title: "Educación 3.0: Lo que viene", videoUrl: "/videos/melinamasnatta/video_2_Video by melinamasnatta.mp4", views: 26521, likes: 3, comments: 94 },
-      { id: "v3", title: "Liderazgo en la era tech", videoUrl: "/videos/melinamasnatta/video_3_Video by melinamasnatta.mp4", views: 17183, likes: 3, comments: 11 }
+      { id: "v1", title: "Cerrando la brecha digital", videoUrl: "/videos/melinamasnatta/video_1_Video by melinamasnatta.mp4", views: 51679, likes: 1020, comments: 22 },
+      { id: "v2", title: "Educación 3.0: Lo que viene", videoUrl: "/videos/melinamasnatta/video_2_Video by melinamasnatta.mp4", views: 26521, likes: 934, comments: 94 },
+      { id: "v3", title: "Liderazgo en la era tech", videoUrl: "/videos/melinamasnatta/video_3_Video by melinamasnatta.mp4", views: 17183, likes: 731, comments: 11 }
     ]
   },
   "Rosario": {
+    clientName: "Rosario",
     influencerName: "Rosario de Bendiciones",
     influencerPhoto: "/imagenes/perfiles/Rosario.png",
     totalViews: 87419,
@@ -78,6 +81,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     ]
   },
   "Loidi": {
+    clientName: "Loidi",
     influencerName: "Jonatan Loidi",
     influencerPhoto: "/imagenes/perfiles/Jonatan.png",
     totalViews: 20182009,
@@ -103,6 +107,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     ]
   },
   "Rieznik": {
+    clientName: "Rieznik",
     influencerName: "Andres Rieznik",
     influencerPhoto: "/imagenes/perfiles/Andrés.png",
     totalViews: 2044790,
@@ -128,6 +133,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     ]
   },
   "Zuchovicki": {
+    clientName: "Zuchovicki",
     influencerName: "Claudio Zuchovicki",
     influencerPhoto: "/imagenes/perfiles/Claudio.png",
     totalViews: 10898671,
@@ -153,6 +159,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     ]
   },
   "Tomi": {
+    clientName: "Tomi",
     influencerName: "Tomi Balmaceda",
     influencerPhoto: "/imagenes/perfiles/Tomi.png",
     totalViews: 1191808,
@@ -178,6 +185,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     ]
   },
   "Patricia": {
+    clientName: "Patricia",
     influencerName: "Patricia Jebsen",
     influencerPhoto: "/imagenes/perfiles/Pato.png",
     totalViews: 12081979,
@@ -203,6 +211,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     ]
   },
   "Melamed": {
+    clientName: "Melamed",
     influencerName: "Alejandro Melamed",
     influencerPhoto: "/imagenes/perfiles/Ale.png",
     totalViews: 2845982,
@@ -228,6 +237,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     ]
   },
   "Cwaik": {
+    clientName: "Cwaik",
     influencerName: "Joan Cwaik",
     influencerPhoto: "/imagenes/perfiles/Joan.png",
     totalViews: 3306841,
@@ -253,6 +263,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     ]
   },
   "Cacique": {
+    clientName: "Cacique",
     influencerName: "Cacique Group",
     influencerPhoto: "/imagenes/perfiles/Cacique.png",
     totalViews: 1270649,
@@ -278,6 +289,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     ]
   },
   "Dubi": {
+    clientName: "Dubi",
     influencerName: "Caro Dubi",
     influencerPhoto: "/imagenes/perfiles/Caro.png",
     totalViews: 2716001,
@@ -303,10 +315,11 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     ]
   },
   "Streamset": {
+    clientName: "Streamset",
     influencerName: "Streamset Latam",
     influencerPhoto: "/imagenes/perfiles/Equipo Streamset.png",
     totalViews: 916426,
-    totalLikes: 603,
+    totalLikes: 2398,
     totalComments: 432,
     totalMinutes: 27,
     totalVideos: 28,
@@ -322,9 +335,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_st", username: "lost_st", text: "¿Cómo configuro el OBS?", profilePic: "https://i.pravatar.cc/150?u=stw3" }
     ],
     topVideos: [
-      { id: "v1_st", title: "Streaming Revolution", videoUrl: "/videos/streamsetlatam/video_1_Video by streamsetlatam.mp4", views: 202834, likes: 3, comments: 80 },
-      { id: "v2_st", title: "Conectando Latam", videoUrl: "/videos/streamsetlatam/video_2_Video by streamsetlatam.mp4", views: 106277, likes: 3, comments: 29 },
-      { id: "v3_st", title: "Futuro del Live", videoUrl: "/videos/streamsetlatam/video_3_Video by streamsetlatam.mp4", views: 81943, likes: 3, comments: 30 }
+      { id: "v1_st", title: "Streaming Revolution", videoUrl: "/videos/streamsetlatam/video_1_Video by streamsetlatam.mp4", views: 202834, likes: 3854, comments: 80 },
+      { id: "v2_st", title: "Conectando Latam", videoUrl: "/videos/streamsetlatam/video_2_Video by streamsetlatam.mp4", views: 106277, likes: 1487, comments: 29 },
+      { id: "v3_st", title: "Futuro del Live", videoUrl: "/videos/streamsetlatam/video_3_Video by streamsetlatam.mp4", views: 81943, likes: 932, comments: 30 }
     ]
   }
 };

@@ -15,7 +15,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   
   // Clientes que no deben ver la slide de engagement
-  const CLIENTS_WITHOUT_ENGAGEMENT = ['streamsetlatam', 'melinamasnatta', 'carodubi', 'cacique', 'joancwaik'];
+  const CLIENTS_WITHOUT_ENGAGEMENT = ['streamset', 'dubi', 'cacique', 'cwaik'];
   const shouldShowEngagement = !CLIENTS_WITHOUT_ENGAGEMENT.includes((data.clientName || '').toLowerCase());
   
   // Ajustar total de slides según si mostramos engagement
@@ -186,17 +186,17 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                 >
                     <div className="relative">
                         <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#9A5BFF] to-[#46DEFF] blur-xl opacity-50 animate-pulse"></div>
-                        <div className="relative w-64 h-64 rounded-full overflow-hidden border-[6px] border-transparent bg-gradient-to-tr from-[#9A5BFF] to-[#46DEFF] bg-clip-padding p-1">
+                        <div className="relative w-40 h-40 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full overflow-hidden border-[4px] sm:border-[6px] border-transparent bg-gradient-to-tr from-[#9A5BFF] to-[#46DEFF] bg-clip-padding p-1">
                             <div className="w-full h-full rounded-full overflow-hidden bg-black">
                                 <img src={data.influencerPhoto} className="w-full h-full object-cover" />
                             </div>
                         </div>
                     </div>
-                    <div className="text-center relative z-20">
-                        <motion.h2 {...titleAnim} className="text-5xl font-jakarta font-black italic tracking-tight">
+                    <div className="text-center relative z-20 px-4">
+                        <motion.h2 {...titleAnim} className="text-3xl sm:text-4xl md:text-5xl font-jakarta font-black italic tracking-tight">
                             ¡Hola <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9A5BFF] to-[#46DEFF]">{firstName}!</span>
                         </motion.h2>
-                        <p className="text-xl font-urbanist text-white/80 font-medium mt-3 tracking-wide">Llegó tu <span className="font-bold text-white">Zaple Wrapped</span> 2025</p>
+                        <p className="text-base sm:text-lg md:text-xl font-urbanist text-white/80 font-medium mt-3 tracking-wide">Llegó tu <span className="font-bold text-white">Zaple Wrapped</span> 2025</p>
                     </div>
                 </motion.div>
             </div>
@@ -204,12 +204,12 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* 1: Contexto */}
           <Slide isActive={currentSlide === 1}>
-            <div className="text-center space-y-8 px-8">
-                <motion.div animate={{ rotate: [0, 10, -10, 0] }} transition={{ repeat: Infinity, duration: 4 }} className="text-8xl">✨</motion.div>
-                <motion.h2 {...titleAnim} className="text-3xl font-jakarta font-extrabold leading-tight">
+            <div className="text-center space-y-6 sm:space-y-8 px-4 sm:px-8">
+                <motion.div animate={{ rotate: [0, 10, -10, 0] }} transition={{ repeat: Infinity, duration: 4 }} className="text-6xl sm:text-8xl">✨</motion.div>
+                <motion.h2 {...titleAnim} className="text-2xl sm:text-3xl font-jakarta font-extrabold leading-tight">
                     2025 fue un año <span className={G_KEYWORD}>increíble</span>.
                 </motion.h2>
-                <p className="text-xl text-gray-300 leading-relaxed">
+                <p className="text-base sm:text-xl text-gray-300 leading-relaxed">
                     Acá van algunos números de lo que <span className="text-white font-bold underline decoration-[#9A5BFF]">logramos juntos.</span>
                 </p>
             </div>
@@ -217,9 +217,9 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* 2: Título Trabajaste Duro */}
           <Slide isActive={currentSlide === 2}>
-            <div className="text-center space-y-6">
-                <div className="text-9xl mb-4">⚡</div>
-                <motion.h2 {...titleAnim} className="text-5xl font-jakarta font-black italic uppercase leading-none">
+            <div className="text-center space-y-4 sm:space-y-6 px-4">
+                <div className="text-6xl sm:text-9xl mb-4">⚡</div>
+                <motion.h2 {...titleAnim} className="text-3xl sm:text-5xl font-jakarta font-black italic uppercase leading-none">
                     ¡TRABAJASTE <br/><span className={G_KEYWORD}>DURO!</span>
                 </motion.h2>
             </div>
@@ -227,33 +227,33 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* 3: Stats Trabajaste Duro */}
           <Slide isActive={currentSlide === 3}>
-            <div className="space-y-6 px-6 w-full">
-              <div className="p-8 bg-gradient-to-br from-[#330086]/40 to-[#330086]/10 backdrop-blur-xl rounded-[2.5rem] border border-[#9A5BFF]/30 shadow-lg relative overflow-hidden">
+            <div className="space-y-4 sm:space-y-6 px-4 sm:px-6 w-full">
+              <div className="p-5 sm:p-8 bg-gradient-to-br from-[#330086]/40 to-[#330086]/10 backdrop-blur-xl rounded-[2rem] sm:rounded-[2.5rem] border border-[#9A5BFF]/30 shadow-lg relative overflow-hidden">
                 <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#FF00E5]/20 rounded-full blur-3xl -ml-16 -mb-16"></div>
                 <div className="flex items-center justify-center gap-2 mb-2">
-                  <Video size={16} className="text-[#FF00E5]" />
-                  <p className="text-xs font-bold text-[#FF00E5] uppercase tracking-widest text-center relative z-10">Con Zaple publicaste</p>
+                  <Video size={14} className="text-[#FF00E5]" />
+                  <p className="text-[10px] sm:text-xs font-bold text-[#FF00E5] uppercase tracking-widest text-center relative z-10">Con Zaple publicaste</p>
                 </div>
-                <p className="text-7xl font-jakarta font-black text-white leading-none text-center tracking-tighter my-2 relative z-10">{data.totalVideos}</p>
-                <p className="text-lg font-urbanist font-medium text-gray-400 text-center relative z-10">videos increíbles</p>
+                <p className="text-5xl sm:text-7xl font-jakarta font-black text-white leading-none text-center tracking-tighter my-2 relative z-10">{data.totalVideos}</p>
+                <p className="text-sm sm:text-lg font-urbanist font-medium text-gray-400 text-center relative z-10">videos increíbles</p>
               </div>
-              <div className="p-8 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-[2.5rem] border border-white/10 shadow-lg relative overflow-hidden group">
+              <div className="p-5 sm:p-8 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-[2rem] sm:rounded-[2.5rem] border border-white/10 shadow-lg relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#89D0D4]/20 rounded-full blur-3xl -mr-16 -mt-16"></div>
                 <div className="flex items-center justify-center gap-2 mb-2">
-                  <Clock size={16} className="text-[#89D0D4]" />
-                  <p className="text-xs font-bold text-[#89D0D4] uppercase tracking-widest text-center relative z-10">Contenido Creado</p>
+                  <Clock size={14} className="text-[#89D0D4]" />
+                  <p className="text-[10px] sm:text-xs font-bold text-[#89D0D4] uppercase tracking-widest text-center relative z-10">Contenido Creado</p>
                 </div>
-                <p className="text-7xl font-jakarta font-black text-white leading-none text-center tracking-tighter my-2 relative z-10">{formatNum(data.totalMinutes * 60)}</p>
-                <p className="text-lg font-urbanist font-medium text-gray-400 text-center relative z-10">segundos de contenido</p>
+                <p className="text-5xl sm:text-7xl font-jakarta font-black text-white leading-none text-center tracking-tighter my-2 relative z-10">{formatNum(data.totalMinutes * 60)}</p>
+                <p className="text-sm sm:text-lg font-urbanist font-medium text-gray-400 text-center relative z-10">segundos de contenido</p>
               </div>
             </div>
           </Slide>
 
           {/* 4: Título Llegamos Lejos */}
           <Slide isActive={currentSlide === 4}>
-            <div className="text-center space-y-6">
-                <div className="text-9xl mb-4">🚀</div>
-                <motion.h2 {...titleAnim} className="text-5xl font-jakarta font-black italic uppercase leading-none">
+            <div className="text-center space-y-4 sm:space-y-6 px-4">
+                <div className="text-6xl sm:text-9xl mb-4">🚀</div>
+                <motion.h2 {...titleAnim} className="text-3xl sm:text-5xl font-jakarta font-black italic uppercase leading-none">
                     ¡LLEGAMOS <br/><span className={G_KEYWORD}>LEJOS!</span>
                 </motion.h2>
             </div>
@@ -261,20 +261,20 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* 5: Stats Views (ACHICADO) */}
           <Slide isActive={currentSlide === 5}>
-            <div className="flex flex-col items-center justify-center h-full text-center px-4 space-y-8">
+            <div className="flex flex-col items-center justify-center h-full text-center px-4 space-y-6 sm:space-y-8">
                <div className="w-full flex flex-col items-center">
-                 <p className="text-lg font-urbanist font-bold text-[#46DEFF] tracking-[0.3em] uppercase mt-4">Alcanzaste un total de</p>
+                 <p className="text-xs sm:text-sm font-urbanist font-bold text-[#46DEFF] tracking-[0.2em] sm:tracking-[0.3em] uppercase mt-3 sm:mt-4">Alcanzaste un total de</p>
                   <motion.p 
                     initial={{ scale: 0.5, opacity: 0 }} 
                     animate={{ scale: 1, opacity: 1 }} 
                     transition={{ duration: 0.8 }} 
-                    className="text-[clamp(2.5rem,12vw,4rem)] font-jakarta font-black leading-none text-center w-full break-all bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent"
+                    className="text-[clamp(1.75rem,10vw,4rem)] font-jakarta font-black leading-none text-center w-full break-all bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent"
                   >
                     {formatNum(data.totalViews)}
                   </motion.p>
-                  <p className="text-lg font-urbanist font-bold text-[#46DEFF] tracking-[0.3em] uppercase mt-4">Views</p>
+                  <p className="text-xs sm:text-sm font-urbanist font-bold text-[#46DEFF] tracking-[0.2em] sm:tracking-[0.3em] uppercase mt-3 sm:mt-4">Views</p>
                </div>
-               <p className="text-xl font-urbanist italic px-10 leading-tight">
+               <p className="text-base sm:text-xl font-urbanist italic px-4 sm:px-10 leading-tight">
                   <span>{data.viewsPhrase}</span>
                </p>
             </div>
@@ -282,9 +282,9 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* 6: Título Comentarios */}
           <Slide isActive={currentSlide === 6}>
-            <div className="text-center space-y-6">
-                <div className="text-9xl mb-4">💬</div>
-                <motion.h2 {...titleAnim} className="text-5xl font-jakarta font-black italic uppercase leading-none">
+            <div className="text-center space-y-4 sm:space-y-6 px-4">
+                <div className="text-6xl sm:text-9xl mb-4">💬</div>
+                <motion.h2 {...titleAnim} className="text-3xl sm:text-5xl font-jakarta font-black italic uppercase leading-none">
                     DISTE DE <br/><span className={G_KEYWORD}>QUÉ HABLAR</span>
                 </motion.h2>
             </div>
@@ -292,40 +292,40 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* 7: Stats Comentarios */}
           <Slide isActive={currentSlide === 7}>
-            <div className="flex flex-col items-center justify-center h-full text-center space-y-8 px-4">
+            <div className="flex flex-col items-center justify-center h-full text-center space-y-6 sm:space-y-8 px-4">
               <div className="w-full flex flex-col items-center">
-                <p className="text-lg font-urbanist font-bold text-[#FF00E5] uppercase tracking-[0.4em] mt-4">Tus videos generaron</p>
+                <p className="text-sm sm:text-lg font-urbanist font-bold text-[#FF00E5] uppercase tracking-[0.2em] sm:tracking-[0.4em] mt-3 sm:mt-4">Tus videos generaron</p>
                 <motion.p 
                   initial={{ scale: 0.5, opacity: 0 }} 
                   animate={{ scale: 1, opacity: 1 }} 
                   transition={{ duration: 0.8 }} 
-                  className="text-[clamp(6rem,18vw,8.5rem)] font-jakarta font-black leading-none text-center w-full bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent"
+                  className="text-[clamp(3rem,16vw,7.5rem)] font-jakarta font-black leading-none text-center w-full bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent"
                 >
                   {formatNum(data.totalComments)}
                 </motion.p>
-                <p className="text-lg font-urbanist font-bold text-[#FF00E5] uppercase tracking-[0.4em] mt-4">Comentarios</p>
+                <p className="text-sm sm:text-lg font-urbanist font-bold text-[#FF00E5] uppercase tracking-[0.2em] sm:tracking-[0.4em] mt-3 sm:mt-4">Comentarios</p>
               </div>
-              <p className="text-xl text-gray-400 italic px-10">¡Qué tertulia! veamos algunos ...</p>
+              <p className="text-base sm:text-xl text-gray-400 italic px-4 sm:px-10">¡Qué tertulia! veamos algunos ...</p>
             </div>
           </Slide>
 
           {/* 8: Apoyo */}
           <Slide isActive={currentSlide === 8}>
-            <div className="space-y-6 px-6 w-full">
-              <motion.h2 {...titleAnim} className="text-2xl font-jakarta font-black uppercase tracking-tight ml-2">MUCHO <span className={G_KEYWORD}>APOYO ❤️</span></motion.h2>
-              <div className="space-y-4">
+            <div className="space-y-4 sm:space-y-6 px-4 sm:px-6 w-full">
+              <motion.h2 {...titleAnim} className="text-xl sm:text-2xl font-jakarta font-black uppercase tracking-tight ml-2">MUCHO <span className={G_KEYWORD}>APOYO ❤️</span></motion.h2>
+              <div className="space-y-3 sm:space-y-4">
                 {data.supportiveComments.slice(0, 3).map((c, i) => (
                   <motion.div 
                     key={c.id}
                     initial={{ x: 50, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.4 + (i * 0.2), duration: 0.5 }}
-                    className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm"
+                    className="flex items-center gap-3 sm:gap-4 bg-white/5 p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-white/10 backdrop-blur-sm"
                   >
-                    <img src={c.profilePic} className="w-12 h-12 rounded-full object-cover border-2 border-[#89D0D4]" />
-                    <div className="flex-1">
-                      <p className="text-md font-bold text-[#89D0D4] mb-1">@{c.username}</p>
-                      <p className="text-xl text-gray-300 italic">"{c.text}"</p>
+                    <img src={c.profilePic} className="w-10 sm:w-12 h-10 sm:h-12 rounded-full object-cover border-2 border-[#89D0D4] flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs sm:text-sm font-bold text-[#89D0D4] mb-1">@{c.username}</p>
+                      <p className="text-sm sm:text-lg text-gray-300 italic line-clamp-2">"{c.text}"</p>
                     </div>
                   </motion.div>
                 ))}
@@ -337,41 +337,41 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* 10: Likes */}
           <Slide isActive={currentSlide === 9}>
-            <div className="flex flex-col items-center justify-center text-center h-full space-y-10 px-4">
-               <motion.div animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1.5 }} className="text-9xl drop-shadow-[0_0_30px_rgba(255,0,229,0.5)]">❤️</motion.div>
+            <div className="flex flex-col items-center justify-center text-center h-full space-y-6 sm:space-y-10 px-4">
+               <motion.div animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1.5 }} className="text-6xl sm:text-9xl drop-shadow-[0_0_30px_rgba(255,0,229,0.5)]">❤️</motion.div>
                <div>
-                  <p className="text-xl font-urbanist font-bold text-[#9A5BFF] uppercase tracking-[0.2em] mt-2">Recibiste</p>
-                  <h2 className="text-7xl font-jakarta font-black leading-none bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent">{formatNum(data.totalLikes)}</h2>
-                  <p className="text-xl font-urbanist font-bold text-[#9A5BFF] uppercase tracking-[0.2em] mt-2">Likes</p>
+                  <p className="text-sm sm:text-xl font-urbanist font-bold text-[#9A5BFF] uppercase tracking-[0.2em] mt-2">Recibiste</p>
+                  <h2 className="text-5xl sm:text-7xl font-jakarta font-black leading-none bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent">{formatNum(data.totalLikes)}</h2>
+                  <p className="text-sm sm:text-xl font-urbanist font-bold text-[#9A5BFF] uppercase tracking-[0.2em] mt-2">Likes</p>
                </div>
-               <p className="text-lg text-gray-400 font-urbanist max-w-[280px]">La gente señaló con un corazón que les volaste la cabeza.</p>
+               <p className="text-base sm:text-lg text-gray-400 font-urbanist max-w-[280px]">La gente señaló con un corazón que les volaste la cabeza.</p>
             </div>
           </Slide>
 
           {/* 11: Engagement */}
           {shouldShowEngagement && (
             <Slide isActive={currentSlide === 10}>
-              <div className="flex flex-col items-center justify-center h-full text-center px-6 space-y-8">
-                <div className="text-9xl mb-2">🔥</div>
-                <motion.h2 {...titleAnim} className="text-4xl font-jakarta font-black italic uppercase leading-none">
+              <div className="flex flex-col items-center justify-center h-full text-center px-4 sm:px-6 space-y-6 sm:space-y-8">
+                <div className="text-6xl sm:text-9xl mb-2">🔥</div>
+                <motion.h2 {...titleAnim} className="text-2xl sm:text-4xl font-jakarta font-black italic uppercase leading-tight">
                   TU ENGAGEMENT <br/><span className={G_KEYWORD}>FUE BRUTAL</span>
                 </motion.h2>
-                <div className="w-full max-w-[350px] space-y-4 mt-6">
-                  <div className="relative p-8 bg-gradient-to-br from-[#9A5BFF]/20 to-[#46DEFF]/20 backdrop-blur-xl rounded-[2.5rem] border border-white/20 shadow-lg overflow-hidden">
+                <div className="w-full max-w-[350px] space-y-3 sm:space-y-4 mt-4 sm:mt-6">
+                  <div className="relative p-5 sm:p-8 bg-gradient-to-br from-[#9A5BFF]/20 to-[#46DEFF]/20 backdrop-blur-xl rounded-[2rem] sm:rounded-[2.5rem] border border-white/20 shadow-lg overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-[#46DEFF]/30 rounded-full blur-3xl -mr-16 -mt-16"></div>
                     <div className="relative z-10">
-                      <p className="text-xs font-bold text-[#46DEFF] uppercase tracking-widest mb-3">Tasa de Engagement</p>
-                      <p className="text-7xl font-jakarta font-black text-white leading-none tracking-tighter">
+                      <p className="text-[10px] sm:text-xs font-bold text-[#46DEFF] uppercase tracking-widest mb-2 sm:mb-3">Tasa de Engagement</p>
+                      <p className="text-5xl sm:text-7xl font-jakarta font-black text-white leading-none tracking-tighter">
                         {((data.totalLikes + data.totalComments) / data.totalViews * 100).toFixed(1)}%
                       </p>
-                      <p className="text-sm text-gray-400 mt-3 font-urbanist">(Likes + Comentarios) / Views</p>
+                      <p className="text-xs sm:text-sm text-gray-400 mt-2 sm:mt-3 font-urbanist">(Likes + Comentarios) / Views</p>
                     </div>
                   </div>
-                  <div className="flex items-center justify-center">
-                    <p className="text-lg text-gray-300 italic px-4 leading-tight">
+                  <div className="flex items-center justify-center gap-2">
+                    <p className="text-base sm:text-lg text-gray-300 italic px-2 sm:px-4 leading-tight">
                       El valor de referencia suele ser <span className="text-white font-bold">1%</span>
                     </p>
-                    <p>😉</p>
+                    <p className="text-lg sm:text-xl">😉</p>
                   </div>
                 </div>
               </div>
@@ -380,31 +380,31 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* 12: Top Videos Intro */}
           <Slide isActive={currentSlide === (shouldShowEngagement ? 11 : 10)}>
-            <div className="text-center space-y-8">
-               <div className="text-9xl">🏆</div>
-               <motion.h2 {...titleAnim} className="text-4xl font-jakarta font-black leading-tight uppercase italic text-center px-4">TUS VIDEOS <br/><span className={G_KEYWORD}>MÁS VISTOS</span></motion.h2>
+            <div className="text-center space-y-6 sm:space-y-8 px-4">
+               <div className="text-6xl sm:text-9xl">🏆</div>
+               <motion.h2 {...titleAnim} className="text-2xl sm:text-4xl font-jakarta font-black leading-tight uppercase italic text-center">TUS VIDEOS <br/><span className={G_KEYWORD}>MÁS VISTOS</span></motion.h2>
             </div>
           </Slide>
 
           {/* SLIDES 13, 14, 15: Top Videos Content */}
           {[0, 1, 2].map((idx) => (
             <Slide key={idx} isActive={currentSlide === (shouldShowEngagement ? 12 + idx : 11 + idx)}>
-              <div className="flex flex-col h-full pt-20 pb-12 space-y-4 px-4">
-                <div className="relative flex-1 bg-black rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl">
+              <div className="flex flex-col h-full pt-12 sm:pt-20 pb-8 sm:pb-12 space-y-3 sm:space-y-4 px-3 sm:px-4">
+                <div className="relative flex-1 bg-black rounded-[2rem] sm:rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl">
                    <video src={data.topVideos[idx].videoUrl} className="w-full h-full object-cover" autoPlay loop playsInline />
-                   <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[90%]">
-                      <div className="grid grid-cols-3 gap-2 bg-black/60 backdrop-blur-2xl p-4 rounded-[2rem] border border-white/10">
+                   <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 w-[92%]">
+                      <div className="grid grid-cols-3 gap-1.5 sm:gap-2 bg-black/60 backdrop-blur-2xl p-3 sm:p-4 rounded-[1.5rem] sm:rounded-[2rem] border border-white/10">
                         <div className="text-center">
-                          <p className="text-[10px] text-gray-400 uppercase font-black mb-1">Vistas</p>
-                          <p className="text-lg font-black text-[#46DEFF]">{formatNum(data.topVideos[idx].views)}</p>
+                          <p className="text-[9px] sm:text-[10px] text-gray-400 uppercase font-black mb-1">Vistas</p>
+                          <p className="text-sm sm:text-lg font-black text-[#46DEFF]">{formatNum(data.topVideos[idx].views)}</p>
                         </div>
                         <div className="text-center">
-                          <p className="text-[10px] text-gray-400 uppercase font-black mb-1">Likes</p>
-                          <p className="text-lg font-black text-[#FF00E5]">{formatNum(data.topVideos[idx].likes)}</p>
+                          <p className="text-[9px] sm:text-[10px] text-gray-400 uppercase font-black mb-1">Likes</p>
+                          <p className="text-sm sm:text-lg font-black text-[#FF00E5]">{formatNum(data.topVideos[idx].likes)}</p>
                         </div>
                         <div className="text-center">
-                          <p className="text-[10px] text-gray-400 uppercase font-black mb-1">Comms</p>
-                          <p className="text-lg font-black text-[#89D0D4]">{formatNum(data.topVideos[idx].comments)}</p>
+                          <p className="text-[9px] sm:text-[10px] text-gray-400 uppercase font-black mb-1">Comentarios</p>
+                          <p className="text-sm sm:text-lg font-black text-[#89D0D4]">{formatNum(data.topVideos[idx].comments)}</p>
                         </div>
                       </div>
                    </div>
@@ -415,13 +415,13 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* 15: Agradecimiento */}
           <Slide isActive={currentSlide === (shouldShowEngagement ? 15 : 14)}>
-            <div className="flex flex-col items-center justify-center h-full text-center px-6 space-y-10">
-              <div className="space-y-6 max-w-sm">
+            <div className="flex flex-col items-center justify-center h-full text-center px-4 sm:px-6 space-y-6 sm:space-y-10">
+              <div className="space-y-4 sm:space-y-6 max-w-sm">
                 <motion.p 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  className="text-2xl font-urbanist leading-relaxed"
+                  className="text-lg sm:text-2xl font-urbanist leading-relaxed"
                 >
                   Estos son solo los números pero detrás de eso...
                 </motion.p>
@@ -430,10 +430,10 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.3 }}
-                  className="py-4"
+                  className="py-2 sm:py-4"
                 >
-                  <p className="text-3xl font-jakarta font-black mb-3">
-                    <span className="text-3xl">💡</span>
+                  <p className="text-xl sm:text-3xl font-jakarta font-black mb-2 sm:mb-3">
+                    <span className="text-2xl sm:text-3xl">💡</span>
                     <span className="bg-gradient-to-r from-[#46DEFF] to-[#9A5BFF] bg-clip-text text-transparent"> Encendiste ideas</span>
                   </p>
                 </motion.div>
@@ -442,10 +442,10 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
-                  className="py-4"
+                  className="py-2 sm:py-4"
                 >
-                  <p className="text-3xl font-jakarta font-black mb-3">
-                    <span className="text-3xl">💓</span>
+                  <p className="text-xl sm:text-3xl font-jakarta font-black mb-2 sm:mb-3">
+                    <span className="text-2xl sm:text-3xl">💓</span>
                     <span className="bg-gradient-to-r from-[#FF00E5] to-[#46DEFF] bg-clip-text text-transparent"> Despertaste emociones</span>
                   </p>
                 </motion.div>
@@ -454,10 +454,10 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.7 }}
-                  className="py-4"
+                  className="py-2 sm:py-4"
                 >
-                  <p className="text-3xl font-jakarta font-black mb-3">
-                    <span className="text-3xl">😯</span>
+                  <p className="text-xl sm:text-3xl font-jakarta font-black mb-2 sm:mb-3">
+                    <span className="text-2xl sm:text-3xl">😯</span>
                     <span className="bg-gradient-to-r from-[#9A5BFF] to-[#FF00E5] bg-clip-text text-transparent"> Inspiraste personas</span>
                   </p>
                 </motion.div>
@@ -466,9 +466,9 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: 1 }}
-                  className="pt-6 border-t border-white/20"
+                  className="pt-4 sm:pt-6 border-t border-white/20"
                 >
-                  <p className="text-2xl font-urbanist pt-4">
+                  <p className="text-lg sm:text-2xl font-urbanist pt-2 sm:pt-4">
                     ¡¡Brindamos por eso!! 🥂
                   </p>
                 
@@ -480,9 +480,9 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 1.3 }}
               >
-                <p className="text-3xl font-jakarta font-black mb-3 flex flex-col">
-                  <span className={`text-4xl font-jakarta font-black italic ${G_KEYWORD}`}>¡Vamos por más!</span>
-                  <span className="text-4xl"> 🚀</span>
+                <p className="text-2xl sm:text-3xl font-jakarta font-black mb-2 sm:mb-3 flex flex-col">
+                  <span className={`text-2xl sm:text-4xl font-jakarta font-black italic ${G_KEYWORD}`}>¡Vamos por más!</span>
+                  <span className="text-3xl sm:text-4xl"> 🚀</span>
                 </p>
               </motion.p>
             </div>
@@ -490,9 +490,9 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* 16: Final Summary */}
           <Slide isActive={currentSlide === (shouldShowEngagement ? 16 : 15)} isLastSlide={true}>
-            <div className="flex flex-col h-full items-center justify-center p-4">
+            <div className="flex flex-col h-full items-center justify-center p-2 sm:p-4">
               
-              <div className="relative aspect-[9/16] h-full max-h-[75vh] w-auto shadow-2xl mx-auto">
+              <div className="relative aspect-[9/16] h-full max-h-[75vh] w-auto shadow-2xl mx-auto scale-90 sm:scale-100 origin-top">
                 <div className="w-full h-full bg-[#0A0A0A] rounded-[2.5rem] overflow-hidden border border-white/10 flex flex-col relative">
                   
                   {/* Background Gradients */}
@@ -565,9 +565,9 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle,rgba(137,208,212,0.2)_0%,transparent_70%)] -mr-16 -mt-16 pointer-events-none"></div>
                                 <div className="flex items-center gap-1.5 text-[#89D0D4] mb-1 relative z-10">
                                 <MessageCircle size={14} />
-                                <span className="text-[10px] font-bold uppercase tracking-wider text-[#89D0D4]">Videos</span>
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-[#89D0D4]">Comentarios</span>
                                 </div>
-                                <span className="font-jakarta font-black text-xl text-white relative z-10">{data.totalVideos}</span>
+                                <span className="font-jakarta font-black text-xl text-white relative z-10">{data.totalComments}</span>
                             </div>
                         </div>
                     </div>
@@ -583,10 +583,10 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
               <button 
                 onClick={(e) => { e.stopPropagation(); handleShare(); }}
-                className="w-full max-w-[300px] py-4 mt-8 bg-white text-black font-jakarta font-black rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] active:shadow-[0_0_50px_rgba(154,91,255,0.7),0_0_80px_rgba(70,222,255,0.5)]"
+                className="w-full max-w-xs sm:max-w-[300px] py-3 sm:py-4 mt-4 sm:mt-8 bg-white text-black font-jakarta font-black text-sm sm:text-base rounded-lg sm:rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] active:shadow-[0_0_50px_rgba(154,91,255,0.7),0_0_80px_rgba(70,222,255,0.5)]"
                 data-html2canvas-ignore
               >
-                <Share2 size={20} /> COMPARTIR
+                <Share2 size={18} className="sm:size-[20px]" /> COMPARTIR
               </button>
             </div>
           </Slide>
