@@ -522,7 +522,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
           <Slide isActive={currentSlide === (shouldShowEngagement ? 16 : 15)} isLastSlide={true}>
             <div className="flex flex-col h-full items-center justify-center p-2 sm:p-4">
               
-              <div className="relative aspect-[9/16] h-full shadow-2xl mx-auto scale-90 sm:scale-70 origin-top">
+              <div className="relative aspect-[9/16] h-full max-h-[75vh] w-auto shadow-2xl mx-auto scale-90 sm:scale-100 origin-top">
                 <div className="w-full h-full bg-[#0A0A0A] rounded-[2.5rem] overflow-hidden border border-white/10 flex flex-col relative">
                   
                   {/* Background Gradients */}
