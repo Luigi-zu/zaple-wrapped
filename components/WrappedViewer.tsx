@@ -113,10 +113,18 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
         scrollX: -window.scrollX,
         onclone: (doc) => {
           const elements = doc.querySelectorAll('p, span, h3');
-          elements.forEach((el) => {
+          const originalElements = target.querySelectorAll('p, span, h3');
+          elements.forEach((el, i) => {
             if (el instanceof HTMLElement) {
               el.style.position = 'relative';
               el.style.top = '-6px';
+              if (originalElements[i]) {
+                const style = window.getComputedStyle(originalElements[i]);
+                const fontSize = parseFloat(style.fontSize);
+                if (fontSize) {
+                  el.style.fontSize = `${fontSize * 0.9}px`;
+                }
+              }
             }
           });
         }
@@ -148,6 +156,19 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
   return (
     <div className="fixed inset-0 bg-black flex items-center justify-center overflow-hidden font-urbanist">
+      {/* Preload videos */}
+      <div className="absolute w-0 h-0 overflow-hidden opacity-0 pointer-events-none">
+        {data.topVideos.map((video) => (
+          <video 
+            key={video.id} 
+            src={video.videoUrl} 
+            preload="auto" 
+            muted 
+            playsInline 
+          />
+        ))}
+      </div>
+
       <div 
         ref={summaryRef}
         className="relative w-full h-full max-w-[450px] bg-black overflow-hidden shadow-2xl touch-none"
