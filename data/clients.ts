@@ -23,9 +23,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3", username: "desconocido", text: "Me gusta el color de tu pared, ¿es gris espacial?", profilePic: "https://i.pravatar.cc/150?u=w3" }
     ],
     topVideos: [
-      { id: "v1", title: "El futuro de la IA en 2025", videoUrl: "/videos/s.bilinkis/video_1_Video by s.bilinkis.mp4", views: 2857258, likes: 83830, comments: 1074 },
-      { id: "v2", title: "¿Cómo hackear tu productividad?", videoUrl: "/videos/s.bilinkis/video_2_Video by s.bilinkis.mp4", views: 2758975, likes: 125074, comments: 1643 },
-      { id: "v3", title: "Biohacking: Mitos y Verdades", videoUrl: "/videos/s.bilinkis/video_3_Video by s.bilinkis.mp4", views: 2704448, likes: 176495, comments: 2199 }
+      { id: "v1", title: "El futuro de la IA en 2025", videoUrl: "https://www.instagram.com/reel/DP1msEgDeqJ", views: 2857258, likes: 83830, comments: 1074 },
+      { id: "v2", title: "¿Cómo hackear tu productividad?", videoUrl: "https://www.instagram.com/reel/DE-iR00y88R", views: 2758975, likes: 125074, comments: 1643 },
+      { id: "v3", title: "Biohacking: Mitos y Verdades", videoUrl: "https://www.instagram.com/reel/DN8gbwcCUYH", views: 2704448, likes: 176495, comments: 2199 }
     ]
   },
   "Masnatta": {
@@ -49,9 +49,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3", username: "lost_in_space", text: "Meli, ¿qué opinas de los gatos que no maúllan?", profilePic: "https://i.pravatar.cc/150?u=mw3" }
     ],
     topVideos: [
-      { id: "v1", title: "Cerrando la brecha digital", videoUrl: "/videos/melinamasnatta/video_1_Video by melinamasnatta.mp4", views: 51679, likes: 1020, comments: 22 },
-      { id: "v2", title: "Educación 3.0: Lo que viene", videoUrl: "/videos/melinamasnatta/video_2_Video by melinamasnatta.mp4", views: 26521, likes: 934, comments: 94 },
-      { id: "v3", title: "Liderazgo en la era tech", videoUrl: "/videos/melinamasnatta/video_3_Video by melinamasnatta.mp4", views: 17183, likes: 731, comments: 11 }
+      { id: "v1", title: "Cerrando la brecha digital", videoUrl: "https://www.instagram.com/reel/DLXyEX5OQLv", views: 51679, likes: 3, comments: 22 },
+      { id: "v2", title: "Educación 3.0: Lo que viene", videoUrl: "https://www.instagram.com/reel/DSF4XskCfXm", views: 26521, likes: 3, comments: 94 },
+      { id: "v3", title: "Liderazgo en la era tech", videoUrl: "https://www.instagram.com/reel/DNTVyI4xD3l", views: 17183, likes: 3, comments: 11 }
     ]
   },
   "Rosario": {
@@ -75,9 +75,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_r", username: "alien_1", text: "Saludos desde Marte.", profilePic: "https://i.pravatar.cc/150?u=rw3" }
     ],
     topVideos: [
-      { id: "v1_r", title: "Mensaje de esperanza", videoUrl: "/videos/rosariodebendiciones/video_1_Video by rosariodebendiciones.mp4", views: 129148, likes: 8740, comments: 164 },
-      { id: "v2_r", title: "Reflexión del día", videoUrl: "/videos/rosariodebendiciones/video_2_Video by rosariodebendiciones.mp4", views: 30021, likes: 2755, comments: 14 },
-      { id: "v3_r", title: "Oración nocturna", videoUrl: "/videos/rosariodebendiciones/video_3_Video by rosariodebendiciones.mp4", views: 27889, likes: 2973, comments: 92 }
+      { id: "v1_r", title: "Mensaje de esperanza", videoUrl: "https://www.instagram.com/reel/DOf8yahjix3", views: 129148, likes: 8740, comments: 164 },
+      { id: "v2_r", title: "Reflexión del día", videoUrl: "https://www.instagram.com/reel/DMxwwUngJWc", views: 30021, likes: 2755, comments: 14 },
+      { id: "v3_r", title: "Oración nocturna", videoUrl: "https://www.instagram.com/reel/DNYLPdfOc-E", views: 27889, likes: 2973, comments: 92 }
     ]
   },
   "Loidi": {
@@ -101,9 +101,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_l", username: "lost_user", text: "¿Precio del dólar blue?", profilePic: "https://i.pravatar.cc/150?u=lw3" }
     ],
     topVideos: [
-      { id: "v1_l", title: "Estrategia de Negocios 2025", videoUrl: "/videos/jonatanloidi/video_1_Video by jonatanloidi.mp4", views: 5767395, likes: 367584, comments: 3493 },
-      { id: "v2_l", title: "Realidad Pyme Argentina", videoUrl: "/videos/jonatanloidi/video_2_Video by jonatanloidi.mp4", views: 4540192, likes: 197429, comments: 2808 },
-      { id: "v3_l", title: "Liderazgo en Crisis", videoUrl: "/videos/jonatanloidi/video_3_Video by jonatanloidi.mp4", views: 3266757, likes: 281401, comments: 1112 }
+      { id: "v1_l", title: "Estrategia de Negocios 2025", videoUrl: "https://www.instagram.com/reel/DOs07r_EQc9", views: 5767395, likes: 367584, comments: 3493 },
+      { id: "v2_l", title: "Realidad Pyme Argentina", videoUrl: "https://www.instagram.com/reel/DPOhO1Kjc5b", views: 4540192, likes: 197429, comments: 2808 },
+      { id: "v3_l", title: "Liderazgo en Crisis", videoUrl: "https://www.instagram.com/reel/DQoxy8nEbzK", views: 3266757, likes: 281401, comments: 1112 }
     ]
   },
   "Rieznik": {
@@ -127,9 +127,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_rz", username: "random_guy", text: "¿Sabes arreglar lavarropas?", profilePic: "https://i.pravatar.cc/150?u=rzw3" }
     ],
     topVideos: [
-      { id: "v1_rz", title: "Matemagia Revelada", videoUrl: "/videos/andresrieznik/video_1_Video by andresrieznik.mp4", views: 644919, likes: 37197, comments: 229 },
-      { id: "v2_rz", title: "Física Cuántica Fácil", videoUrl: "/videos/andresrieznik/video_2_Video by andresrieznik.mp4", views: 579945, likes: 33611, comments: 181 },
-      { id: "v3_rz", title: "El Cerebro Mágico", videoUrl: "/videos/andresrieznik/video_3_Video by andresrieznik.mp4", views: 181291, likes: 5117, comments: 32 }
+      { id: "v1_rz", title: "Matemagia Revelada", videoUrl: "https://www.instagram.com/reel/DQXfAitEkru", views: 644919, likes: 37197, comments: 229 },
+      { id: "v2_rz", title: "Física Cuántica Fácil", videoUrl: "https://www.instagram.com/reel/DQct-aPkj2X", views: 579945, likes: 33611, comments: 181 },
+      { id: "v3_rz", title: "El Cerebro Mágico", videoUrl: "https://www.instagram.com/reel/DRQO_uwEn6j", views: 181291, likes: 5117, comments: 32 }
     ]
   },
   "Zuchovicki": {
@@ -153,9 +153,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_z", username: "lost_z", text: "¿Vendes bitcoins?", profilePic: "https://i.pravatar.cc/150?u=zw3" }
     ],
     topVideos: [
-      { id: "v1_z", title: "Mercados 2025", videoUrl: "/videos/czuchovicki/video_1_Video by czuchovicki.mp4", views: 1897254, likes: 93895, comments: 1763 },
-      { id: "v2_z", title: "¿Qué hacer con los pesos?", videoUrl: "/videos/czuchovicki/video_2_Video by czuchovicki.mp4", views: 1319754, likes: 80017, comments: 1485 },
-      { id: "v3_z", title: "Inflación y Futuro", videoUrl: "/videos/czuchovicki/video_3_Video by czuchovicki.mp4", views: 753085, likes: 28017, comments: 245 }
+      { id: "v1_z", title: "Mercados 2025", videoUrl: "https://www.instagram.com/reel/DEjRFtfMH9_", views: 1897254, likes: 93895, comments: 1763 },
+      { id: "v2_z", title: "¿Qué hacer con los pesos?", videoUrl: "https://www.instagram.com/reel/DP6yhnEDj9L", views: 1319754, likes: 80017, comments: 1485 },
+      { id: "v3_z", title: "Inflación y Futuro", videoUrl: "https://www.instagram.com/reel/DJ2KPpmPEXF", views: 753085, likes: 28017, comments: 245 }
     ]
   },
   "Tomi": {
@@ -179,9 +179,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_c", username: "lost_c", text: "Aguante el Capitán América.", profilePic: "https://i.pravatar.cc/150?u=cw3" }
     ],
     topVideos: [
-      { id: "v1_c", title: "Lo mejor de la semana", videoUrl: "/videos/capitanintriga/video_1_Video by capitanintriga.mp4", views: 83054, likes: 5003, comments: 25 },
-      { id: "v2_c", title: "Tendencias Virales", videoUrl: "/videos/capitanintriga/video_2_Video by capitanintriga.mp4", views: 69231, likes: 2741, comments: 132 },
-      { id: "v3_c", title: "Análisis de Memes", videoUrl: "/videos/capitanintriga/video_3_Video by capitanintriga.mp4", views: 56254, likes: 1426, comments: 42 }
+      { id: "v1_c", title: "Lo mejor de la semana", videoUrl: "https://www.instagram.com/reel/DFZ9eF5OCTP", views: 83054, likes: 5003, comments: 25 },
+      { id: "v2_c", title: "Tendencias Virales", videoUrl: "https://www.instagram.com/reel/DJ6iGjfAc_l", views: 69231, likes: 2741, comments: 132 },
+      { id: "v3_c", title: "Análisis de Memes", videoUrl: "https://www.instagram.com/reel/DH-yaCuA-cZ", views: 56254, likes: 1426, comments: 42 }
     ]
   },
   "Patricia": {
@@ -205,9 +205,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_j", username: "lost_j", text: "¿Vendes zapatos?", profilePic: "https://i.pravatar.cc/150?u=jw3" }
     ],
     topVideos: [
-      { id: "v1_j", title: "Futuro del Ecommerce", videoUrl: "/videos/patriciajebsen/video_1_Video by patriciajebsen.mp4", views: 973373, likes: 21323, comments: 663 },
-      { id: "v2_j", title: "Logística 4.0", videoUrl: "/videos/patriciajebsen/video_2_Video by patriciajebsen.mp4", views: 900394, likes: 46994, comments: 570 },
-      { id: "v3_j", title: "Experiencia de Cliente", videoUrl: "/videos/patriciajebsen/video_3_Video by patriciajebsen.mp4", views: 719170, likes: 26860, comments: 835 }
+      { id: "v1_j", title: "Futuro del Ecommerce", videoUrl: "https://www.instagram.com/reel/DHbiHL2RpP0", views: 973373, likes: 21323, comments: 663 },
+      { id: "v2_j", title: "Logística 4.0", videoUrl: "https://www.instagram.com/reel/DHWYfaFPGe0", views: 900394, likes: 46994, comments: 570 },
+      { id: "v3_j", title: "Experiencia de Cliente", videoUrl: "https://www.instagram.com/reel/DLkko-aMylV", views: 719170, likes: 26860, comments: 835 }
     ]
   },
   "Melamed": {
@@ -231,9 +231,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_m", username: "lost_m", text: "¿Buscas personal para la NASA?", profilePic: "https://i.pravatar.cc/150?u=mew3" }
     ],
     topVideos: [
-      { id: "v1_m", title: "Habilidades del Futuro", videoUrl: "/videos/melamedaleok/video_1_Video by melamedaleok.mp4", views: 600349, likes: 24114, comments: 142 },
-      { id: "v2_m", title: "Liderazgo Híbrido", videoUrl: "/videos/melamedaleok/video_2_Video by melamedaleok.mp4", views: 530303, likes: 11745, comments: 175 },
-      { id: "v3_m", title: "Bienestar Laboral", videoUrl: "/videos/melamedaleok/video_3_Video by melamedaleok.mp4", views: 315098, likes: 7951, comments: 49 }
+      { id: "v1_m", title: "Habilidades del Futuro", videoUrl: "https://www.instagram.com/reel/DQfLZYkijpT", views: 600349, likes: 24114, comments: 142 },
+      { id: "v2_m", title: "Liderazgo Híbrido", videoUrl: "https://www.instagram.com/reel/DGOU8l2qr-l", views: 530303, likes: 11745, comments: 175 },
+      { id: "v3_m", title: "Bienestar Laboral", videoUrl: "https://www.instagram.com/reel/DLXrbCKqh-6", views: 315098, likes: 7951, comments: 49 }
     ]
   },
   "Cwaik": {
@@ -257,9 +257,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_cw", username: "lost_cw", text: "¿Vendes celulares?", profilePic: "https://i.pravatar.cc/150?u=cww3" }
     ],
     topVideos: [
-      { id: "v1_cw", title: "Metaverso y Realidad", videoUrl: "/videos/joancwaik/video_1_Video by joancwaik.mp4", views: 871766, likes: 13250, comments: 59 },
-      { id: "v2_cw", title: "Tecnología Disruptiva", videoUrl: "/videos/joancwaik/video_2_Video by joancwaik.mp4", views: 507009, likes: 15005, comments: 168 },
-      { id: "v3_cw", title: "Sociedad 5.0", videoUrl: "/videos/joancwaik/video_3_Video by joancwaik.mp4", views: 263546, likes: 2507, comments: 95 }
+      { id: "v1_cw", title: "Metaverso y Realidad", videoUrl: "https://www.instagram.com/reel/DN0ydfAYuhu", views: 871766, likes: 13250, comments: 59 },
+      { id: "v2_cw", title: "Tecnología Disruptiva", videoUrl: "https://www.instagram.com/reel/DRNgVUKEusz", views: 507009, likes: 15005, comments: 168 },
+      { id: "v3_cw", title: "Sociedad 5.0", videoUrl: "https://www.instagram.com/reel/DQMWIbWEbFG", views: 263546, likes: 2507, comments: 95 }
     ]
   },
   "Cacique": {
@@ -283,9 +283,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_ca", username: "lost_ca", text: "¿Venden plumas?", profilePic: "https://i.pravatar.cc/150?u=caw3" }
     ],
     topVideos: [
-      { id: "v1_ca", title: "Innovación Abierta", videoUrl: "/videos/cacique.group/video_1_Video by cacique.group.mp4", views: 1100148, likes: 41548, comments: 632 },
-      { id: "v2_ca", title: "Caso de Éxito", videoUrl: "/videos/cacique.group/video_2_Video by cacique.group.mp4", views: 22419, likes: 696, comments: 14 },
-      { id: "v3_ca", title: "Nuestra Cultura", videoUrl: "/videos/cacique.group/video_3_Video by vocesqueinspiran.oficial.mp4", views: 19351, likes: 458, comments: 22 }
+      { id: "v1_ca", title: "Innovación Abierta", videoUrl: "https://www.instagram.com/reel/DFTWDTKSWr9", views: 22419, likes: 696, comments: 14 },
+      { id: "v2_ca", title: "Caso de Éxito", videoUrl: "https://www.instagram.com/reel/DI9tEikzLGs", views: 19351, likes: 3, comments: 22 },
+      { id: "v3_ca", title: "Nuestra Cultura", videoUrl: "https://www.instagram.com/reel/DHrWu-KTvMZ", views: 19078, likes: 3, comments: 3 }
     ]
   },
   "Dubi": {
@@ -309,9 +309,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_d", username: "lost_d", text: "¿Haces logos gratis?", profilePic: "https://i.pravatar.cc/150?u=dw3" }
     ],
     topVideos: [
-      { id: "v1_d", title: "Proceso Creativo", videoUrl: "/videos/carodubi/video_1_Video by carodubi.mp4", views: 1789541, likes: 11245, comments: 678 },
-      { id: "v2_d", title: "Diseño y Tendencias", videoUrl: "/videos/carodubi/video_2_Video by carodubi.mp4", views: 508017, likes: 18651, comments: 121 },
-      { id: "v3_d", title: "Arte Digital", videoUrl: "/videos/carodubi/video_3_Video by carodubi.mp4", views: 238243, likes: 4721, comments: 52 }
+      { id: "v1_d", title: "Proceso Creativo", videoUrl: "https://www.instagram.com/p/DMI79fApPrd/", views: 1789541, likes: 11245, comments: 678 },
+      { id: "v2_d", title: "Diseño y Tendencias", videoUrl: "https://www.instagram.com/reel/DQcmVSJDGZT", views: 508017, likes: 18651, comments: 121 },
+      { id: "v3_d", title: "Arte Digital", videoUrl: "https://www.instagram.com/reel/DRS8vMPicK8", views: 238243, likes: 4721, comments: 52 }
     ]
   },
   "Streamset": {
@@ -335,9 +335,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_st", username: "lost_st", text: "¿Cómo configuro el OBS?", profilePic: "https://i.pravatar.cc/150?u=stw3" }
     ],
     topVideos: [
-      { id: "v1_st", title: "Streaming Revolution", videoUrl: "/videos/streamsetlatam/video_1_Video by streamsetlatam.mp4", views: 202834, likes: 3854, comments: 80 },
-      { id: "v2_st", title: "Conectando Latam", videoUrl: "/videos/streamsetlatam/video_2_Video by streamsetlatam.mp4", views: 106277, likes: 1487, comments: 29 },
-      { id: "v3_st", title: "Futuro del Live", videoUrl: "/videos/streamsetlatam/video_3_Video by streamsetlatam.mp4", views: 81943, likes: 932, comments: 30 }
+      { id: "v1_st", title: "Streaming Revolution", videoUrl: "https://www.instagram.com/reel/DRfnOylEdqQ", views: 202834, likes: 3, comments: 80 },
+      { id: "v2_st", title: "Conectando Latam", videoUrl: "https://www.instagram.com/reel/DRp58Wjk_rW", views: 106277, likes: 3, comments: 29 },
+      { id: "v3_st", title: "Futuro del Live", videoUrl: "https://www.instagram.com/reel/DRK_5n4kX7_", views: 81943, likes: 3, comments: 30 }
     ]
   }
 };

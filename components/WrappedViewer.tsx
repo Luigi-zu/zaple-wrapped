@@ -32,6 +32,9 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
   useEffect(() => {
     const preloadVideos = async () => {
       const promises = data.topVideos.map(async (video) => {
+        if (video.videoUrl.includes('instagram.com')) {
+          return video.videoUrl;
+        }
         try {
           const response = await fetch(video.videoUrl);
           const blob = await response.blob();
@@ -417,12 +420,26 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
           </Slide>
 
           {/* SLIDES 13, 14, 15: Top Videos Content */}
-          {[0, 1, 2].map((idx) => (
+          {[0, 1, 2].map((idx) => {
+            const videoUrl = preloadedVideos[idx] || data.topVideos[idx].videoUrl;
+            const isInstagram = videoUrl.includes('instagram.com');
+            
+            return (
             <Slide key={idx} isActive={currentSlide === (shouldShowEngagement ? 12 + idx : 11 + idx)}>
               <div className="flex flex-col h-full pt-12 sm:pt-20 pb-8 sm:pb-12 space-y-3 sm:space-y-4 px-3 sm:px-4">
                 <div className="relative flex-1 bg-black rounded-[2rem] sm:rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl">
-                   <video src={preloadedVideos[idx] || data.topVideos[idx].videoUrl} className="w-full h-full object-cover" autoPlay loop playsInline />
-                   <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 w-[92%]">
+                   {isInstagram ? (
+                     <iframe 
+                       src={`${videoUrl}/embed`} 
+                       className="w-full h-full object-cover" 
+                       frameBorder="0" 
+                       scrolling="no" 
+                       allowTransparency={true}
+                     />
+                   ) : (
+                     <video src={videoUrl} className="w-full h-full object-cover" autoPlay loop playsInline />
+                   )}
+                   <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 w-[92%] pointer-events-none">
                       <div className="grid grid-cols-3 gap-1.5 sm:gap-2 bg-black/60 backdrop-blur-2xl p-3 sm:p-4 rounded-[1.5rem] sm:rounded-[2rem] border border-white/10">
                         <div className="text-center">
                           <p className="text-[9px] sm:text-[10px] text-gray-400 uppercase font-black mb-1">Vistas</p>
@@ -441,7 +458,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                 </div>
               </div>
             </Slide>
-          ))}
+          )})}
 
           {/* 15: Agradecimiento */}
           <Slide isActive={currentSlide === (shouldShowEngagement ? 15 : 14)}>
@@ -522,7 +539,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
           <Slide isActive={currentSlide === (shouldShowEngagement ? 16 : 15)} isLastSlide={true}>
             <div className="flex flex-col h-full items-center justify-center p-2 sm:p-4">
               
-              <div className="relative aspect-[9/16] h-full max-h-[75vh] w-auto shadow-2xl mx-auto scale-90 sm:scale-100 origin-top">
+              <div className="relative aspect-[9/16] h-full max-h-[75vh] w-auto shadow-2xl mx-auto scale-100 sm:scale-100 origin-top">
                 <div className="w-full h-full bg-[#0A0A0A] rounded-[2.5rem] overflow-hidden border border-white/10 flex flex-col relative">
                   
                   {/* Background Gradients */}
