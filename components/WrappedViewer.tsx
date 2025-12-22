@@ -5,6 +5,8 @@ import { WrappedData } from '../types.ts';
 import Slide from './Slide.tsx';
 import { G_KEYWORD, G_BODY } from '../constants.tsx';
 import { Share2, Sparkles, TrendingUp, MessageCircle, Heart, Play, Award, Clock, Video, Volume2, VolumeX } from 'lucide-react';
+import ReactPlayer from 'react-player';
+import { InstagramEmbed } from 'react-social-media-embed';
 
 interface WrappedViewerProps {
   data: WrappedData;
@@ -28,6 +30,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
   const firstName = data.influencerName.split(' ')[0];
 
   const [preloadedVideos, setPreloadedVideos] = useState<string[]>([]);
+  const [hasStarted, setHasStarted] = useState(false);
 
   useEffect(() => {
     const preloadVideos = async () => {
@@ -69,7 +72,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (isVideoSlide || isMuted) {
+    if (!hasStarted || isVideoSlide || isMuted) {
       audio.pause();
     } else {
       const playPromise = audio.play();
@@ -79,11 +82,11 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
         });
       }
     }
-  }, [isVideoSlide, isMuted]);
+  }, [isVideoSlide, isMuted, hasStarted]);
 
   useEffect(() => {
     let timer: number;
-    if (!isPaused) {
+    if (!isPaused && hasStarted) {
       timer = window.setInterval(() => {
         setProgress((prev) => {
           if (prev >= 100) {
@@ -98,7 +101,14 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
       }, 100);
     }
     return () => clearInterval(timer);
-  }, [currentSlide, isPaused]);
+  }, [currentSlide, isPaused, hasStarted]);
+
+  const handleStart = () => {
+    setHasStarted(true);
+    if (audioRef.current) {
+      audioRef.current.play().catch(e => console.log("Play failed", e));
+    }
+  };
 
   const handlePointerDown = (e: React.PointerEvent) => {
     // Intentar reproducir audio si no se inició por políticas del navegador
@@ -214,9 +224,26 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
   return (
     <div className="fixed inset-0 bg-black flex items-center justify-center overflow-hidden font-urbanist">
+      {!hasStarted && (
+        <div 
+            className="absolute inset-0 z-[200] flex flex-col items-center justify-center bg-black text-white cursor-pointer"
+            onClick={handleStart}
+        >
+            <div className="relative w-32 h-32 mb-6">
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#9A5BFF] to-[#46DEFF] rounded-full blur-lg opacity-70 animate-pulse"></div>
+                <img src={data.influencerPhoto} className="w-full h-full rounded-full object-cover border-4 border-black relative z-10" />
+            </div>
+            <h1 className="text-3xl font-jakarta font-black italic mb-2">Zaple Wrapped</h1>
+            <p className="text-gray-400 font-urbanist mb-8">Tu resumen del 2025</p>
+            <button className="px-8 py-3 bg-white text-black font-bold rounded-full font-jakarta tracking-wider hover:scale-105 transition-transform">
+                COMENZAR
+            </button>
+        </div>
+      )}
+      
       <div 
         ref={summaryRef}
-        className="relative w-full h-full max-w-[450px] bg-black overflow-hidden shadow-2xl touch-none"
+        className={`relative w-full h-full max-w-[450px] bg-black overflow-hidden shadow-2xl touch-none transition-opacity duration-500 ${!hasStarted ? 'opacity-0' : 'opacity-100'}`}
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
       >
@@ -467,23 +494,36 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
           {[0, 1, 2].map((idx) => {
             const videoUrl = preloadedVideos[idx] || data.topVideos[idx].videoUrl;
             const isInstagram = videoUrl.includes('instagram.com');
+            const slideIndex = shouldShowEngagement ? 12 + idx : 11 + idx;
+            const isActive = currentSlide === slideIndex;
             
             return (
-            <Slide key={idx} isActive={currentSlide === (shouldShowEngagement ? 12 + idx : 11 + idx)}>
+            <Slide key={idx} isActive={isActive}>
               <div className="flex flex-col h-full pt-12 sm:pt-20 pb-8 sm:pb-12 space-y-3 sm:space-y-4 px-3 sm:px-4">
-                <div className="relative flex-1 bg-black rounded-[2rem] sm:rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl">
+                <div className="relative flex-1 bg-black rounded-[2rem] sm:rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl flex items-center justify-center">
                    {isInstagram ? (
-                     <iframe 
-                       src={`${videoUrl}/embed`} 
-                       className="w-full h-full object-cover" 
-                       frameBorder="0" 
-                       scrolling="no" 
-                       allowTransparency={true}
-                     />
+                     <div className="w-full h-full overflow-y-auto flex items-center justify-center bg-black">
+                        <InstagramEmbed url={videoUrl} width="100%" />
+                     </div>
                    ) : (
-                     <video src={videoUrl} className="w-full h-full object-cover" autoPlay loop playsInline />
+                     <ReactPlayer
+                        url={videoUrl}
+                        width="100%"
+                        height="100%"
+                        playing={isActive && !isPaused}
+                        loop
+                        muted={isMuted}
+                        playsinline
+                        config={{ 
+                          file: { 
+                            attributes: { 
+                              style: { objectFit: 'cover', width: '100%', height: '100%' } 
+                            } 
+                          } 
+                        }}
+                     />
                    )}
-                   <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 w-[92%] pointer-events-none">
+                   <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 w-[92%] pointer-events-none z-10">
                       <div className="grid grid-cols-3 gap-1.5 sm:gap-2 bg-black/60 backdrop-blur-2xl p-3 sm:p-4 rounded-[1.5rem] sm:rounded-[2rem] border border-white/10">
                         <div className="text-center">
                           <p className="text-[9px] sm:text-[10px] text-gray-400 uppercase font-black mb-1">Vistas</p>
