@@ -10,7 +10,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     totalComments: 58803,
     totalMinutes: 188,
     totalVideos: 189,
-    viewsPhrase: "Un alcance masivo para un año de puro crecimiento tecnológico.",
+    viewsPhrase: "¡Eso es como llenar la Bombonera 1.706 veces! 💙💛",
     supportiveComments: [
       { id: "s1", username: "ferciccone.beautyepigenetica", text: "genio, en todo lo que decis siempre. Te admiro 🙌", profilePic: "/imagenes/comentarios/Santi 1.png" },
       { id: "s2", username: "santisiri", text: "muy bueno esto que decís santi", profilePic: "/imagenes/comentarios/Santi 2.png" },
@@ -22,9 +22,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3", username: "desconocido", text: "Me gusta el color de tu pared, ¿es gris espacial?", profilePic: "https://i.pravatar.cc/150?u=w3" }
     ],
     topVideos: [
-      { id: "v1", title: "El futuro de la IA en 2025", videoUrl: "/videos/s.bilinkis/video_1_Video by s.bilinkis.mp4", views: 1200000, likes: 95000, comments: 4500 },
-      { id: "v2", title: "¿Cómo hackear tu productividad?", videoUrl: "/videos/s.bilinkis/video_2_Video by s.bilinkis.mp4", views: 800000, likes: 62000, comments: 3100 },
-      { id: "v3", title: "Biohacking: Mitos y Verdades", videoUrl: "/videos/s.bilinkis/video_3_Video by s.bilinkis.mp4", views: 540000, likes: 41000, comments: 2200 }
+      { id: "v1", title: "El futuro de la IA en 2025", videoUrl: "/videos/s.bilinkis/video_1_Video by s.bilinkis.mp4", views: 2857258, likes: 83830, comments: 1074 },
+      { id: "v2", title: "¿Cómo hackear tu productividad?", videoUrl: "/videos/s.bilinkis/video_2_Video by s.bilinkis.mp4", views: 2758975, likes: 125074, comments: 1643 },
+      { id: "v3", title: "Biohacking: Mitos y Verdades", videoUrl: "/videos/s.bilinkis/video_3_Video by s.bilinkis.mp4", views: 2704448, likes: 176495, comments: 2199 }
     ]
   },
   "Masnatta": {
@@ -35,7 +35,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     totalComments: 440,
     totalMinutes: 48,
     totalVideos: 55,
-    viewsPhrase: "Inspirando a miles de personas a través de la educación y la tecnología.",
+    viewsPhrase: "¡Eso es como llenar un aula de colegio 18.115 veces! 🏫🎒",
     supportiveComments: [
       { id: "s1", username: "mdfok", text: "Sos tan clara! Gracias por tu voz siempre!❤️", profilePic: "/imagenes/comentarios/Meli 1.png" },
       { id: "s2", username: "feli.mankemove", text: "Coincido 100% con esto. Gracias por decirlo Meliii 🫂", profilePic: "/imagenes/comentarios/Meli 2.png" },
@@ -47,9 +47,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3", username: "lost_in_space", text: "Meli, ¿qué opinas de los gatos que no maúllan?", profilePic: "https://i.pravatar.cc/150?u=mw3" }
     ],
     topVideos: [
-      { id: "v1", title: "Cerrando la brecha digital", videoUrl: "/videos/melinamasnatta/video_1_Video by melinamasnatta.mp4", views: 950000, likes: 78000, comments: 2900 },
-      { id: "v2", title: "Educación 3.0: Lo que viene", videoUrl: "/videos/melinamasnatta/video_2_Video by melinamasnatta.mp4", views: 720000, likes: 54000, comments: 1800 },
-      { id: "v3", title: "Liderazgo en la era tech", videoUrl: "/videos/melinamasnatta/video_3_Video by melinamasnatta.mp4", views: 400000, likes: 23000, comments: 950 }
+      { id: "v1", title: "Cerrando la brecha digital", videoUrl: "/videos/melinamasnatta/video_1_Video by melinamasnatta.mp4", views: 51679, likes: 3, comments: 22 },
+      { id: "v2", title: "Educación 3.0: Lo que viene", videoUrl: "/videos/melinamasnatta/video_2_Video by melinamasnatta.mp4", views: 26521, likes: 3, comments: 94 },
+      { id: "v3", title: "Liderazgo en la era tech", videoUrl: "/videos/melinamasnatta/video_3_Video by melinamasnatta.mp4", views: 17183, likes: 3, comments: 11 }
     ]
   },
   "Rosario": {
@@ -60,7 +60,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     totalComments: 380,
     totalMinutes: 1358,
     totalVideos: 37,
-    viewsPhrase: "Bendiciones que llegan a miles.",
+    viewsPhrase: "¡Es como llenar el evento Gran Rosario de Bendiciones 6 veces! 🙏✨",
     supportiveComments: [
       { id: "s1_r", username: "fiel_seguidor", text: "Gracias por tanta paz.", profilePic: "https://i.pravatar.cc/150?u=r1" },
       { id: "s2_r", username: "luz_dia", text: "Siempre iluminando.", profilePic: "https://i.pravatar.cc/150?u=r2" },
@@ -72,9 +72,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_r", username: "alien_1", text: "Saludos desde Marte.", profilePic: "https://i.pravatar.cc/150?u=rw3" }
     ],
     topVideos: [
-      { id: "v1_r", title: "Mensaje de esperanza", videoUrl: "/videos/rosariodebendiciones/video_1_Video by rosariodebendiciones.mp4", views: 20000, likes: 1500, comments: 100 },
-      { id: "v2_r", title: "Reflexión del día", videoUrl: "/videos/rosariodebendiciones/video_2_Video by rosariodebendiciones.mp4", views: 15000, likes: 1200, comments: 80 },
-      { id: "v3_r", title: "Oración nocturna", videoUrl: "/videos/rosariodebendiciones/video_3_Video by rosariodebendiciones.mp4", views: 10000, likes: 800, comments: 50 }
+      { id: "v1_r", title: "Mensaje de esperanza", videoUrl: "/videos/rosariodebendiciones/video_1_Video by rosariodebendiciones.mp4", views: 129148, likes: 8740, comments: 164 },
+      { id: "v2_r", title: "Reflexión del día", videoUrl: "/videos/rosariodebendiciones/video_2_Video by rosariodebendiciones.mp4", views: 30021, likes: 2755, comments: 14 },
+      { id: "v3_r", title: "Oración nocturna", videoUrl: "/videos/rosariodebendiciones/video_3_Video by rosariodebendiciones.mp4", views: 27889, likes: 2973, comments: 92 }
     ]
   },
   "Loidi": {
@@ -85,7 +85,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     totalComments: 14407,
     totalMinutes: 39,
     totalVideos: 30,
-    viewsPhrase: "Negocios y realidad con impacto masivo.",
+    viewsPhrase: "¡Eso es como llenar un auditorio de 1000 personas 20.182 veces! 🎤👔",
     supportiveComments: [
       { id: "s1_l", username: "sangp33", text: "Esto sí que es STORYTELLING en su máxima expresión!🙌🙌🙌🙌", profilePic: "/imagenes/comentarios/Jonatan 1.png" },
       { id: "s2_l", username: "hugoignaciolopezosornio", text: "Muy bueno, gracias por darnos siempre material para reflexionar..", profilePic: "/imagenes/comentarios/Jonatan 2.png" },
@@ -97,9 +97,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_l", username: "lost_user", text: "¿Precio del dólar blue?", profilePic: "https://i.pravatar.cc/150?u=lw3" }
     ],
     topVideos: [
-      { id: "v1_l", title: "Estrategia de Negocios 2025", videoUrl: "/videos/jonatanloidi/video_1_Video by jonatanloidi.mp4", views: 500000, likes: 40000, comments: 2000 },
-      { id: "v2_l", title: "Realidad Pyme Argentina", videoUrl: "/videos/jonatanloidi/video_2_Video by jonatanloidi.mp4", views: 400000, likes: 35000, comments: 1500 },
-      { id: "v3_l", title: "Liderazgo en Crisis", videoUrl: "/videos/jonatanloidi/video_3_Video by jonatanloidi.mp4", views: 300000, likes: 25000, comments: 1000 }
+      { id: "v1_l", title: "Estrategia de Negocios 2025", videoUrl: "/videos/jonatanloidi/video_1_Video by jonatanloidi.mp4", views: 5767395, likes: 367584, comments: 3493 },
+      { id: "v2_l", title: "Realidad Pyme Argentina", videoUrl: "/videos/jonatanloidi/video_2_Video by jonatanloidi.mp4", views: 4540192, likes: 197429, comments: 2808 },
+      { id: "v3_l", title: "Liderazgo en Crisis", videoUrl: "/videos/jonatanloidi/video_3_Video by jonatanloidi.mp4", views: 3266757, likes: 281401, comments: 1112 }
     ]
   },
   "Rieznik": {
@@ -110,7 +110,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     totalComments: 771,
     totalMinutes: 12,
     totalVideos: 14,
-    viewsPhrase: "Ciencia y magia en cada video.",
+    viewsPhrase: "¡Eso es como llenar el aula magna de ciencias exactas de la UBA 5.112 veces! 🧪🧬",
     supportiveComments: [
       { id: "s1_rz", username: "ani_led", text: "Sos increíble, amamos este Andy comunicador / influencer de ciencia.", profilePic: "/imagenes/comentarios/Andrés 1.png" },
       { id: "s2_rz", username: "cynthia_alcarazok", text: "Que placer es escucharte Andres! Gracias por cada columna que brindas!", profilePic: "/imagenes/comentarios/Andrés 2.png" },
@@ -122,9 +122,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_rz", username: "random_guy", text: "¿Sabes arreglar lavarropas?", profilePic: "https://i.pravatar.cc/150?u=rzw3" }
     ],
     topVideos: [
-      { id: "v1_rz", title: "Matemagia Revelada", videoUrl: "/videos/andresrieznik/video_1_Video by andresrieznik.mp4", views: 100000, likes: 8000, comments: 200 },
-      { id: "v2_rz", title: "Física Cuántica Fácil", videoUrl: "/videos/andresrieznik/video_2_Video by andresrieznik.mp4", views: 80000, likes: 6000, comments: 150 },
-      { id: "v3_rz", title: "El Cerebro Mágico", videoUrl: "/videos/andresrieznik/video_3_Video by andresrieznik.mp4", views: 60000, likes: 4000, comments: 100 }
+      { id: "v1_rz", title: "Matemagia Revelada", videoUrl: "/videos/andresrieznik/video_1_Video by andresrieznik.mp4", views: 644919, likes: 37197, comments: 229 },
+      { id: "v2_rz", title: "Física Cuántica Fácil", videoUrl: "/videos/andresrieznik/video_2_Video by andresrieznik.mp4", views: 579945, likes: 33611, comments: 181 },
+      { id: "v3_rz", title: "El Cerebro Mágico", videoUrl: "/videos/andresrieznik/video_3_Video by andresrieznik.mp4", views: 181291, likes: 5117, comments: 32 }
     ]
   },
   "Zuchovicki": {
@@ -135,7 +135,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     totalComments: 8417,
     totalMinutes: 29,
     totalVideos: 28,
-    viewsPhrase: "Economía clara para todos.",
+    viewsPhrase: "¡Eso es como llenar el estadio de Estudiantes de La Plata 335 veces!🦁",
     supportiveComments: [
       { id: "s1_z", username: "vanetolaba2016", text: "Escúcharlo a Zucho es oro puro! Me leí vs libros de inversiones en toda mi vida y viene el y te lo resume en un reel!! Genio !!!", profilePic: "/imagenes/comentarios/Claudio 1.png" },
       { id: "s2_z", username: "cristinadechiano2018", text: "Señor Claudio, gracias por ser siempre tan sencillo, humilde, y claro para explicar lo complicado de una forma en la que todos podemos comprenderlo. 👏👏👏👏", profilePic: "/imagenes/comentarios/Claudio 2.png" },
@@ -147,9 +147,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_z", username: "lost_z", text: "¿Vendes bitcoins?", profilePic: "https://i.pravatar.cc/150?u=zw3" }
     ],
     topVideos: [
-      { id: "v1_z", title: "Mercados 2025", videoUrl: "/videos/czuchovicki/video_1_Video by czuchovicki.mp4", views: 300000, likes: 20000, comments: 1000 },
-      { id: "v2_z", title: "¿Qué hacer con los pesos?", videoUrl: "/videos/czuchovicki/video_2_Video by czuchovicki.mp4", views: 250000, likes: 15000, comments: 800 },
-      { id: "v3_z", title: "Inflación y Futuro", videoUrl: "/videos/czuchovicki/video_3_Video by czuchovicki.mp4", views: 200000, likes: 10000, comments: 500 }
+      { id: "v1_z", title: "Mercados 2025", videoUrl: "/videos/czuchovicki/video_1_Video by czuchovicki.mp4", views: 1897254, likes: 93895, comments: 1763 },
+      { id: "v2_z", title: "¿Qué hacer con los pesos?", videoUrl: "/videos/czuchovicki/video_2_Video by czuchovicki.mp4", views: 1319754, likes: 80017, comments: 1485 },
+      { id: "v3_z", title: "Inflación y Futuro", videoUrl: "/videos/czuchovicki/video_3_Video by czuchovicki.mp4", views: 753085, likes: 28017, comments: 245 }
     ]
   },
   "Tomi": {
@@ -160,7 +160,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     totalComments: 998,
     totalMinutes: 92,
     totalVideos: 116,
-    viewsPhrase: "Navegando las tendencias de internet.",
+    viewsPhrase: "¡Eso es como llenar el Movistar Arena 79 veces! 🏟️",
     supportiveComments: [
       { id: "s1_c", username: "debystaiff", text: "me gusta cuando aparece el filósofo trayéndonos a la realidad...", profilePic: "/imagenes/comentarios/Tomi 1.png" },
       { id: "s2_c", username: "carla.trangoni", text: "Siempre es maravilloso leerte/ escucharte 🙌", profilePic: "/imagenes/comentarios/Tomi 2.png" },
@@ -172,9 +172,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_c", username: "lost_c", text: "Aguante el Capitán América.", profilePic: "https://i.pravatar.cc/150?u=cw3" }
     ],
     topVideos: [
-      { id: "v1_c", title: "Lo mejor de la semana", videoUrl: "/videos/capitanintriga/video_1_Video by capitanintriga.mp4", views: 50000, likes: 2000, comments: 100 },
-      { id: "v2_c", title: "Tendencias Virales", videoUrl: "/videos/capitanintriga/video_2_Video by capitanintriga.mp4", views: 40000, likes: 1500, comments: 80 },
-      { id: "v3_c", title: "Análisis de Memes", videoUrl: "/videos/capitanintriga/video_3_Video by capitanintriga.mp4", views: 30000, likes: 1000, comments: 50 }
+      { id: "v1_c", title: "Lo mejor de la semana", videoUrl: "/videos/capitanintriga/video_1_Video by capitanintriga.mp4", views: 83054, likes: 5003, comments: 25 },
+      { id: "v2_c", title: "Tendencias Virales", videoUrl: "/videos/capitanintriga/video_2_Video by capitanintriga.mp4", views: 69231, likes: 2741, comments: 132 },
+      { id: "v3_c", title: "Análisis de Memes", videoUrl: "/videos/capitanintriga/video_3_Video by capitanintriga.mp4", views: 56254, likes: 1426, comments: 42 }
     ]
   },
   "Patricia": {
@@ -185,7 +185,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     totalComments: 6222,
     totalMinutes: 34,
     totalVideos: 50,
-    viewsPhrase: "Liderando el ecommerce regional.",
+    viewsPhrase: "¡Eso es como llenar el Monumental 143 veces! 🤍❤️",
     supportiveComments: [
       { id: "s1_j", username: "my_saray_susurros", text: "Gracias por todos tus consejos ❤️❤️", profilePic: "/imagenes/comentarios/Pato 1.png" },
       { id: "s2_j", username: "marcelabarbero1", text: "Me levantaste el ánimo 💪 tengo 49 años y quiero trabajar y me esta costando mucho conseguir 😢", profilePic: "/imagenes/comentarios/Pato 2.png" },
@@ -197,9 +197,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_j", username: "lost_j", text: "¿Vendes zapatos?", profilePic: "https://i.pravatar.cc/150?u=jw3" }
     ],
     topVideos: [
-      { id: "v1_j", title: "Futuro del Ecommerce", videoUrl: "/videos/patriciajebsen/video_1_Video by patriciajebsen.mp4", views: 300000, likes: 15000, comments: 500 },
-      { id: "v2_j", title: "Logística 4.0", videoUrl: "/videos/patriciajebsen/video_2_Video by patriciajebsen.mp4", views: 250000, likes: 12000, comments: 400 },
-      { id: "v3_j", title: "Experiencia de Cliente", videoUrl: "/videos/patriciajebsen/video_3_Video by patriciajebsen.mp4", views: 200000, likes: 10000, comments: 300 }
+      { id: "v1_j", title: "Futuro del Ecommerce", videoUrl: "/videos/patriciajebsen/video_1_Video by patriciajebsen.mp4", views: 973373, likes: 21323, comments: 663 },
+      { id: "v2_j", title: "Logística 4.0", videoUrl: "/videos/patriciajebsen/video_2_Video by patriciajebsen.mp4", views: 900394, likes: 46994, comments: 570 },
+      { id: "v3_j", title: "Experiencia de Cliente", videoUrl: "/videos/patriciajebsen/video_3_Video by patriciajebsen.mp4", views: 719170, likes: 26860, comments: 835 }
     ]
   },
   "Melamed": {
@@ -210,7 +210,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     totalComments: 999,
     totalMinutes: 47,
     totalVideos: 59,
-    viewsPhrase: "El futuro del trabajo, hoy.",
+    viewsPhrase: "¡Eso es como llenar el Teatro Gran Rex 873 veces! 🏛️",
     supportiveComments: [
       { id: "s1_m", username: "profecarbone", text: "Excelente!!! Me encantó, Alejandro! 🙌🔥❤️ Uso bibliografía tuya en clase, y soy Ristretter. Gracias!", profilePic: "/imagenes/comentarios/Ale 1.png" },
       { id: "s2_m", username: "robertovergaran", text: "Muy interesante y valioso. GRACIAS 🫂", profilePic: "/imagenes/comentarios/Ale 2.png" },
@@ -222,9 +222,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_m", username: "lost_m", text: "¿Buscas personal para la NASA?", profilePic: "https://i.pravatar.cc/150?u=mew3" }
     ],
     topVideos: [
-      { id: "v1_m", title: "Habilidades del Futuro", videoUrl: "/videos/melamedaleok/video_1_Video by melamedaleok.mp4", views: 100000, likes: 5000, comments: 200 },
-      { id: "v2_m", title: "Liderazgo Híbrido", videoUrl: "/videos/melamedaleok/video_2_Video by melamedaleok.mp4", views: 80000, likes: 4000, comments: 150 },
-      { id: "v3_m", title: "Bienestar Laboral", videoUrl: "/videos/melamedaleok/video_3_Video by melamedaleok.mp4", views: 60000, likes: 3000, comments: 100 }
+      { id: "v1_m", title: "Habilidades del Futuro", videoUrl: "/videos/melamedaleok/video_1_Video by melamedaleok.mp4", views: 600349, likes: 24114, comments: 142 },
+      { id: "v2_m", title: "Liderazgo Híbrido", videoUrl: "/videos/melamedaleok/video_2_Video by melamedaleok.mp4", views: 530303, likes: 11745, comments: 175 },
+      { id: "v3_m", title: "Bienestar Laboral", videoUrl: "/videos/melamedaleok/video_3_Video by melamedaleok.mp4", views: 315098, likes: 7951, comments: 49 }
     ]
   },
   "Cwaik": {
@@ -235,7 +235,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     totalComments: 1172,
     totalMinutes: 49,
     totalVideos: 64,
-    viewsPhrase: "Tecnología y sociedad en evolución.",
+    viewsPhrase: "¡Eso es como llenar el Luna Park 389 veces! 🌙",
     supportiveComments: [
       { id: "s1_cw", username: "__uni.verso", text: "Jajajajajajajaj que crack.", profilePic: "/imagenes/comentarios/Joan 1.png" },
       { id: "s2_cw", username: "danalauragrilli", text: "Lean \"El algoritmo\". Tremendo 🔥", profilePic: "/imagenes/comentarios/Joan 2.png" },
@@ -247,20 +247,20 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_cw", username: "lost_cw", text: "¿Vendes celulares?", profilePic: "https://i.pravatar.cc/150?u=cww3" }
     ],
     topVideos: [
-      { id: "v1_cw", title: "Metaverso y Realidad", videoUrl: "/videos/joancwaik/video_1_Video by joancwaik.mp4", views: 150000, likes: 8000, comments: 300 },
-      { id: "v2_cw", title: "Tecnología Disruptiva", videoUrl: "/videos/joancwaik/video_2_Video by joancwaik.mp4", views: 120000, likes: 6000, comments: 250 },
-      { id: "v3_cw", title: "Sociedad 5.0", videoUrl: "/videos/joancwaik/video_3_Video by joancwaik.mp4", views: 100000, likes: 5000, comments: 200 }
+      { id: "v1_cw", title: "Metaverso y Realidad", videoUrl: "/videos/joancwaik/video_1_Video by joancwaik.mp4", views: 871766, likes: 13250, comments: 59 },
+      { id: "v2_cw", title: "Tecnología Disruptiva", videoUrl: "/videos/joancwaik/video_2_Video by joancwaik.mp4", views: 507009, likes: 15005, comments: 168 },
+      { id: "v3_cw", title: "Sociedad 5.0", videoUrl: "/videos/joancwaik/video_3_Video by joancwaik.mp4", views: 263546, likes: 2507, comments: 95 }
     ]
   },
   "Cacique": {
     influencerName: "Cacique Group",
     influencerPhoto: "/imagenes/perfiles/Cacique.png",
-    totalViews: 123111,
-    totalLikes: 1750,
-    totalComments: 75,
-    totalMinutes: 19,
-    totalVideos: 22,
-    viewsPhrase: "Innovación y estrategia.",
+    totalViews: 1270649,
+    totalLikes: 44038,
+    totalComments: 729,
+    totalMinutes: 31,
+    totalVideos: 35,
+    viewsPhrase: "¡Eso es como llenar el evento Summit AI Human Future 154 veces! 🤖🚀",
     supportiveComments: [
       { id: "s1_ca", username: "partner_1", text: "Grandes aliados.", profilePic: "https://i.pravatar.cc/150?u=ca1" },
       { id: "s2_ca", username: "cliente_feliz", text: "Excelente servicio.", profilePic: "https://i.pravatar.cc/150?u=ca2" },
@@ -272,9 +272,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_ca", username: "lost_ca", text: "¿Venden plumas?", profilePic: "https://i.pravatar.cc/150?u=caw3" }
     ],
     topVideos: [
-      { id: "v1_ca", title: "Caso de Éxito", videoUrl: "/videos/cacique.group/video_1_Video by cacique.group.mp4", views: 10000, likes: 500, comments: 20 },
-      { id: "v2_ca", title: "Nuestra Cultura", videoUrl: "/videos/cacique.group/video_2_Video by vocesqueinspiran.oficial.mp4", views: 8000, likes: 400, comments: 15 },
-      { id: "v3_ca", title: "Innovación Abierta", videoUrl: "/videos/cacique.group/video_3_Video by cacique.group.mp4", views: 6000, likes: 300, comments: 10 }
+      { id: "v1_ca", title: "Caso de Éxito", videoUrl: "/videos/cacique.group/video_1_Video by cacique.group.mp4", views: 22419, likes: 696, comments: 14 },
+      { id: "v2_ca", title: "Nuestra Cultura", videoUrl: "/videos/cacique.group/video_2_Video by vocesqueinspiran.oficial.mp4", views: 19351, likes: 3, comments: 22 },
+      { id: "v3_ca", title: "Innovación Abierta", videoUrl: "/videos/cacique.group/video_3_Video by cacique.group.mp4", views: 19078, likes: 3, comments: 3 }
     ]
   },
   "Dubi": {
@@ -285,7 +285,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     totalComments: 951,
     totalMinutes: 9,
     totalVideos: 14,
-    viewsPhrase: "Creatividad sin límites.",
+    viewsPhrase: "¡Eso es como llenar una Función de Gala en el Teatro Colón 1.086 veces! 🏛️",
     supportiveComments: [
       { id: "s1_d", username: "julietaaimone", text: "Caro sos una genia!!! Admirable absolutamente todo lo que haces y el impulso que tenés. 🤗🤗😘", profilePic: "/imagenes/comentarios/Caro 1.png" },
       { id: "s2_d", username: "deraizplantas", text: "Si alguien tiene la posta, es Caro", profilePic: "/imagenes/comentarios/Caro 2.png" },
@@ -297,9 +297,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_d", username: "lost_d", text: "¿Haces logos gratis?", profilePic: "https://i.pravatar.cc/150?u=dw3" }
     ],
     topVideos: [
-      { id: "v1_d", title: "Proceso Creativo", videoUrl: "/videos/carodubi/video_1_Video by carodubi.mp4", views: 100000, likes: 5000, comments: 200 },
-      { id: "v2_d", title: "Diseño y Tendencias", videoUrl: "/videos/carodubi/video_2_Video by carodubi.mp4", views: 80000, likes: 4000, comments: 150 },
-      { id: "v3_d", title: "Arte Digital", videoUrl: "/videos/carodubi/video_3_Video by carodubi.mp4", views: 60000, likes: 3000, comments: 100 }
+      { id: "v1_d", title: "Proceso Creativo", videoUrl: "/videos/carodubi/video_1_Video by carodubi.mp4", views: 1789541, likes: 11245, comments: 678 },
+      { id: "v2_d", title: "Diseño y Tendencias", videoUrl: "/videos/carodubi/video_2_Video by carodubi.mp4", views: 508017, likes: 18651, comments: 121 },
+      { id: "v3_d", title: "Arte Digital", videoUrl: "/videos/carodubi/video_3_Video by carodubi.mp4", views: 238243, likes: 4721, comments: 52 }
     ]
   },
   "Streamset": {
@@ -310,7 +310,7 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
     totalComments: 432,
     totalMinutes: 27,
     totalVideos: 28,
-    viewsPhrase: "Conectando marcas y audiencias.",
+    viewsPhrase: "¡Eso es como llenar un auditorio de 1000 personas 916 veces! 📡📹",
     supportiveComments: [
       { id: "s1_st", username: "mechiaishemberg", text: "Que claridad🙌🙌!", profilePic: "/imagenes/comentarios/Streamset 1.png" },
       { id: "s2_st", username: "amaya4226", text: "Muy claro excelente. Saludos a los dos, son unos verdaderos maestros.", profilePic: "/imagenes/comentarios/Streamset  2.png" },
@@ -322,9 +322,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_st", username: "lost_st", text: "¿Cómo configuro el OBS?", profilePic: "https://i.pravatar.cc/150?u=stw3" }
     ],
     topVideos: [
-      { id: "v1_st", title: "Streaming Revolution", videoUrl: "/videos/streamsetlatam/video_1_Video by streamsetlatam.mp4", views: 50000, likes: 200, comments: 50 },
-      { id: "v2_st", title: "Conectando Latam", videoUrl: "/videos/streamsetlatam/video_2_Video by streamsetlatam.mp4", views: 40000, likes: 150, comments: 40 },
-      { id: "v3_st", title: "Futuro del Live", videoUrl: "/videos/streamsetlatam/video_3_Video by streamsetlatam.mp4", views: 30000, likes: 100, comments: 30 }
+      { id: "v1_st", title: "Streaming Revolution", videoUrl: "/videos/streamsetlatam/video_1_Video by streamsetlatam.mp4", views: 202834, likes: 3, comments: 80 },
+      { id: "v2_st", title: "Conectando Latam", videoUrl: "/videos/streamsetlatam/video_2_Video by streamsetlatam.mp4", views: 106277, likes: 3, comments: 29 },
+      { id: "v3_st", title: "Futuro del Live", videoUrl: "/videos/streamsetlatam/video_3_Video by streamsetlatam.mp4", views: 81943, likes: 3, comments: 30 }
     ]
   }
 };

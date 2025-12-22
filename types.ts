@@ -16,6 +16,7 @@ export interface VideoData {
 }
 
 export interface WrappedData {
+  clientName?: string; // Cliente identificador (ej: streamsetlatam, melinamasnatta, etc)
   influencerName: string;
   influencerPhoto: string;
   totalViews: number;
