@@ -27,6 +27,28 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
   const firstName = data.influencerName.split(' ')[0];
 
+  const [preloadedVideos, setPreloadedVideos] = useState<string[]>([]);
+
+  useEffect(() => {
+    const preloadVideos = async () => {
+      const promises = data.topVideos.map(async (video) => {
+        try {
+          const response = await fetch(video.videoUrl);
+          const blob = await response.blob();
+          return URL.createObjectURL(blob);
+        } catch (error) {
+          console.error('Error preloading video:', error);
+          return video.videoUrl;
+        }
+      });
+
+      const results = await Promise.all(promises);
+      setPreloadedVideos(results);
+    };
+
+    preloadVideos();
+  }, [data.topVideos]);
+
   useEffect(() => {
     let timer: number;
     if (!isPaused) {
@@ -156,19 +178,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
   return (
     <div className="fixed inset-0 bg-black flex items-center justify-center overflow-hidden font-urbanist">
-      {/* Preload videos */}
-      <div className="absolute w-0 h-0 overflow-hidden opacity-0 pointer-events-none">
-        {data.topVideos.map((video) => (
-          <video 
-            key={video.id} 
-            src={video.videoUrl} 
-            preload="auto" 
-            muted 
-            playsInline 
-          />
-        ))}
-      </div>
-
       <div 
         ref={summaryRef}
         className="relative w-full h-full max-w-[450px] bg-black overflow-hidden shadow-2xl touch-none"
@@ -412,7 +421,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             <Slide key={idx} isActive={currentSlide === (shouldShowEngagement ? 12 + idx : 11 + idx)}>
               <div className="flex flex-col h-full pt-12 sm:pt-20 pb-8 sm:pb-12 space-y-3 sm:space-y-4 px-3 sm:px-4">
                 <div className="relative flex-1 bg-black rounded-[2rem] sm:rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl">
-                   <video src={data.topVideos[idx].videoUrl} className="w-full h-full object-cover" autoPlay loop playsInline />
+                   <video src={preloadedVideos[idx] || data.topVideos[idx].videoUrl} className="w-full h-full object-cover" autoPlay loop playsInline />
                    <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 w-[92%]">
                       <div className="grid grid-cols-3 gap-1.5 sm:gap-2 bg-black/60 backdrop-blur-2xl p-3 sm:p-4 rounded-[1.5rem] sm:rounded-[2rem] border border-white/10">
                         <div className="text-center">
@@ -513,14 +522,14 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
           <Slide isActive={currentSlide === (shouldShowEngagement ? 16 : 15)} isLastSlide={true}>
             <div className="flex flex-col h-full items-center justify-center p-2 sm:p-4">
               
-              <div className="relative aspect-[9/16] h-full max-h-[75vh] w-auto shadow-2xl mx-auto scale-90 sm:scale-100 origin-top">
+              <div className="relative aspect-[9/16] h-full shadow-2xl mx-auto scale-90 sm:scale-70 origin-top">
                 <div className="w-full h-full bg-[#0A0A0A] rounded-[2.5rem] overflow-hidden border border-white/10 flex flex-col relative">
                   
                   {/* Background Gradients */}
                   <div className="absolute top-0 right-0 w-96 h-96 bg-[radial-gradient(circle,rgba(154,91,255,0.2)_0%,transparent_70%)] -mr-32 -mt-32 pointer-events-none"></div>
                   <div className="absolute bottom-0 left-0 w-96 h-96 bg-[radial-gradient(circle,rgba(70,222,255,0.2)_0%,transparent_70%)] -ml-32 -mb-32 pointer-events-none"></div>
 
-                  <div className="relative h-full p-6 flex flex-col items-center justify-between z-10">
+                  <div className="relative h-full p-4 flex flex-col items-center justify-between z-10">
                     
                     {/* Header */}
                     <div className="flex items-center justify-between w-full">
