@@ -283,9 +283,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_ca", username: "lost_ca", text: "¿Venden plumas?", profilePic: "https://i.pravatar.cc/150?u=caw3" }
     ],
     topVideos: [
-      { id: "v1_ca", title: "Innovación Abierta", videoUrl: "https://www.instagram.com/reel/DFTWDTKSWr9", views: 22419, likes: 696, comments: 14 },
-      { id: "v2_ca", title: "Caso de Éxito", videoUrl: "https://www.instagram.com/reel/DI9tEikzLGs", views: 19351, likes: 3, comments: 22 },
-      { id: "v3_ca", title: "Nuestra Cultura", videoUrl: "https://www.instagram.com/reel/DHrWu-KTvMZ", views: 19078, likes: 3, comments: 3 }
+      { id: "v1_ca", title: "Innovación Abierta", videoUrl: "https://www.instagram.com/p/DMI79fApPrd", views: 1100847, likes: 41553, comments: 846 },
+      { id: "v2_ca", title: "Caso de Éxito", videoUrl: "https://www.instagram.com/reel/DFTWDTKSWr9", views: 22431, likes: 696, comments: 22 },
+      { id: "v3_ca", title: "Nuestra Cultura", videoUrl: "https://www.instagram.com/reel/DI9tEikzLGs", views: 19078, likes: 579, comments: 3 }
     ]
   },
   "Dubi": {
@@ -309,9 +309,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_d", username: "lost_d", text: "¿Haces logos gratis?", profilePic: "https://i.pravatar.cc/150?u=dw3" }
     ],
     topVideos: [
-      { id: "v1_d", title: "Proceso Creativo", videoUrl: "https://www.instagram.com/p/DMI79fApPrd/", views: 1789541, likes: 11245, comments: 678 },
-      { id: "v2_d", title: "Diseño y Tendencias", videoUrl: "https://www.instagram.com/reel/DQcmVSJDGZT", views: 508017, likes: 18651, comments: 121 },
-      { id: "v3_d", title: "Arte Digital", videoUrl: "https://www.instagram.com/reel/DRS8vMPicK8", views: 238243, likes: 4721, comments: 52 }
+      { id: "v1_d", title: "Proceso Creativo", videoUrl: "https://www.instagram.com/reel/DQcmVSJDGZT", views: 1789541, likes: 11245, comments: 678 },
+      { id: "v2_d", title: "Diseño y Tendencias", videoUrl: "https://www.instagram.com/reel/DRS8vMPicK8", views: 508017, likes: 18651, comments: 121 },
+      { id: "v3_d", title: "Arte Digital", videoUrl: "https://www.instagram.com/reel/DRNeCA7EaWd", views: 238243, likes: 4721, comments: 52 }
     ]
   },
   "Streamset": {
@@ -335,9 +335,9 @@ export const CLIENTS_DATA: Record<string, WrappedData> = {
       { id: "w3_st", username: "lost_st", text: "¿Cómo configuro el OBS?", profilePic: "https://i.pravatar.cc/150?u=stw3" }
     ],
     topVideos: [
-      { id: "v1_st", title: "Streaming Revolution", videoUrl: "https://www.instagram.com/reel/DRfnOylEdqQ", views: 202834, likes: 3, comments: 80 },
-      { id: "v2_st", title: "Conectando Latam", videoUrl: "https://www.instagram.com/reel/DRp58Wjk_rW", views: 106277, likes: 3, comments: 29 },
-      { id: "v3_st", title: "Futuro del Live", videoUrl: "https://www.instagram.com/reel/DRK_5n4kX7_", views: 81943, likes: 3, comments: 30 }
+      { id: "v1_st", title: "Streaming Revolution", videoUrl: "/videos/streamsetlatam/video_1_Video by streamsetlatam.mp4", views: 202834, likes: 3854, comments: 80 },
+      { id: "v2_st", title: "Conectando Latam", videoUrl: "/videos/streamsetlatam/video_2_Video by streamsetlatam.mp4", views: 106277, likes: 1487, comments: 29 },
+      { id: "v3_st", title: "Futuro del Live", videoUrl: "/videos/streamsetlatam/video_3_Video by streamsetlatam.mp4", views: 81943, likes: 932, comments: 30 }
     ]
   }
 };

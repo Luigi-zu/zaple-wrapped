@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { WrappedData } from '../types.ts';
 import Slide from './Slide.tsx';
 import { G_KEYWORD, G_BODY } from '../constants.tsx';
-import { Share2, Sparkles, TrendingUp, MessageCircle, Heart, Play, Award, Clock, Video } from 'lucide-react';
+import { Share2, Sparkles, TrendingUp, MessageCircle, Heart, Play, Award, Clock, Video, Volume2, VolumeX } from 'lucide-react';
 
 interface WrappedViewerProps {
   data: WrappedData;
@@ -52,6 +52,35 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
     preloadVideos();
   }, [data.topVideos]);
 
+  const [isMuted, setIsMuted] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const videoStartSlide = shouldShowEngagement ? 12 : 11;
+  const videoEndSlide = videoStartSlide + 2;
+  const isVideoSlide = currentSlide >= videoStartSlide && currentSlide <= videoEndSlide;
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.2;
+    }
+  }, []);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isVideoSlide || isMuted) {
+      audio.pause();
+    } else {
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.log("Audio autoplay prevented:", error);
+        });
+      }
+    }
+  }, [isVideoSlide, isMuted]);
+
   useEffect(() => {
     let timer: number;
     if (!isPaused) {
@@ -72,6 +101,10 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
   }, [currentSlide, isPaused]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
+    // Intentar reproducir audio si no se inició por políticas del navegador
+    if (audioRef.current && audioRef.current.paused && !isMuted && !isVideoSlide) {
+      audioRef.current.play().catch(() => {});
+    }
     pressStartTimeRef.current = Date.now();
     setIsPaused(true);
   };
@@ -202,6 +235,17 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           ))}
         </div>
+
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsMuted(!isMuted);
+          }}
+          className="absolute top-10 right-4 z-[140] p-2 rounded-full text-white/70 hover:text-white transition-all"
+          data-html2canvas-ignore
+        >
+          {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+        </button>
 
         <div className="relative w-full h-full">
           
@@ -358,7 +402,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                     <img src={c.profilePic} className="w-10 sm:w-12 h-10 sm:h-12 rounded-full object-cover border-2 border-[#89D0D4] flex-shrink-0" />
                     <div className="flex-1 min-w-0">
                       <p className="text-xs sm:text-sm font-bold text-[#89D0D4] mb-1">@{c.username}</p>
-                      <p className="text-sm sm:text-lg text-gray-300 italic line-clamp-2">"{c.text}"</p>
+                      <p className="text-sm sm:text-lg text-gray-300 italic">{c.text}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -639,6 +683,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
           </Slide>
         </div>
       </div>
+      <audio ref={audioRef} loop src="/music/background.mp3" />
     </div>
   );
 };
