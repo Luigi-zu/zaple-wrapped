@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { WrappedData } from '../types.ts';
 import Slide from './Slide.tsx';
 import { G_KEYWORD, G_BODY } from '../constants.tsx';
-import { Share2, Sparkles, TrendingUp, MessageCircle, Heart, Play, Award } from 'lucide-react';
+import { Share2, Sparkles, TrendingUp, MessageCircle, Heart, Play, Award, Clock, Video } from 'lucide-react';
 
 interface WrappedViewerProps {
   data: WrappedData;
@@ -13,7 +13,7 @@ interface WrappedViewerProps {
 
 const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = 17;
+  const totalSlides = 16;
   const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const summaryRef = useRef<HTMLDivElement>(null);
@@ -218,17 +218,23 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
           {/* 3: Stats Trabajaste Duro */}
           <Slide isActive={currentSlide === 3}>
             <div className="space-y-6 px-6 w-full">
-              <div className="p-8 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-[2.5rem] border border-white/10 shadow-lg relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[#89D0D4]/20 rounded-full blur-3xl -mr-16 -mt-16"></div>
-                <p className="text-xs font-bold text-[#89D0D4] uppercase tracking-widest mb-2 text-center relative z-10">Contenido Creado</p>
-                <p className="text-7xl font-jakarta font-black text-white leading-none text-center tracking-tighter my-2 relative z-10">{formatNum(data.totalMinutes * 60)}</p>
-                <p className="text-lg font-urbanist font-medium text-gray-400 text-center relative z-10">segundos de contenido</p>
-              </div>
               <div className="p-8 bg-gradient-to-br from-[#330086]/40 to-[#330086]/10 backdrop-blur-xl rounded-[2.5rem] border border-[#9A5BFF]/30 shadow-lg relative overflow-hidden">
                 <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#FF00E5]/20 rounded-full blur-3xl -ml-16 -mb-16"></div>
-                <p className="text-xs font-bold text-[#FF00E5] uppercase tracking-widest mb-2 text-center relative z-10">Con Zaple publicaste</p>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Video size={16} className="text-[#FF00E5]" />
+                  <p className="text-xs font-bold text-[#FF00E5] uppercase tracking-widest text-center relative z-10">Con Zaple publicaste</p>
+                </div>
                 <p className="text-7xl font-jakarta font-black text-white leading-none text-center tracking-tighter my-2 relative z-10">{data.totalVideos}</p>
                 <p className="text-lg font-urbanist font-medium text-gray-400 text-center relative z-10">videos increíbles</p>
+              </div>
+              <div className="p-8 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-[2.5rem] border border-white/10 shadow-lg relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#89D0D4]/20 rounded-full blur-3xl -mr-16 -mt-16"></div>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Clock size={16} className="text-[#89D0D4]" />
+                  <p className="text-xs font-bold text-[#89D0D4] uppercase tracking-widest text-center relative z-10">Contenido Creado</p>
+                </div>
+                <p className="text-7xl font-jakarta font-black text-white leading-none text-center tracking-tighter my-2 relative z-10">{formatNum(data.totalMinutes * 60)} s</p>
+                <p className="text-lg font-urbanist font-medium text-gray-400 text-center relative z-10">segundos de contenido</p>
               </div>
             </div>
           </Slide>
@@ -247,6 +253,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
           <Slide isActive={currentSlide === 5}>
             <div className="flex flex-col items-center justify-center h-full text-center px-4 space-y-8">
                <div className="w-full flex flex-col items-center">
+                 <p className="text-lg font-urbanist font-bold text-[#46DEFF] tracking-[0.3em] uppercase mt-4">Alcanzaste un total de</p>
                   <motion.p 
                     initial={{ scale: 0.5, opacity: 0 }} 
                     animate={{ scale: 1, opacity: 1 }} 
@@ -255,7 +262,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                   >
                     {formatNum(data.totalViews)}
                   </motion.p>
-                  <p className="text-lg font-urbanist font-bold text-[#46DEFF] tracking-[0.3em] uppercase mt-4">Views Totales</p>
+                  <p className="text-lg font-urbanist font-bold text-[#46DEFF] tracking-[0.3em] uppercase mt-4">Views</p>
                </div>
                <p className="text-xl font-urbanist italic px-10 leading-tight text-gray-400">
                   <span className={G_BODY}>"{data.viewsPhrase}"</span>
@@ -277,6 +284,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
           <Slide isActive={currentSlide === 7}>
             <div className="flex flex-col items-center justify-center h-full text-center space-y-8 px-4">
               <div className="w-full flex flex-col items-center">
+                <p className="text-lg font-urbanist font-bold text-[#FF00E5] uppercase tracking-[0.4em] mt-4">Tus videos generaron</p>
                 <motion.p 
                   initial={{ scale: 0.5, opacity: 0 }} 
                   animate={{ scale: 1, opacity: 1 }} 
@@ -287,7 +295,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                 </motion.p>
                 <p className="text-lg font-urbanist font-bold text-[#FF00E5] uppercase tracking-[0.4em] mt-4">Comentarios</p>
               </div>
-              <p className="text-xl text-gray-400 italic px-10">¡Qué tertulia! Hubo de todo un poco...</p>
+              <p className="text-xl text-gray-400 italic px-10">¡Qué tertulia! veamos algunos ...</p>
             </div>
           </Slide>
 
@@ -312,32 +320,14 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </div>
           </Slide>
 
-          {/* 9: Raros */}
-          <Slide isActive={currentSlide === 9}>
-            <div className="space-y-6 px-6 w-full">
-              <motion.h2 {...titleAnim} className="text-2xl font-jakarta font-black uppercase tracking-tight ml-2">Y ALGUNOS <span className={G_KEYWORD}>QUE... 🤌🏻</span></motion.h2>
-              <div className="space-y-4">
-                {data.weirdComments.slice(0, 3).map((c, i) => (
-                  <motion.div 
-                    key={c.id}
-                    initial={{ x: 50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.4 + (i * 0.2), duration: 0.5 }}
-                    className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm"
-                  >
-                    <img src={c.profilePic} className="w-12 h-12 rounded-full object-cover border-2 border-[#FF00E5]" />
-                    <p className="text-sm text-gray-300 italic flex-1">"{c.text}"</p>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </Slide>
+
 
           {/* 10: Likes */}
-          <Slide isActive={currentSlide === 10}>
+          <Slide isActive={currentSlide === 9}>
             <div className="flex flex-col items-center justify-center text-center h-full space-y-10 px-4">
                <motion.div animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1.5 }} className="text-9xl drop-shadow-[0_0_30px_rgba(255,0,229,0.5)]">❤️</motion.div>
                <div>
+                  <p className="text-xl font-urbanist font-bold text-[#9A5BFF] uppercase tracking-[0.2em] mt-2">Alcanzaste</p>
                   <h2 className="text-7xl font-jakarta font-black leading-none bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent">{formatNum(data.totalLikes)}</h2>
                   <p className="text-xl font-urbanist font-bold text-[#9A5BFF] uppercase tracking-[0.2em] mt-2">Likes</p>
                </div>
@@ -346,7 +336,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
           </Slide>
 
           {/* 11: Engagement */}
-          <Slide isActive={currentSlide === 11}>
+          <Slide isActive={currentSlide === 10}>
             <div className="flex flex-col items-center justify-center h-full text-center px-6 space-y-8">
               <div className="text-9xl mb-2">🔥</div>
               <motion.h2 {...titleAnim} className="text-4xl font-jakarta font-black italic uppercase leading-none">
@@ -363,15 +353,18 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                     <p className="text-sm text-gray-400 mt-3 font-urbanist">(Likes + Comentarios) / Views</p>
                   </div>
                 </div>
-                <p className="text-lg text-gray-300 italic px-4 leading-tight">
-                  Tu comunidad está <span className="text-white font-bold">activa y comprometida</span>
-                </p>
+                <div className="flex items-center justify-center">
+                  <p className="text-lg text-gray-300 italic px-4 leading-tight">
+                    El valor de referencia suele ser <span className="text-white font-bold">1%</span>
+                  </p>
+                  <p>😉</p>
+                </div>
               </div>
             </div>
           </Slide>
 
           {/* 12: Top Videos Intro */}
-          <Slide isActive={currentSlide === 12}>
+          <Slide isActive={currentSlide === 11}>
             <div className="text-center space-y-8">
                <div className="text-9xl">🏆</div>
                <motion.h2 {...titleAnim} className="text-4xl font-jakarta font-black leading-tight uppercase italic text-center px-4">TUS VIDEOS <br/><span className={G_KEYWORD}>MÁS VISTOS</span></motion.h2>
@@ -380,10 +373,10 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* SLIDES 13, 14, 15: Top Videos Content */}
           {[0, 1, 2].map((idx) => (
-            <Slide key={idx} isActive={currentSlide === 13 + idx}>
+            <Slide key={idx} isActive={currentSlide === 12 + idx}>
               <div className="flex flex-col h-full pt-20 pb-12 space-y-4 px-4">
                 <div className="relative flex-1 bg-black rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl">
-                   <video src={data.topVideos[idx].videoUrl} className="w-full h-full object-cover" autoPlay muted loop playsInline />
+                   <video src={data.topVideos[idx].videoUrl} className="w-full h-full object-cover" autoPlay loop playsInline />
                    <div className="absolute top-0 left-0 w-full p-8 bg-gradient-to-b from-black/80 via-black/30 to-transparent">
                       <h3 className="text-xl font-jakarta font-bold text-white leading-tight line-clamp-2">{data.topVideos[idx].title}</h3>
                    </div>
@@ -409,7 +402,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
           ))}
 
           {/* 16: Final Summary */}
-          <Slide isActive={currentSlide === 16}>
+          <Slide isActive={currentSlide === 15}>
             <div className="flex flex-col h-full items-center justify-center p-4">
               
               <div ref={shareCardRef} className="relative aspect-[9/16] h-full max-h-[75vh] w-auto shadow-2xl mx-auto">
@@ -476,7 +469,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                             <div className="bg-gradient-to-br from-[#9A5BFF]/10 to-[#9A5BFF]/5 p-4 rounded-2xl border border-[#9A5BFF]/30 flex flex-col items-center justify-center gap-1 relative overflow-hidden">
                                 <div className="absolute top-0 right-0 w-16 h-16 bg-[#9A5BFF]/20 rounded-full blur-xl -mr-8 -mt-8"></div>
                                 <div className="flex items-center gap-1.5 text-[#9A5BFF] mb-1 relative z-10">
-                                <TrendingUp size={14} />
+                                <Clock size={14} />
                                 <span className="text-[10px] font-bold uppercase tracking-wider text-[#9A5BFF]">Segundos</span>
                                 </div>
                                 <span className="font-jakarta font-black text-xl text-white relative z-10">{formatNum(data.totalMinutes * 60)}</span>
@@ -495,7 +488,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
                     {/* Footer */}
                     <div className="w-full text-center pt-4 border-t border-white/10">
-                      <p className="text-transparent bg-clip-text bg-gradient-to-r from-[#9A5BFF] via-[#46DEFF] to-[#89D0D4] text-[11px] font-jakarta font-black uppercase tracking-[0.3em]">zaple.com</p>
+                      <p className="text-transparent bg-clip-text bg-gradient-to-r from-[#9A5BFF] via-[#46DEFF] to-[#89D0D4] text-[11px] font-jakarta font-black uppercase tracking-[0.3em]">zaple-tech.com</p>
                     </div>
 
                   </div>
