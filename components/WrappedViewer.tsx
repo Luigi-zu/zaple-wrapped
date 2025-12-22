@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { WrappedData } from '../types.ts';
 import Slide from './Slide.tsx';
 import { G_KEYWORD, G_BODY } from '../constants.tsx';
-import { Share2 } from 'lucide-react';
+import { Share2, Sparkles, TrendingUp, MessageCircle, Heart, Play, Award } from 'lucide-react';
 
 interface WrappedViewerProps {
   data: WrappedData;
@@ -13,10 +13,11 @@ interface WrappedViewerProps {
 
 const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = 16;
+  const totalSlides = 17;
   const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const summaryRef = useRef<HTMLDivElement>(null);
+  const shareCardRef = useRef<HTMLDivElement>(null);
   const pressStartTimeRef = useRef<number>(0);
 
   const firstName = data.influencerName.split(' ')[0];
@@ -69,14 +70,46 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
   };
 
   const handleShare = async () => {
-    if (!summaryRef.current) return;
+    const target = shareCardRef.current || summaryRef.current;
+    if (!target) return;
     try {
+      // Esperar a que las fuentes se carguen
+      await document.fonts.ready;
+      
+      const imgs = Array.from(target.querySelectorAll('img')) as HTMLImageElement[];
+      await Promise.all(
+        imgs.map((img) =>
+          img.complete
+            ? Promise.resolve()
+            : new Promise<void>((resolve) => {
+                const done = () => resolve();
+                img.addEventListener('load', done, { once: true });
+                img.addEventListener('error', done, { once: true });
+              })
+        )
+      );
+
+      // Pequeño delay para asegurar que todo esté renderizado
+      await new Promise(resolve => setTimeout(resolve, 300));
+
       // @ts-ignore
-      const canvas = await html2canvas(summaryRef.current, {
+      const canvas = await html2canvas(target, {
         backgroundColor: '#000000',
-        scale: 2,
+        scale: 3,
         useCORS: true,
-        logging: false
+        allowTaint: true,
+        logging: false,
+        foreignObjectRendering: false,
+        imageTimeout: 15000,
+        removeContainer: true,
+        onclone: (clonedDoc: Document) => {
+          const elements = clonedDoc.querySelectorAll('.text-transparent');
+          elements.forEach((el: any) => {
+            el.style.color = '#46DEFF';
+            el.style.background = 'none';
+            el.style.webkitTextFillColor = 'initial';
+          });
+        }
       });
       
       canvas.toBlob(async (blob: Blob | null) => {
@@ -106,12 +139,13 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
   return (
     <div className="fixed inset-0 bg-black flex items-center justify-center overflow-hidden font-urbanist">
       <div 
+        ref={summaryRef}
         className="relative w-full h-full max-w-[450px] bg-black overflow-hidden shadow-2xl touch-none"
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
       >
         
-        <div className="absolute top-6 left-4 right-4 z-[130] flex gap-1 px-1">
+        <div className="absolute top-6 left-4 right-4 z-[130] flex gap-1 px-1" data-html2canvas-ignore>
           {Array.from({ length: totalSlides }).map((_, i) => (
             <div key={i} className="h-1 flex-1 bg-white/20 rounded-full overflow-hidden">
               <motion.div
@@ -140,12 +174,19 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                     transition={{ delay: 0.8, duration: 1.2 }}
                     className="relative z-20 flex flex-col items-center gap-8"
                 >
-                    <div className="w-64 h-64 rounded-full overflow-hidden border-4 border-[#9A5BFF] shadow-[0_0_80px_rgba(154,91,255,0.3)]">
-                        <img src={data.influencerPhoto} className="w-full h-full object-cover" />
+                    <div className="relative">
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#9A5BFF] to-[#46DEFF] blur-xl opacity-50 animate-pulse"></div>
+                        <div className="relative w-64 h-64 rounded-full overflow-hidden border-[6px] border-transparent bg-gradient-to-tr from-[#9A5BFF] to-[#46DEFF] bg-clip-padding p-1">
+                            <div className="w-full h-full rounded-full overflow-hidden bg-black">
+                                <img src={data.influencerPhoto} className="w-full h-full object-cover" />
+                            </div>
+                        </div>
                     </div>
-                    <div className="text-center">
-                        <motion.h2 {...titleAnim} className="text-4xl font-jakarta font-black italic">¡Hola {firstName}!</motion.h2>
-                        <p className="text-xl font-urbanist text-[#89D0D4] font-bold mt-2">Llegó tu Zaple Wrapped 2025</p>
+                    <div className="text-center relative z-20">
+                        <motion.h2 {...titleAnim} className="text-5xl font-jakarta font-black italic tracking-tight">
+                            ¡Hola <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9A5BFF] to-[#46DEFF]">{firstName}!</span>
+                        </motion.h2>
+                        <p className="text-xl font-urbanist text-white/80 font-medium mt-3 tracking-wide">Tu 2025 en <span className="font-bold text-white">Zaple</span></p>
                     </div>
                 </motion.div>
             </div>
@@ -176,16 +217,18 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* 3: Stats Trabajaste Duro */}
           <Slide isActive={currentSlide === 3}>
-            <div className="space-y-6 px-6">
-              <div className="p-8 bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10">
-                <p className="text-xs font-bold text-[#89D0D4] uppercase tracking-widest mb-2 text-center">Contenido Creado</p>
-                <p className="text-6xl font-jakarta font-black text-white leading-none text-center">{formatNum(data.totalMinutes)}</p>
-                <p className="text-xl font-jakarta font-bold text-gray-400 text-center">minutos de video</p>
+            <div className="space-y-6 px-6 w-full">
+              <div className="p-8 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-[2.5rem] border border-white/10 shadow-lg relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#89D0D4]/20 rounded-full blur-3xl -mr-16 -mt-16"></div>
+                <p className="text-xs font-bold text-[#89D0D4] uppercase tracking-widest mb-2 text-center relative z-10">Contenido Creado</p>
+                <p className="text-7xl font-jakarta font-black text-white leading-none text-center tracking-tighter my-2 relative z-10">{formatNum(data.totalMinutes * 60)}</p>
+                <p className="text-lg font-urbanist font-medium text-gray-400 text-center relative z-10">segundos de contenido</p>
               </div>
-              <div className="p-8 bg-[#330086]/20 backdrop-blur-md rounded-[2.5rem] border border-[#9A5BFF]/20">
-                <p className="text-xs font-bold text-[#FF00E5] uppercase tracking-widest mb-2 text-center">Con Zaple publicaste</p>
-                <p className="text-6xl font-jakarta font-black text-white leading-none text-center">{data.totalVideos}</p>
-                <p className="text-xl font-jakarta font-bold text-gray-400 text-center">videos increíbles</p>
+              <div className="p-8 bg-gradient-to-br from-[#330086]/40 to-[#330086]/10 backdrop-blur-xl rounded-[2.5rem] border border-[#9A5BFF]/30 shadow-lg relative overflow-hidden">
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#FF00E5]/20 rounded-full blur-3xl -ml-16 -mb-16"></div>
+                <p className="text-xs font-bold text-[#FF00E5] uppercase tracking-widest mb-2 text-center relative z-10">Con Zaple publicaste</p>
+                <p className="text-7xl font-jakarta font-black text-white leading-none text-center tracking-tighter my-2 relative z-10">{data.totalVideos}</p>
+                <p className="text-lg font-urbanist font-medium text-gray-400 text-center relative z-10">videos increíbles</p>
               </div>
             </div>
           </Slide>
@@ -208,7 +251,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                     initial={{ scale: 0.5, opacity: 0 }} 
                     animate={{ scale: 1, opacity: 1 }} 
                     transition={{ duration: 0.8 }} 
-                    className="text-[clamp(3.5rem,12vw,5.5rem)] font-jakarta font-black leading-none text-center w-full break-all"
+                    className="text-[clamp(2.5rem,12vw,4rem)] font-jakarta font-black leading-none text-center w-full break-all bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent"
                   >
                     {formatNum(data.totalViews)}
                   </motion.p>
@@ -238,7 +281,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                   initial={{ scale: 0.5, opacity: 0 }} 
                   animate={{ scale: 1, opacity: 1 }} 
                   transition={{ duration: 0.8 }} 
-                  className="text-[clamp(6rem,18vw,8.5rem)] font-jakarta font-black leading-none text-center w-full"
+                  className="text-[clamp(6rem,18vw,8.5rem)] font-jakarta font-black leading-none text-center w-full bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent"
                 >
                   {formatNum(data.totalComments)}
                 </motion.p>
@@ -250,14 +293,20 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* 8: Apoyo */}
           <Slide isActive={currentSlide === 8}>
-            <div className="space-y-6 px-6">
+            <div className="space-y-6 px-6 w-full">
               <motion.h2 {...titleAnim} className="text-2xl font-jakarta font-black uppercase tracking-tight ml-2">MUCHO <span className={G_KEYWORD}>APOYO ❤️</span></motion.h2>
               <div className="space-y-4">
-                {data.supportiveComments.slice(0, 3).map((c) => (
-                  <div key={c.id} className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10">
+                {data.supportiveComments.slice(0, 3).map((c, i) => (
+                  <motion.div 
+                    key={c.id}
+                    initial={{ x: 50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.4 + (i * 0.2), duration: 0.5 }}
+                    className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm"
+                  >
                     <img src={c.profilePic} className="w-12 h-12 rounded-full object-cover border-2 border-[#89D0D4]" />
                     <p className="text-sm text-gray-300 italic flex-1">"{c.text}"</p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -265,14 +314,20 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* 9: Raros */}
           <Slide isActive={currentSlide === 9}>
-            <div className="space-y-6 px-6">
+            <div className="space-y-6 px-6 w-full">
               <motion.h2 {...titleAnim} className="text-2xl font-jakarta font-black uppercase tracking-tight ml-2">Y ALGUNOS <span className={G_KEYWORD}>QUE... 🤌🏻</span></motion.h2>
               <div className="space-y-4">
-                {data.weirdComments.slice(0, 3).map((c) => (
-                  <div key={c.id} className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10">
+                {data.weirdComments.slice(0, 3).map((c, i) => (
+                  <motion.div 
+                    key={c.id}
+                    initial={{ x: 50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.4 + (i * 0.2), duration: 0.5 }}
+                    className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm"
+                  >
                     <img src={c.profilePic} className="w-12 h-12 rounded-full object-cover border-2 border-[#FF00E5]" />
                     <p className="text-sm text-gray-300 italic flex-1">"{c.text}"</p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -283,43 +338,68 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             <div className="flex flex-col items-center justify-center text-center h-full space-y-10 px-4">
                <motion.div animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1.5 }} className="text-9xl drop-shadow-[0_0_30px_rgba(255,0,229,0.5)]">❤️</motion.div>
                <div>
-                  <h2 className="text-7xl font-jakarta font-black leading-none">{formatNum(data.totalLikes)}</h2>
+                  <h2 className="text-7xl font-jakarta font-black leading-none bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent">{formatNum(data.totalLikes)}</h2>
                   <p className="text-xl font-urbanist font-bold text-[#9A5BFF] uppercase tracking-[0.2em] mt-2">Likes</p>
                </div>
                <p className="text-lg text-gray-400 font-urbanist max-w-[280px]">La gente señaló con un corazón que les volaste la cabeza.</p>
             </div>
           </Slide>
 
-          {/* 11: Top Videos Intro */}
+          {/* 11: Engagement */}
           <Slide isActive={currentSlide === 11}>
+            <div className="flex flex-col items-center justify-center h-full text-center px-6 space-y-8">
+              <div className="text-9xl mb-2">🔥</div>
+              <motion.h2 {...titleAnim} className="text-4xl font-jakarta font-black italic uppercase leading-none">
+                TU ENGAGEMENT <br/><span className={G_KEYWORD}>FUE BRUTAL</span>
+              </motion.h2>
+              <div className="w-full max-w-[350px] space-y-4 mt-6">
+                <div className="relative p-8 bg-gradient-to-br from-[#9A5BFF]/20 to-[#46DEFF]/20 backdrop-blur-xl rounded-[2.5rem] border border-white/20 shadow-lg overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#46DEFF]/30 rounded-full blur-3xl -mr-16 -mt-16"></div>
+                  <div className="relative z-10">
+                    <p className="text-xs font-bold text-[#46DEFF] uppercase tracking-widest mb-3">Tasa de Engagement</p>
+                    <p className="text-7xl font-jakarta font-black text-white leading-none tracking-tighter">
+                      {((data.totalLikes + data.totalComments) / data.totalViews * 100).toFixed(1)}%
+                    </p>
+                    <p className="text-sm text-gray-400 mt-3 font-urbanist">(Likes + Comentarios) / Views</p>
+                  </div>
+                </div>
+                <p className="text-lg text-gray-300 italic px-4 leading-tight">
+                  Tu comunidad está <span className="text-white font-bold">activa y comprometida</span>
+                </p>
+              </div>
+            </div>
+          </Slide>
+
+          {/* 12: Top Videos Intro */}
+          <Slide isActive={currentSlide === 12}>
             <div className="text-center space-y-8">
                <div className="text-9xl">🏆</div>
                <motion.h2 {...titleAnim} className="text-4xl font-jakarta font-black leading-tight uppercase italic text-center px-4">TUS VIDEOS <br/><span className={G_KEYWORD}>MÁS VISTOS</span></motion.h2>
             </div>
           </Slide>
 
-          {/* SLIDES 12, 13, 14: Top Videos Content */}
+          {/* SLIDES 13, 14, 15: Top Videos Content */}
           {[0, 1, 2].map((idx) => (
-            <Slide key={idx} isActive={currentSlide === 12 + idx}>
+            <Slide key={idx} isActive={currentSlide === 13 + idx}>
               <div className="flex flex-col h-full pt-20 pb-12 space-y-4 px-4">
                 <div className="relative flex-1 bg-black rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl">
                    <video src={data.topVideos[idx].videoUrl} className="w-full h-full object-cover" autoPlay muted loop playsInline />
                    <div className="absolute top-0 left-0 w-full p-8 bg-gradient-to-b from-black/80 via-black/30 to-transparent">
-                      <h3 className="text-xl font-jakarta font-bold text-white leading-tight">{data.topVideos[idx].title}</h3>
+                      <h3 className="text-xl font-jakarta font-bold text-white leading-tight line-clamp-2">{data.topVideos[idx].title}</h3>
                    </div>
                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[90%]">
-                      <div className="grid grid-cols-3 gap-2 bg-black/60 backdrop-blur-2xl p-6 rounded-[2.5rem] border border-white/10">
+                      <div className="grid grid-cols-3 gap-2 bg-black/60 backdrop-blur-2xl p-4 rounded-[2rem] border border-white/10">
                         <div className="text-center">
                           <p className="text-[10px] text-gray-400 uppercase font-black mb-1">Vistas</p>
-                          <p className="text-xl font-black text-[#46DEFF]">{formatNum(data.topVideos[idx].views)}</p>
+                          <p className="text-lg font-black text-[#46DEFF]">{formatNum(data.topVideos[idx].views)}</p>
                         </div>
                         <div className="text-center">
                           <p className="text-[10px] text-gray-400 uppercase font-black mb-1">Likes</p>
-                          <p className="text-xl font-black text-[#FF00E5]">{formatNum(data.topVideos[idx].likes)}</p>
+                          <p className="text-lg font-black text-[#FF00E5]">{formatNum(data.topVideos[idx].likes)}</p>
                         </div>
                         <div className="text-center">
                           <p className="text-[10px] text-gray-400 uppercase font-black mb-1">Comms</p>
-                          <p className="text-xl font-black text-[#89D0D4]">{formatNum(data.topVideos[idx].comments)}</p>
+                          <p className="text-lg font-black text-[#89D0D4]">{formatNum(data.topVideos[idx].comments)}</p>
                         </div>
                       </div>
                    </div>
@@ -328,51 +408,106 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             </Slide>
           ))}
 
-          {/* 15: Final Summary */}
-          <Slide isActive={currentSlide === 15}>
-            <div className="flex flex-col h-full justify-between py-12 px-6">
+          {/* 16: Final Summary */}
+          <Slide isActive={currentSlide === 16}>
+            <div className="flex flex-col h-full items-center justify-center p-4">
               
-              <div ref={summaryRef} className="relative p-1 bg-gradient-to-tr from-[#FF00E5] to-[#46DEFF] rounded-[3.5rem] shadow-2xl mt-12">
-                <div className="bg-black rounded-[3.4rem] p-8 pt-10 flex flex-col items-center">
+              <div ref={shareCardRef} className="relative aspect-[9/16] h-full max-h-[75vh] w-auto shadow-2xl mx-auto">
+                <div className="w-full h-full bg-[#0A0A0A] rounded-[2.5rem] overflow-hidden border border-white/10 flex flex-col relative">
                   
-                  <div className="flex items-center gap-1 mb-8">
-                     <div className="w-4 h-4 bg-gradient-to-tr from-[#FF00E5] to-[#46DEFF] rounded-sm rotate-12" />
-                     <span className="font-jakarta font-black tracking-tighter text-xs uppercase">Zaple Wrapped</span>
-                  </div>
+                  {/* Background Gradients */}
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-[#9A5BFF]/20 rounded-full blur-[80px] -mr-20 -mt-20"></div>
+                  <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#46DEFF]/20 rounded-full blur-[80px] -ml-20 -mb-20"></div>
 
-                  <img src={data.influencerPhoto} className="w-32 h-32 rounded-full object-cover border-4 border-black -mt-24 shadow-2xl relative z-20 mb-4" />
-                  
-                  <div className="text-center mb-6">
-                    <h3 className="text-3xl font-jakarta font-black text-white">{firstName}</h3>
-                    <p className="text-[#89D0D4] font-bold text-xs uppercase tracking-[0.2em] mt-1">Tu año en Zaple</p>
-                  </div>
+                  <div className="relative h-full p-6 flex flex-col items-center justify-between z-10">
+                    
+                    {/* Header */}
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-9 h-9 bg-gradient-to-br from-[#9A5BFF] via-[#7B3FFF] to-[#46DEFF] rounded-xl flex items-center justify-center shadow-lg">
+                          <span className="font-black text-white text-sm">Z</span>
+                        </div>
+                        <div className="flex flex-col leading-none">
+                          <span className="font-jakarta font-black text-white text-sm tracking-wider">ZAPLE</span>
+                          <span className="font-jakarta font-black text-transparent bg-clip-text bg-gradient-to-r from-[#9A5BFF] to-[#46DEFF] text-xs tracking-widest">WRAPPED</span>
+                        </div>
+                      </div>
+                      <div className="px-3 py-1 bg-gradient-to-r from-[#9A5BFF]/20 to-[#46DEFF]/20 rounded-full border border-white/20">
+                        <span className="text-white font-jakarta font-black text-sm">2025</span>
+                      </div>
+                    </div>
 
-                  <div className="w-full space-y-4 py-4 border-y border-white/10">
-                    <div className="flex justify-between items-center px-1">
-                      <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Views</span>
-                      <span className="font-black text-2xl text-[#46DEFF]">{formatNum(data.totalViews)}</span>
+                    {/* Center Content */}
+                    <div className="flex flex-col items-center w-full gap-4 flex-1 justify-center">
+                        {/* Profile */}
+                        <div className="relative mb-2">
+                            <div className="absolute inset-0 bg-gradient-to-tr from-[#9A5BFF] to-[#46DEFF] rounded-full blur-md opacity-60"></div>
+                          <img src={data.influencerPhoto} className="block w-28 h-28 rounded-full object-cover border-4 border-black relative z-10" />
+                            <div className="absolute -bottom-2 -right-2 z-20 bg-white text-black p-1.5 rounded-full border-4 border-black">
+                                <Award size={16} fill="black" />
+                            </div>
+                        </div>
+                        
+                        <div className="text-center mb-4">
+                            <h3 className="text-3xl font-jakarta font-black text-white mb-1">{firstName}</h3>
+                            <p className="text-[#89D0D4] font-bold text-xs uppercase tracking-[0.2em]">Creador de Contenido</p>
+                        </div>
+
+                        {/* Stats Grid */}
+                        <div className="grid grid-cols-2 gap-3 w-full">
+                            <div className="bg-gradient-to-br from-[#46DEFF]/10 to-[#46DEFF]/5 p-4 rounded-2xl border border-[#46DEFF]/30 flex flex-col items-center justify-center gap-1 relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-16 h-16 bg-[#46DEFF]/20 rounded-full blur-xl -mr-8 -mt-8"></div>
+                                <div className="flex items-center gap-1.5 text-[#46DEFF] mb-1 relative z-10">
+                                <Play size={14} fill="currentColor" />
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-[#46DEFF]">Views</span>
+                                </div>
+                                <span className="font-jakarta font-black text-xl text-white relative z-10">{formatNum(data.totalViews)}</span>
+                            </div>
+                            
+                            <div className="bg-gradient-to-br from-[#FF00E5]/10 to-[#FF00E5]/5 p-4 rounded-2xl border border-[#FF00E5]/30 flex flex-col items-center justify-center gap-1 relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-16 h-16 bg-[#FF00E5]/20 rounded-full blur-xl -mr-8 -mt-8"></div>
+                                <div className="flex items-center gap-1.5 text-[#FF00E5] mb-1 relative z-10">
+                                <Heart size={14} fill="currentColor" />
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FF00E5]">Likes</span>
+                                </div>
+                                <span className="font-jakarta font-black text-xl text-white relative z-10">{formatNum(data.totalLikes)}</span>
+                            </div>
+
+                            <div className="bg-gradient-to-br from-[#9A5BFF]/10 to-[#9A5BFF]/5 p-4 rounded-2xl border border-[#9A5BFF]/30 flex flex-col items-center justify-center gap-1 relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-16 h-16 bg-[#9A5BFF]/20 rounded-full blur-xl -mr-8 -mt-8"></div>
+                                <div className="flex items-center gap-1.5 text-[#9A5BFF] mb-1 relative z-10">
+                                <TrendingUp size={14} />
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-[#9A5BFF]">Segundos</span>
+                                </div>
+                                <span className="font-jakarta font-black text-xl text-white relative z-10">{formatNum(data.totalMinutes * 60)}</span>
+                            </div>
+
+                            <div className="bg-gradient-to-br from-[#89D0D4]/10 to-[#89D0D4]/5 p-4 rounded-2xl border border-[#89D0D4]/30 flex flex-col items-center justify-center gap-1 relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-16 h-16 bg-[#89D0D4]/20 rounded-full blur-xl -mr-8 -mt-8"></div>
+                                <div className="flex items-center gap-1.5 text-[#89D0D4] mb-1 relative z-10">
+                                <MessageCircle size={14} />
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-[#89D0D4]">Videos</span>
+                                </div>
+                                <span className="font-jakarta font-black text-xl text-white relative z-10">{data.totalVideos}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div className="flex justify-between items-center px-1">
-                      <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Likes</span>
-                      <span className="font-black text-2xl text-[#FF00E5]">{formatNum(data.totalLikes)}</span>
+
+                    {/* Footer */}
+                    <div className="w-full text-center pt-4 border-t border-white/10">
+                      <p className="text-transparent bg-clip-text bg-gradient-to-r from-[#9A5BFF] via-[#46DEFF] to-[#89D0D4] text-[11px] font-jakarta font-black uppercase tracking-[0.3em]">zaple.com</p>
                     </div>
-                    <div className="flex justify-between items-center px-1">
-                      <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Minutos</span>
-                      <span className="font-black text-2xl text-[#9A5BFF]">{formatNum(data.totalMinutes)}</span>
-                    </div>
-                    <div className="flex justify-between items-center px-1">
-                      <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Videos</span>
-                      <span className="font-black text-2xl text-[#89D0D4]">{data.totalVideos}</span>
-                    </div>
+
                   </div>
                 </div>
               </div>
 
               <button 
                 onClick={(e) => { e.stopPropagation(); handleShare(); }}
-                className="w-full py-5 bg-white text-black font-jakarta font-black rounded-2xl flex items-center justify-center gap-3 active:scale-95 transition-all shadow-xl"
+                className="w-full max-w-[300px] py-4 mt-8 bg-white text-black font-jakarta font-black rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)]"
+                data-html2canvas-ignore
               >
-                <Share2 size={24} /> COMPARTIR MI WRAPPED
+                <Share2 size={20} /> COMPARTIR
               </button>
             </div>
           </Slide>
