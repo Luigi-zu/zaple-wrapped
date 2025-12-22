@@ -5,8 +5,82 @@ import { WrappedData } from '../types.ts';
 import Slide from './Slide.tsx';
 import { G_KEYWORD, G_BODY } from '../constants.tsx';
 import { Share2, Sparkles, TrendingUp, MessageCircle, Heart, Play, Award, Clock, Video, Volume2, VolumeX } from 'lucide-react';
-import ReactPlayer from 'react-player';
-import { InstagramEmbed } from 'react-social-media-embed';
+
+const INSTAGRAM_ALLOWED_FEATURES = 'autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share';
+
+const buildInstagramEmbedUrl = (url: string) => {
+  const base = url.split('?')[0].replace(/\/$/, '');
+  return `${base}/embed`;
+};
+
+interface TopVideoPlayerProps {
+  url: string;
+  muted: boolean;
+  active: boolean;
+  paused: boolean;
+}
+
+const TopVideoPlayer = ({ url, muted, active, paused }: TopVideoPlayerProps) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const isInstagram = url.includes('instagram.com');
+  const shouldPlay = active && !paused;
+
+  useEffect(() => {
+    if (isInstagram) return;
+    const el = videoRef.current;
+    if (!el) return;
+    el.muted = muted;
+  }, [muted, isInstagram]);
+
+  useEffect(() => {
+    if (isInstagram) return;
+    const el = videoRef.current;
+    if (!el) return;
+    if (shouldPlay) {
+      const playPromise = el.play();
+      if (playPromise) {
+        playPromise.catch(() => {});
+      }
+    } else {
+      el.pause();
+    }
+  }, [shouldPlay, isInstagram]);
+
+  useEffect(() => {
+    if (isInstagram || active) return;
+    const el = videoRef.current;
+    if (!el) return;
+    el.currentTime = 0;
+  }, [active, isInstagram]);
+
+  if (isInstagram) {
+    const embedUrl = buildInstagramEmbedUrl(url);
+    return (
+      <iframe
+        src={embedUrl}
+        title="Instagram video"
+        allow={INSTAGRAM_ALLOWED_FEATURES}
+        allowFullScreen
+        loading="lazy"
+        className="absolute inset-0 h-full w-full"
+        style={{ border: '0' }}
+      />
+    );
+  }
+
+  return (
+    <video
+      ref={videoRef}
+      src={url}
+      className="absolute inset-0 h-full w-full object-cover"
+      playsInline
+      loop
+      muted={muted}
+      preload="auto"
+      controls={false}
+    />
+  );
+};
 
 interface WrappedViewerProps {
   data: WrappedData;
@@ -102,7 +176,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
     }
     return () => clearInterval(timer);
   }, [currentSlide, isPaused, hasStarted]);
-
+  
   const handleStart = () => {
     setHasStarted(true);
     if (audioRef.current) {
@@ -493,7 +567,6 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
           {/* SLIDES 13, 14, 15: Top Videos Content */}
           {[0, 1, 2].map((idx) => {
             const videoUrl = preloadedVideos[idx] || data.topVideos[idx].videoUrl;
-            const isInstagram = videoUrl.includes('instagram.com');
             const slideIndex = shouldShowEngagement ? 12 + idx : 11 + idx;
             const isActive = currentSlide === slideIndex;
             
@@ -501,28 +574,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             <Slide key={idx} isActive={isActive}>
               <div className="flex flex-col h-full pt-12 sm:pt-20 pb-8 sm:pb-12 space-y-3 sm:space-y-4 px-3 sm:px-4">
                 <div className="relative flex-1 bg-black rounded-[2rem] sm:rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl flex items-center justify-center">
-                   {isInstagram ? (
-                     <div className="w-full h-full overflow-y-auto flex items-center justify-center bg-black">
-                        <InstagramEmbed url={videoUrl} width="100%" />
-                     </div>
-                   ) : (
-                     <ReactPlayer
-                        url={videoUrl}
-                        width="100%"
-                        height="100%"
-                        playing={isActive && !isPaused}
-                        loop
-                        muted={isMuted}
-                        playsinline
-                        config={{ 
-                          file: { 
-                            attributes: { 
-                              style: { objectFit: 'cover', width: '100%', height: '100%' } 
-                            } 
-                          } 
-                        }}
-                     />
-                   )}
+                   <TopVideoPlayer url={videoUrl} muted={isMuted} active={isActive} paused={isPaused} />
                    <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 w-[92%] pointer-events-none z-10">
                       <div className="grid grid-cols-3 gap-1.5 sm:gap-2 bg-black/60 backdrop-blur-2xl p-3 sm:p-4 rounded-[1.5rem] sm:rounded-[2rem] border border-white/10">
                         <div className="text-center">
