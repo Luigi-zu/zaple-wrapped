@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { WrappedData } from '../types.ts';
 import Slide from './Slide.tsx';
@@ -18,9 +18,10 @@ interface TopVideoPlayerProps {
   muted: boolean;
   active: boolean;
   paused: boolean;
+  onAutoplayBlocked?: () => void;
 }
 
-const TopVideoPlayer = ({ url, muted, active, paused }: TopVideoPlayerProps) => {
+const TopVideoPlayer = ({ url, muted, active, paused, onAutoplayBlocked }: TopVideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const isInstagram = url.includes('instagram.com');
   const shouldPlay = active && !paused;
@@ -29,6 +30,11 @@ const TopVideoPlayer = ({ url, muted, active, paused }: TopVideoPlayerProps) => 
     if (isInstagram) return;
     const el = videoRef.current;
     if (!el) return;
+    el.setAttribute('playsinline', 'true');
+    el.setAttribute('webkit-playsinline', 'true');
+    if (el.defaultMuted !== muted) {
+      el.defaultMuted = muted;
+    }
     el.muted = muted;
   }, [muted, isInstagram]);
 
@@ -39,12 +45,19 @@ const TopVideoPlayer = ({ url, muted, active, paused }: TopVideoPlayerProps) => 
     if (shouldPlay) {
       const playPromise = el.play();
       if (playPromise) {
-        playPromise.catch(() => {});
+        playPromise.catch((error: unknown) => {
+          const err = error as { name?: string; message?: string } | null;
+          const message = (err?.message ?? '').toLowerCase();
+          const isAutoplayDenied = err?.name === 'NotAllowedError' || message.includes('not allowed') || message.includes('notallowed');
+          if (isAutoplayDenied) {
+            onAutoplayBlocked?.();
+          }
+        });
       }
     } else {
       el.pause();
     }
-  }, [shouldPlay, isInstagram]);
+  }, [shouldPlay, isInstagram, muted, onAutoplayBlocked]);
 
   useEffect(() => {
     if (isInstagram || active) return;
@@ -131,6 +144,10 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
   const [isMuted, setIsMuted] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  const handleVideoAutoplayBlocked = useCallback(() => {
+    setIsMuted((prev) => (prev ? prev : true));
+  }, []);
 
   const videoStartSlide = shouldShowEngagement ? 12 : 11;
   const videoEndSlide = videoStartSlide + 2;
@@ -574,7 +591,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             <Slide key={idx} isActive={isActive}>
               <div className="flex flex-col h-full pt-12 sm:pt-20 pb-8 sm:pb-12 space-y-3 sm:space-y-4 px-3 sm:px-4">
                 <div className="relative flex-1 bg-black rounded-[2rem] sm:rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl flex items-center justify-center">
-                   <TopVideoPlayer url={videoUrl} muted={isMuted} active={isActive} paused={isPaused} />
+                   <TopVideoPlayer url={videoUrl} muted={isMuted} active={isActive} paused={isPaused} onAutoplayBlocked={handleVideoAutoplayBlocked} />
                    <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 w-[92%] pointer-events-none z-10">
                       <div className="grid grid-cols-3 gap-1.5 sm:gap-2 bg-black/60 backdrop-blur-2xl p-3 sm:p-4 rounded-[1.5rem] sm:rounded-[2rem] border border-white/10">
                         <div className="text-center">
