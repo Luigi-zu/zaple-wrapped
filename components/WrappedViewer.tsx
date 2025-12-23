@@ -6,11 +6,48 @@ import Slide from './Slide.tsx';
 import { G_KEYWORD, G_BODY } from '../constants.tsx';
 import { Share2, Sparkles, TrendingUp, MessageCircle, Heart, Play, Award, Clock, Video, Volume2, VolumeX } from 'lucide-react';
 
-const INSTAGRAM_ALLOWED_FEATURES = 'autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share';
+const instagramVideoCache = new Map<string, string | null>();
 
-const buildInstagramEmbedUrl = (url: string) => {
-  const base = url.split('?')[0].replace(/\/$/, '');
-  return `${base}/embed`;
+const decodeInstagramString = (value: string) =>
+  value
+    .replace(/\\u([0-9a-fA-F]{4})/g, (_, code) => String.fromCharCode(parseInt(code, 16)))
+    .replace(/\\\//g, '/');
+
+const extractInstagramDirectUrl = async (pageUrl: string): Promise<string | null> => {
+  if (instagramVideoCache.has(pageUrl)) {
+    return instagramVideoCache.get(pageUrl) ?? null;
+  }
+
+  const match = pageUrl.match(/instagram\.com\/(reel|p|tv)\/([^/?#]+)/i);
+  if (!match) {
+    return null;
+  }
+
+  const mediaType = match[1];
+  const shortcode = match[2];
+  const requestUrl = `https://r.jina.ai/https://www.instagram.com/${mediaType}/${shortcode}/`;
+
+  try {
+    const response = await fetch(requestUrl, { credentials: 'omit' });
+    if (!response.ok) {
+      throw new Error(`Instagram fetch failed with status ${response.status}`);
+    }
+    const payload = await response.text();
+    const directMatch = payload.match(/"video_url":"([^"]+)"/);
+    const fallbackMatch = payload.match(/"video_urls":\s*\[\s*"([^"]+)"/);
+    const contentUrlMatch = payload.match(/"contentUrl":"([^"]+)"/);
+    const rawUrl = directMatch?.[1] ?? fallbackMatch?.[1] ?? contentUrlMatch?.[1] ?? null;
+    if (!rawUrl) {
+      throw new Error('Direct video URL not found in Instagram payload');
+    }
+    const decoded = decodeInstagramString(rawUrl);
+    instagramVideoCache.set(pageUrl, decoded);
+    return decoded;
+  } catch (error) {
+    console.error('Failed to resolve Instagram video URL:', error);
+    instagramVideoCache.set(pageUrl, null);
+    return null;
+  }
 };
 
 interface TopVideoPlayerProps {
@@ -23,11 +60,9 @@ interface TopVideoPlayerProps {
 
 const TopVideoPlayer = ({ url, muted, active, paused, onAutoplayBlocked }: TopVideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const isInstagram = url.includes('instagram.com');
   const shouldPlay = active && !paused;
 
   useEffect(() => {
-    if (isInstagram) return;
     const el = videoRef.current;
     if (!el) return;
     el.setAttribute('playsinline', 'true');
@@ -36,12 +71,17 @@ const TopVideoPlayer = ({ url, muted, active, paused, onAutoplayBlocked }: TopVi
       el.defaultMuted = muted;
     }
     el.muted = muted;
-  }, [muted, isInstagram]);
+  }, [muted]);
 
   useEffect(() => {
-    if (isInstagram) return;
     const el = videoRef.current;
-    if (!el) return;
+    if (!el || !url) return;
+    el.load();
+  }, [url]);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el || !url) return;
     if (shouldPlay) {
       const playPromise = el.play();
       if (playPromise) {
@@ -57,28 +97,17 @@ const TopVideoPlayer = ({ url, muted, active, paused, onAutoplayBlocked }: TopVi
     } else {
       el.pause();
     }
-  }, [shouldPlay, isInstagram, muted, onAutoplayBlocked]);
+  }, [shouldPlay, muted, onAutoplayBlocked, url]);
 
   useEffect(() => {
-    if (isInstagram || active) return;
+    if (active) return;
     const el = videoRef.current;
     if (!el) return;
     el.currentTime = 0;
-  }, [active, isInstagram]);
+  }, [active]);
 
-  if (isInstagram) {
-    const embedUrl = buildInstagramEmbedUrl(url);
-    return (
-      <iframe
-        src={embedUrl}
-        title="Instagram video"
-        allow={INSTAGRAM_ALLOWED_FEATURES}
-        allowFullScreen
-        loading="lazy"
-        className="absolute inset-0 h-full w-full"
-        style={{ border: '0' }}
-      />
-    );
+  if (!url) {
+    return null;
   }
 
   return (
@@ -120,15 +149,32 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
   const [hasStarted, setHasStarted] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+    const objectUrls: string[] = [];
+
     const preloadVideos = async () => {
       const promises = data.topVideos.map(async (video) => {
-        if (video.videoUrl.includes('instagram.com')) {
-          return video.videoUrl;
-        }
         try {
+          if (video.videoUrl.includes('instagram.com')) {
+            const directUrl = await extractInstagramDirectUrl(video.videoUrl);
+            if (directUrl) {
+              return directUrl;
+            }
+            return video.videoUrl;
+          }
+
+          if (video.videoUrl.startsWith('http')) {
+            return video.videoUrl;
+          }
+
           const response = await fetch(video.videoUrl);
+          if (!response.ok) {
+            throw new Error(`Failed to preload video with status ${response.status}`);
+          }
           const blob = await response.blob();
-          return URL.createObjectURL(blob);
+          const objectUrl = URL.createObjectURL(blob);
+          objectUrls.push(objectUrl);
+          return objectUrl;
         } catch (error) {
           console.error('Error preloading video:', error);
           return video.videoUrl;
@@ -136,10 +182,17 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
       });
 
       const results = await Promise.all(promises);
-      setPreloadedVideos(results);
+      if (isMounted) {
+        setPreloadedVideos(results);
+      }
     };
 
     preloadVideos();
+
+    return () => {
+      isMounted = false;
+      objectUrls.forEach((url) => URL.revokeObjectURL(url));
+    };
   }, [data.topVideos]);
 
   const [isMuted, setIsMuted] = useState(false);
