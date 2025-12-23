@@ -193,7 +193,7 @@ const TopVideoPlayer = ({ source, muted, active, paused, onAutoplayBlocked }: To
         className="absolute inset-0 h-full w-full object-cover"
         playsInline
         loop
-        muted
+        muted={muted}
         preload="metadata"
         controls={false}
         style={{
@@ -206,12 +206,11 @@ const TopVideoPlayer = ({ source, muted, active, paused, onAutoplayBlocked }: To
         <button
           type="button"
           className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-20"
-          onClick={handleManualPlay}
-          onTouchEnd={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            handleManualPlay(e as any);
+          onPointerDown={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
           }}
+          onClick={handleManualPlay}
           aria-label="Reproducir video"
         >
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/90 text-black shadow-2xl">
