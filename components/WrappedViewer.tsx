@@ -229,6 +229,8 @@ interface WrappedViewerProps {
 
 const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const BASE_AUDIO_VOLUME = 0.2;
+  const VIDEO_AUDIO_VOLUME = 0.03;
   
   // Clientes que no deben ver la slide de engagement
   const CLIENTS_WITHOUT_ENGAGEMENT = ['streamset', 'dubi', 'cacique', 'cwaik', 'masnatta', 'melina', 'joan'];
@@ -266,25 +268,34 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = 0.2;
+      audioRef.current.volume = BASE_AUDIO_VOLUME;
     }
-  }, []);
+  }, [BASE_AUDIO_VOLUME]);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (!hasStarted || isVideoSlide || isMuted) {
+    const targetVolume = isMuted
+      ? 0
+      : isVideoSlide
+        ? VIDEO_AUDIO_VOLUME
+        : BASE_AUDIO_VOLUME;
+
+    audio.volume = targetVolume;
+
+    if (!hasStarted || targetVolume === 0) {
       audio.pause();
-    } else {
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.log("Audio autoplay prevented:", error);
-        });
-      }
+      return;
     }
-  }, [isVideoSlide, isMuted, hasStarted]);
+
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(error => {
+        console.log("Audio autoplay prevented:", error);
+      });
+    }
+  }, [isVideoSlide, isMuted, hasStarted, BASE_AUDIO_VOLUME, VIDEO_AUDIO_VOLUME]);
 
   useEffect(() => {
     let timer: number;
@@ -314,7 +325,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
   const handlePointerDown = (e: React.PointerEvent) => {
     // Intentar reproducir audio si no se inició por políticas del navegador
-    if (audioRef.current && audioRef.current.paused && !isMuted && !isVideoSlide) {
+    if (audioRef.current && audioRef.current.paused && !isMuted) {
       audioRef.current.play().catch(() => {});
     }
     pressStartTimeRef.current = Date.now();
