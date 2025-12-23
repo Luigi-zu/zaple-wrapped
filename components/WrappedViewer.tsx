@@ -66,8 +66,7 @@ interface TopVideoPlayerProps {
 
 const TopVideoPlayer = ({ source, muted, active, paused, onAutoplayBlocked }: TopVideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasUserInteracted, setHasUserInteracted] = useState(false);
+  const [showPlayButton, setShowPlayButton] = useState(true);
   const playbackUrl = source.playbackUrl || source.originalUrl;
   const shouldPlay = active && !paused;
 
@@ -76,106 +75,102 @@ const TopVideoPlayer = ({ source, muted, active, paused, onAutoplayBlocked }: To
     const el = videoRef.current;
     if (!el) return;
     
-    el.setAttribute('playsinline', 'true');
-    el.setAttribute('webkit-playsinline', 'true');
-    el.setAttribute('x-webkit-airplay', 'allow');
+    el.setAttribute('playsinline', '');
+    el.setAttribute('webkit-playsinline', '');
+    el.muted = true; // Siempre muted para iOS
+    el.defaultMuted = true;
     
-    if (el.defaultMuted !== muted) {
-      el.defaultMuted = muted;
-    }
-    el.muted = muted;
-    
-    // Forzar load en iOS
     el.load();
-    setIsPlaying(false);
-    setHasUserInteracted(false);
-  }, [muted, playbackUrl]);
+    setShowPlayButton(true);
+  }, [playbackUrl]);
 
-  // Seguimiento de eventos de reproducción
+  // Eventos de reproducción
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
 
-    const handlePlay = () => setIsPlaying(true);
-    const handlePause = () => setIsPlaying(false);
+    const handlePlay = () => setShowPlayButton(false);
+    const handlePause = () => setShowPlayButton(true);
+    const handleEnded = () => setShowPlayButton(true);
 
     el.addEventListener('play', handlePlay);
     el.addEventListener('playing', handlePlay);
     el.addEventListener('pause', handlePause);
+    el.addEventListener('ended', handleEnded);
 
     return () => {
       el.removeEventListener('play', handlePlay);
       el.removeEventListener('playing', handlePlay);
       el.removeEventListener('pause', handlePause);
+      el.removeEventListener('ended', handleEnded);
     };
-  }, [playbackUrl]);
+  }, []);
 
-  // Control de reproducción
+  // Control de reproducción automático cuando el slide cambia
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
 
-    if (!shouldPlay) {
+    if (!active) {
       el.pause();
+      el.currentTime = 0;
+      setShowPlayButton(true);
       return;
     }
 
-    if (!hasUserInteracted) {
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      const playPromise = el.play();
-      if (playPromise) {
-        playPromise.catch((error: unknown) => {
-          const err = error as { name?: string; message?: string } | null;
-          const message = (err?.message ?? '').toLowerCase();
-          const isAutoplayDenied =
-            err?.name === 'NotAllowedError' ||
-            message.includes('not allowed') ||
-            message.includes('notallowed');
-          if (isAutoplayDenied) {
-            onAutoplayBlocked?.();
-          }
-        });
-      }
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, [shouldPlay, hasUserInteracted, onAutoplayBlocked, playbackUrl]);
-
-  // Reset cuando no está activo
-  useEffect(() => {
-    if (active) return;
-    const el = videoRef.current;
-    if (!el) return;
-    el.currentTime = 0;
-    el.pause();
-    setIsPlaying(false);
-    setHasUserInteracted(false);
-  }, [active, playbackUrl]);
-
-  const showPlayButton = !isPlaying || !active;
-
-  const handleManualPlay = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    const el = videoRef.current;
-    if (!el) return;
-    setHasUserInteracted(true);
-    const playPromise = el.play();
-    if (playPromise) {
-      playPromise.catch((error: unknown) => {
-        const err = error as { name?: string; message?: string } | null;
-        const message = (err?.message ?? '').toLowerCase();
-        const isAutoplayDenied =
-          err?.name === 'NotAllowedError' ||
-          message.includes('not allowed') ||
-          message.includes('notallowed');
-        if (isAutoplayDenied) {
-          onAutoplayBlocked?.();
+    if (shouldPlay) {
+      // Intentar reproducir automáticamente
+      const attemptPlay = () => {
+        el.muted = true; // Forzar muted
+        const playPromise = el.play();
+        
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              console.log('Video playing');
+              setShowPlayButton(false);
+            })
+            .catch((error) => {
+              console.log('Autoplay blocked:', error.message);
+              setShowPlayButton(true);
+              onAutoplayBlocked?.();
+            });
         }
-      });
+      };
+
+      // Intentar inmediatamente y con delay
+      attemptPlay();
+      const timer = setTimeout(attemptPlay, 200);
+      
+      return () => clearTimeout(timer);
+    } else {
+      el.pause();
     }
+  }, [active, shouldPlay, playbackUrl, onAutoplayBlocked]);
+
+  // Handler para el botón manual - LA CLAVE ESTÁ AQUÍ
+  const handleManualPlay = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const el = videoRef.current;
+    if (!el) return;
+
+    console.log('Manual play clicked');
+    
+    // Asegurar que está muted
+    el.muted = true;
+    
+    // Reproducir
+    el.play()
+      .then(() => {
+        console.log('Manual play successful');
+        setShowPlayButton(false);
+      })
+      .catch((err) => {
+        console.error('Manual play failed:', err);
+        alert(`Error: ${err.message}`); // Para debugging
+      });
   };
 
   return (
@@ -186,32 +181,32 @@ const TopVideoPlayer = ({ source, muted, active, paused, onAutoplayBlocked }: To
         poster={source.posterUrl}
         className="absolute inset-0 h-full w-full object-cover"
         playsInline
-        webkit-playsinline="true"
-        x-webkit-airplay="allow"
         loop
-        muted={muted}
+        muted
         preload="metadata"
         controls={false}
-        autoPlay={false}
         style={{
           objectFit: 'cover',
           width: '100%',
           height: '100%'
         }}
       />
-      {showPlayButton && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <button
-            type="button"
-            className="pointer-events-auto flex h-16 w-16 items-center justify-center rounded-full bg-black/60 text-white transition-transform hover:scale-105"
-            onClick={handleManualPlay}
-            onPointerDown={(event) => event.stopPropagation()}
-            onPointerUp={(event) => event.stopPropagation()}
-            aria-label="Reproducir video"
-          >
-            <Play size={32} />
-          </button>
-        </div>
+      {showPlayButton && active && (
+        <button
+          type="button"
+          className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-20"
+          onClick={handleManualPlay}
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleManualPlay(e as any);
+          }}
+          aria-label="Reproducir video"
+        >
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/90 text-black shadow-2xl">
+            <Play size={40} fill="currentColor" />
+          </div>
+        </button>
       )}
     </>
   );
