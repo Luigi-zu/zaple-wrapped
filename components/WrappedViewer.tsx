@@ -77,12 +77,19 @@ const TopVideoPlayer = ({ source, muted, active, paused, onAutoplayBlocked }: To
     
     el.setAttribute('playsinline', '');
     el.setAttribute('webkit-playsinline', '');
-    el.muted = true; // Siempre muted para iOS
-    el.defaultMuted = true;
-    
+    el.muted = muted;
+    el.defaultMuted = muted;
+
     el.load();
     setShowPlayButton(true);
-  }, [playbackUrl]);
+  }, [playbackUrl, muted]);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    el.muted = muted;
+    el.defaultMuted = muted;
+  }, [muted]);
 
   // Eventos de reproducción
   useEffect(() => {
@@ -118,10 +125,10 @@ const TopVideoPlayer = ({ source, muted, active, paused, onAutoplayBlocked }: To
       return;
     }
 
-    if (shouldPlay) {
+    if (shouldPlay && muted) {
       // Intentar reproducir automáticamente
       const attemptPlay = () => {
-        el.muted = true; // Forzar muted
+        el.muted = true; // Requerido para autoplay
         const playPromise = el.play();
         
         if (playPromise !== undefined) {
@@ -145,6 +152,9 @@ const TopVideoPlayer = ({ source, muted, active, paused, onAutoplayBlocked }: To
       return () => clearTimeout(timer);
     } else {
       el.pause();
+      if (!muted) {
+        setShowPlayButton(true);
+      }
     }
   }, [active, shouldPlay, playbackUrl, onAutoplayBlocked]);
 
@@ -158,8 +168,9 @@ const TopVideoPlayer = ({ source, muted, active, paused, onAutoplayBlocked }: To
 
     console.log('Manual play clicked');
     
-    // Asegurar que está muted
-    el.muted = true;
+    // Ajustar mute según toggle global
+    el.muted = muted;
+    el.defaultMuted = muted;
     
     // Reproducir
     el.play()
