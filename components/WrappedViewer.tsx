@@ -66,6 +66,8 @@ interface TopVideoPlayerProps {
 
 const TopVideoPlayer = ({ source, muted, active, paused, onAutoplayBlocked }: TopVideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const playbackUrl = source.playbackUrl || source.originalUrl;
   const shouldPlay = active && !paused;
 
@@ -85,38 +87,62 @@ const TopVideoPlayer = ({ source, muted, active, paused, onAutoplayBlocked }: To
     
     // Forzar load en iOS
     el.load();
+    setIsPlaying(false);
+    setHasUserInteracted(false);
   }, [muted, playbackUrl]);
+
+  // Seguimiento de eventos de reproducción
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    el.addEventListener('play', handlePlay);
+    el.addEventListener('playing', handlePlay);
+    el.addEventListener('pause', handlePause);
+
+    return () => {
+      el.removeEventListener('play', handlePlay);
+      el.removeEventListener('playing', handlePlay);
+      el.removeEventListener('pause', handlePause);
+    };
+  }, [playbackUrl]);
 
   // Control de reproducción
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
 
-    if (shouldPlay) {
-      // Pequeño delay para iOS
-      const timer = setTimeout(() => {
-        const playPromise = el.play();
-        if (playPromise) {
-          playPromise.catch((error: unknown) => {
-            const err = error as { name?: string; message?: string } | null;
-            const message = (err?.message ?? '').toLowerCase();
-            const isAutoplayDenied =
-              err?.name === 'NotAllowedError' ||
-              message.includes('not allowed') ||
-              message.includes('notallowed');
-            if (isAutoplayDenied) {
-              console.log('Autoplay blocked on iOS');
-              onAutoplayBlocked?.();
-            }
-          });
-        }
-      }, 100); // Delay de 100ms para iOS
-      
-      return () => clearTimeout(timer);
-    } else {
+    if (!shouldPlay) {
       el.pause();
+      return;
     }
-  }, [shouldPlay, muted, onAutoplayBlocked, playbackUrl]);
+
+    if (!hasUserInteracted) {
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      const playPromise = el.play();
+      if (playPromise) {
+        playPromise.catch((error: unknown) => {
+          const err = error as { name?: string; message?: string } | null;
+          const message = (err?.message ?? '').toLowerCase();
+          const isAutoplayDenied =
+            err?.name === 'NotAllowedError' ||
+            message.includes('not allowed') ||
+            message.includes('notallowed');
+          if (isAutoplayDenied) {
+            onAutoplayBlocked?.();
+          }
+        });
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [shouldPlay, hasUserInteracted, onAutoplayBlocked, playbackUrl]);
 
   // Reset cuando no está activo
   useEffect(() => {
@@ -125,28 +151,69 @@ const TopVideoPlayer = ({ source, muted, active, paused, onAutoplayBlocked }: To
     if (!el) return;
     el.currentTime = 0;
     el.pause();
+    setIsPlaying(false);
+    setHasUserInteracted(false);
   }, [active, playbackUrl]);
 
+  const showPlayButton = !isPlaying || !active;
+
+  const handleManualPlay = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    const el = videoRef.current;
+    if (!el) return;
+    setHasUserInteracted(true);
+    const playPromise = el.play();
+    if (playPromise) {
+      playPromise.catch((error: unknown) => {
+        const err = error as { name?: string; message?: string } | null;
+        const message = (err?.message ?? '').toLowerCase();
+        const isAutoplayDenied =
+          err?.name === 'NotAllowedError' ||
+          message.includes('not allowed') ||
+          message.includes('notallowed');
+        if (isAutoplayDenied) {
+          onAutoplayBlocked?.();
+        }
+      });
+    }
+  };
+
   return (
-    <video
-      ref={videoRef}
-      src={playbackUrl}
-      poster={source.posterUrl}
-      className="absolute inset-0 h-full w-full object-cover"
-      playsInline
-      webkit-playsinline="true"
-      x-webkit-airplay="allow"
-      loop
-      muted={muted}
-      preload="metadata"
-      controls={false}
-      autoPlay={false}
-      style={{
-        objectFit: 'cover',
-        width: '100%',
-        height: '100%'
-      }}
-    />
+    <>
+      <video
+        ref={videoRef}
+        src={playbackUrl}
+        poster={source.posterUrl}
+        className="absolute inset-0 h-full w-full object-cover"
+        playsInline
+        webkit-playsinline="true"
+        x-webkit-airplay="allow"
+        loop
+        muted={muted}
+        preload="metadata"
+        controls={false}
+        autoPlay={false}
+        style={{
+          objectFit: 'cover',
+          width: '100%',
+          height: '100%'
+        }}
+      />
+      {showPlayButton && (
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <button
+            type="button"
+            className="pointer-events-auto flex h-16 w-16 items-center justify-center rounded-full bg-black/60 text-white transition-transform hover:scale-105"
+            onClick={handleManualPlay}
+            onPointerDown={(event) => event.stopPropagation()}
+            onPointerUp={(event) => event.stopPropagation()}
+            aria-label="Reproducir video"
+          >
+            <Play size={32} />
+          </button>
+        </div>
+      )}
+    </>
   );
 };
 
