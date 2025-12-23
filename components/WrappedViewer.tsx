@@ -231,7 +231,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   
   // Clientes que no deben ver la slide de engagement
-  const CLIENTS_WITHOUT_ENGAGEMENT = ['streamset', 'dubi', 'cacique', 'cwaik'];
+  const CLIENTS_WITHOUT_ENGAGEMENT = ['streamset', 'dubi', 'cacique', 'cwaik', 'masnatta', 'melina', 'joan'];
   const shouldShowEngagement = !CLIENTS_WITHOUT_ENGAGEMENT.includes((data.clientName || '').toLowerCase());
   
   // Ajustar total de slides según si mostramos engagement
@@ -886,7 +886,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
                                 <MessageCircle size={14} />
                                 <span className="text-[10px] font-bold uppercase tracking-wider text-[#89D0D4]">Comentarios</span>
                                 </div>
-                                <span className="font-jakarta font-black text-xl text-white relative z-10">{data.totalComments}</span>
+                                <span className="font-jakarta font-black text-xl text-white relative z-10">{formatNum(data.totalComments)}</span>
                             </div>
                         </div>
                     </div>
