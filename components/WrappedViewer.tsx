@@ -69,59 +69,83 @@ const TopVideoPlayer = ({ source, muted, active, paused, onAutoplayBlocked }: To
   const playbackUrl = source.playbackUrl || source.originalUrl;
   const shouldPlay = active && !paused;
 
+  // Configuración inicial del video
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
+    
     el.setAttribute('playsinline', 'true');
     el.setAttribute('webkit-playsinline', 'true');
+    el.setAttribute('x-webkit-airplay', 'allow');
+    
     if (el.defaultMuted !== muted) {
       el.defaultMuted = muted;
     }
     el.muted = muted;
+    
+    // Forzar load en iOS
+    el.load();
   }, [muted, playbackUrl]);
 
+  // Control de reproducción
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
+
     if (shouldPlay) {
-      const playPromise = el.play();
-      if (playPromise) {
-        playPromise.catch((error: unknown) => {
-          const err = error as { name?: string; message?: string } | null;
-          const message = (err?.message ?? '').toLowerCase();
-          const isAutoplayDenied =
-            err?.name === 'NotAllowedError' ||
-            message.includes('not allowed') ||
-            message.includes('notallowed');
-          if (isAutoplayDenied) {
-            onAutoplayBlocked?.();
-          }
-        });
-      }
+      // Pequeño delay para iOS
+      const timer = setTimeout(() => {
+        const playPromise = el.play();
+        if (playPromise) {
+          playPromise.catch((error: unknown) => {
+            const err = error as { name?: string; message?: string } | null;
+            const message = (err?.message ?? '').toLowerCase();
+            const isAutoplayDenied =
+              err?.name === 'NotAllowedError' ||
+              message.includes('not allowed') ||
+              message.includes('notallowed');
+            if (isAutoplayDenied) {
+              console.log('Autoplay blocked on iOS');
+              onAutoplayBlocked?.();
+            }
+          });
+        }
+      }, 100); // Delay de 100ms para iOS
+      
+      return () => clearTimeout(timer);
     } else {
       el.pause();
     }
   }, [shouldPlay, muted, onAutoplayBlocked, playbackUrl]);
 
+  // Reset cuando no está activo
   useEffect(() => {
     if (active) return;
     const el = videoRef.current;
     if (!el) return;
     el.currentTime = 0;
+    el.pause();
   }, [active, playbackUrl]);
 
   return (
     <video
-      key={playbackUrl}
       ref={videoRef}
       src={playbackUrl}
       poster={source.posterUrl}
       className="absolute inset-0 h-full w-full object-cover"
       playsInline
+      webkit-playsinline="true"
+      x-webkit-airplay="allow"
       loop
       muted={muted}
-      preload="auto"
+      preload="metadata"
       controls={false}
+      autoPlay={false}
+      style={{
+        objectFit: 'cover',
+        width: '100%',
+        height: '100%'
+      }}
     />
   );
 };
