@@ -6,63 +6,126 @@ import Slide from './Slide.tsx';
 import { G_KEYWORD, G_BODY } from '../constants.tsx';
 import { Share2, Sparkles, TrendingUp, MessageCircle, Heart, Play, Award, Clock, Video, Volume2, VolumeX } from 'lucide-react';
 
-const instagramVideoCache = new Map<string, string | null>();
+const INSTAGRAM_ALLOWED_FEATURES = 'autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share';
+// Proxy endpoint expected to return direct Instagram MP4 streams compatible with iOS playback.
+const INSTAGRAM_MEDIA_API_URL = import.meta.env.VITE_INSTAGRAM_MEDIA_API_URL ?? '';
 
-const decodeInstagramString = (value: string) =>
-  value
-    .replace(/\\u([0-9a-fA-F]{4})/g, (_, code) => String.fromCharCode(parseInt(code, 16)))
-    .replace(/\\\//g, '/');
+type VideoPlaybackKind = 'video' | 'iframe';
 
-const extractInstagramDirectUrl = async (pageUrl: string): Promise<string | null> => {
-  if (instagramVideoCache.has(pageUrl)) {
-    return instagramVideoCache.get(pageUrl) ?? null;
+interface VideoPlaybackSource {
+  playbackUrl: string;
+  sourceType: VideoPlaybackKind;
+  originalUrl: string;
+  posterUrl?: string;
+}
+
+interface InstagramMediaApiResponse {
+  videoUrl?: string;
+  streamUrl?: string;
+  downloadUrl?: string;
+  posterUrl?: string;
+  thumbnailUrl?: string;
+  html?: string;
+}
+
+const buildInstagramEmbedUrl = (url: string) => {
+  const base = url.split('?')[0].replace(/\/$/, '');
+  return `${base}/embed`;
+};
+
+const createDefaultSource = (url: string): VideoPlaybackSource => {
+  if (url.includes('instagram.com')) {
+    return {
+      playbackUrl: buildInstagramEmbedUrl(url),
+      sourceType: 'iframe',
+      originalUrl: url,
+    };
   }
 
-  const match = pageUrl.match(/instagram\.com\/(reel|p|tv)\/([^/?#]+)/i);
-  if (!match) {
-    return null;
-  }
+  return {
+    playbackUrl: url,
+    sourceType: 'video',
+    originalUrl: url,
+  };
+};
 
-  const mediaType = match[1];
-  const shortcode = match[2];
-  const requestUrl = `https://r.jina.ai/https://www.instagram.com/${mediaType}/${shortcode}/`;
+const resolveInstagramVideoSource = async (url: string): Promise<VideoPlaybackSource> => {
+  if (!INSTAGRAM_MEDIA_API_URL) {
+    return createDefaultSource(url);
+  }
 
   try {
-    const response = await fetch(requestUrl, { credentials: 'omit' });
+    const response = await fetch(`${INSTAGRAM_MEDIA_API_URL}?url=${encodeURIComponent(url)}`, {
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+
     if (!response.ok) {
-      throw new Error(`Instagram fetch failed with status ${response.status}`);
+      throw new Error(`Instagram media API responded with ${response.status}`);
     }
-    const payload = await response.text();
-    const directMatch = payload.match(/"video_url":"([^"]+)"/);
-    const fallbackMatch = payload.match(/"video_urls":\s*\[\s*"([^"]+)"/);
-    const contentUrlMatch = payload.match(/"contentUrl":"([^"]+)"/);
-    const rawUrl = directMatch?.[1] ?? fallbackMatch?.[1] ?? contentUrlMatch?.[1] ?? null;
-    if (!rawUrl) {
-      throw new Error('Direct video URL not found in Instagram payload');
+
+    const payload = (await response.json()) as InstagramMediaApiResponse;
+    const directUrl = payload.videoUrl || payload.streamUrl || payload.downloadUrl;
+
+    if (directUrl) {
+      return {
+        playbackUrl: directUrl,
+        sourceType: 'video',
+        originalUrl: url,
+        posterUrl: payload.posterUrl ?? payload.thumbnailUrl,
+      };
     }
-    const decoded = decodeInstagramString(rawUrl);
-    instagramVideoCache.set(pageUrl, decoded);
-    return decoded;
   } catch (error) {
-    console.error('Failed to resolve Instagram video URL:', error);
-    instagramVideoCache.set(pageUrl, null);
-    return null;
+    console.error('Error resolving Instagram media:', error);
+  }
+
+  return createDefaultSource(url);
+};
+
+const preloadStandardVideoSource = async (url: string): Promise<VideoPlaybackSource> => {
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Video preload failed with status ${response.status}`);
+    }
+
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
+
+    return {
+      playbackUrl: objectUrl,
+      sourceType: 'video',
+      originalUrl: url,
+    };
+  } catch (error) {
+    console.error('Error preloading video:', error);
+
+    return {
+      playbackUrl: url,
+      sourceType: 'video',
+      originalUrl: url,
+    };
   }
 };
 
 interface TopVideoPlayerProps {
-  url: string;
+  source: VideoPlaybackSource;
   muted: boolean;
   active: boolean;
   paused: boolean;
   onAutoplayBlocked?: () => void;
 }
 
-const TopVideoPlayer = ({ url, muted, active, paused, onAutoplayBlocked }: TopVideoPlayerProps) => {
+const TopVideoPlayer = ({ source, muted, active, paused, onAutoplayBlocked }: TopVideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const shouldPlay = active && !paused;
+  const isIframe = source.sourceType === 'iframe';
+  const shouldPlay = active && !paused && !isIframe;
+  const playbackUrl = source.playbackUrl;
 
   useEffect(() => {
+    if (isIframe) return;
     const el = videoRef.current;
     if (!el) return;
     el.setAttribute('playsinline', 'true');
@@ -71,17 +134,12 @@ const TopVideoPlayer = ({ url, muted, active, paused, onAutoplayBlocked }: TopVi
       el.defaultMuted = muted;
     }
     el.muted = muted;
-  }, [muted]);
+  }, [muted, isIframe, playbackUrl]);
 
   useEffect(() => {
+    if (isIframe) return;
     const el = videoRef.current;
-    if (!el || !url) return;
-    el.load();
-  }, [url]);
-
-  useEffect(() => {
-    const el = videoRef.current;
-    if (!el || !url) return;
+    if (!el) return;
     if (shouldPlay) {
       const playPromise = el.play();
       if (playPromise) {
@@ -97,23 +155,36 @@ const TopVideoPlayer = ({ url, muted, active, paused, onAutoplayBlocked }: TopVi
     } else {
       el.pause();
     }
-  }, [shouldPlay, muted, onAutoplayBlocked, url]);
+  }, [shouldPlay, isIframe, muted, onAutoplayBlocked, playbackUrl]);
 
   useEffect(() => {
-    if (active) return;
+    if (isIframe || active) return;
     const el = videoRef.current;
     if (!el) return;
     el.currentTime = 0;
-  }, [active]);
+  }, [active, isIframe, playbackUrl]);
 
-  if (!url) {
-    return null;
+  if (isIframe) {
+    return (
+      <iframe
+        key={playbackUrl}
+        src={playbackUrl}
+        title="Instagram video"
+        allow={INSTAGRAM_ALLOWED_FEATURES}
+        allowFullScreen
+        loading="lazy"
+        className="absolute inset-0 h-full w-full"
+        style={{ border: '0' }}
+      />
+    );
   }
 
   return (
     <video
+      key={playbackUrl}
       ref={videoRef}
-      src={url}
+      src={playbackUrl}
+      poster={source.posterUrl}
       className="absolute inset-0 h-full w-full object-cover"
       playsInline
       loop
@@ -145,53 +216,36 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
   const firstName = data.influencerName.split(' ')[0];
 
-  const [preloadedVideos, setPreloadedVideos] = useState<string[]>([]);
+  const [videoSources, setVideoSources] = useState<VideoPlaybackSource[]>(() =>
+    data.topVideos.map((video) => createDefaultSource(video.videoUrl))
+  );
   const [hasStarted, setHasStarted] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
-    const objectUrls: string[] = [];
 
-    const preloadVideos = async () => {
-      const promises = data.topVideos.map(async (video) => {
-        try {
+    const defaultSources = data.topVideos.map((video) => createDefaultSource(video.videoUrl));
+    setVideoSources(defaultSources);
+
+    const resolveSources = async () => {
+      const resolved = await Promise.all(
+        data.topVideos.map(async (video) => {
           if (video.videoUrl.includes('instagram.com')) {
-            const directUrl = await extractInstagramDirectUrl(video.videoUrl);
-            if (directUrl) {
-              return directUrl;
-            }
-            return video.videoUrl;
+            return resolveInstagramVideoSource(video.videoUrl);
           }
+          return preloadStandardVideoSource(video.videoUrl);
+        })
+      );
 
-          if (video.videoUrl.startsWith('http')) {
-            return video.videoUrl;
-          }
-
-          const response = await fetch(video.videoUrl);
-          if (!response.ok) {
-            throw new Error(`Failed to preload video with status ${response.status}`);
-          }
-          const blob = await response.blob();
-          const objectUrl = URL.createObjectURL(blob);
-          objectUrls.push(objectUrl);
-          return objectUrl;
-        } catch (error) {
-          console.error('Error preloading video:', error);
-          return video.videoUrl;
-        }
-      });
-
-      const results = await Promise.all(promises);
       if (isMounted) {
-        setPreloadedVideos(results);
+        setVideoSources(resolved);
       }
     };
 
-    preloadVideos();
+    resolveSources();
 
     return () => {
       isMounted = false;
-      objectUrls.forEach((url) => URL.revokeObjectURL(url));
     };
   }, [data.topVideos]);
 
@@ -636,7 +690,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
 
           {/* SLIDES 13, 14, 15: Top Videos Content */}
           {[0, 1, 2].map((idx) => {
-            const videoUrl = preloadedVideos[idx] || data.topVideos[idx].videoUrl;
+            const source = videoSources[idx] ?? createDefaultSource(data.topVideos[idx].videoUrl);
             const slideIndex = shouldShowEngagement ? 12 + idx : 11 + idx;
             const isActive = currentSlide === slideIndex;
             
@@ -644,7 +698,7 @@ const WrappedViewer: React.FC<WrappedViewerProps> = ({ data, onRestart }) => {
             <Slide key={idx} isActive={isActive}>
               <div className="flex flex-col h-full pt-12 sm:pt-20 pb-8 sm:pb-12 space-y-3 sm:space-y-4 px-3 sm:px-4">
                 <div className="relative flex-1 bg-black rounded-[2rem] sm:rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl flex items-center justify-center">
-                   <TopVideoPlayer url={videoUrl} muted={isMuted} active={isActive} paused={isPaused} onAutoplayBlocked={handleVideoAutoplayBlocked} />
+                   <TopVideoPlayer source={source} muted={isMuted} active={isActive} paused={isPaused} onAutoplayBlocked={handleVideoAutoplayBlocked} />
                    <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 w-[92%] pointer-events-none z-10">
                       <div className="grid grid-cols-3 gap-1.5 sm:gap-2 bg-black/60 backdrop-blur-2xl p-3 sm:p-4 rounded-[1.5rem] sm:rounded-[2rem] border border-white/10">
                         <div className="text-center">
